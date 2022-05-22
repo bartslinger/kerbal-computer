@@ -24,23 +24,80 @@ export class SpaceCenter {
       }
     );
     const bytebuffer = ByteBuffer.wrap(result.value);
-    return new Vessel(bytebuffer.readVarint64());
+    return new Vessel(this.conn, bytebuffer.readVarint64());
   }
 }
 export class Control {
+  private conn: KRPCConnection;
   private id: Long;
-  constructor(id: Long) {
+  constructor(conn: KRPCConnection, id: Long) {
+    this.conn = conn;
     this.id = id;
+  }
+
+  async activateNextStage(): Promise<void> {
+    const controlId = new Uint8Array(
+      ByteBuffer.wrap(new ByteBuffer().writeVarint64(this.id)).buffer
+    );
+    const procedureCall = krpc.ProcedureCall.fromPartial({
+      service: "SpaceCenter",
+      procedure: "Control_ActivateNextStage",
+      arguments: [
+        {
+          position: 0,
+          value: controlId,
+        },
+      ],
+    });
+
+    const result = await new Promise<krpc.ProcedureResult>(
+      (resolve, reject) => {
+        this.conn.scheduleProcedureCall({
+          procedureCall,
+          resolve,
+          reject,
+        });
+      }
+    );
+    const bytebuffer = ByteBuffer.wrap(result.value);
+    console.log(bytebuffer);
   }
 }
 
 export class Vessel {
+  private conn: KRPCConnection;
   private id: Long;
-  constructor(id: Long) {
+  constructor(conn: KRPCConnection, id: Long) {
+    this.conn = conn;
     this.id = id;
+    console.log("id", id);
   }
 
-  getControl(): Control {
-    return new Control(Long.fromInt(0));
+  async getControl(): Promise<Control> {
+    const vesselId = new Uint8Array(
+      ByteBuffer.wrap(new ByteBuffer().writeVarint64(this.id)).buffer
+    );
+    const procedureCall = krpc.ProcedureCall.fromPartial({
+      service: "SpaceCenter",
+      procedure: "Vessel_get_Control",
+      arguments: [
+        {
+          position: 0,
+          value: vesselId,
+        },
+      ],
+    });
+
+    const result = await new Promise<krpc.ProcedureResult>(
+      (resolve, reject) => {
+        this.conn.scheduleProcedureCall({
+          procedureCall,
+          resolve,
+          reject,
+        });
+      }
+    );
+    const bytebuffer = ByteBuffer.wrap(result.value);
+    return new Control(this.conn, bytebuffer.readVarint64());
   }
 }

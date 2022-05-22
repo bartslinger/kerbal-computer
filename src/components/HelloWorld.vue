@@ -21,6 +21,9 @@ const loop = async () => {
   const spaceCenter = new SpaceCenter(connection);
   const activeVessel = await spaceCenter.getActiveVessel();
   console.log(activeVessel);
+  const control = await activeVessel.getControl();
+  console.log(control);
+  await control.activateNextStage();
   for (;;) {
     const result = await Promise.all([krpc.getUT(), krpc.getNavball()]);
     ut.value = result[0];
