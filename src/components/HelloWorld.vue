@@ -20,7 +20,13 @@ type ScheduledProcedureCall = {
   reject: () => void;
 };
 
+type PendingProcedureCall = {
+  resolve: (value: krpc.ProcedureResult) => void;
+  reject: () => void;
+};
+
 const scheduledProcedureCalls: Array<ScheduledProcedureCall> = [];
+const pendingProcedureCalls: Array<PendingProcedureCall> = [];
 
 const getUT = async (): Promise<number> => {
   // schedule the request
@@ -28,78 +34,80 @@ const getUT = async (): Promise<number> => {
     service: "SpaceCenter",
     procedure: "get_UT",
   });
-  const promise = new Promise<krpc.ProcedureResult>((resolve, reject) => {
+  const result = await new Promise<krpc.ProcedureResult>((resolve, reject) => {
     scheduledProcedureCalls.push({
       procedureCall,
       resolve,
       reject,
     });
   });
-  const procedureResult = await promise;
-  console.log("GOT PROCEDURE RESULT:");
-  console.log(procedureResult);
-  return 12;
+  const dataView = new DataView(result.value.buffer, result.value.byteOffset);
+  const ut = dataView.getFloat64(0, true);
+  return ut;
+};
+
+const getNavball = async (): Promise<boolean> => {
+  const procedureCall = krpc.ProcedureCall.fromPartial({
+    service: "SpaceCenter",
+    procedure: "get_Navball",
+  });
+  const result = await new Promise<krpc.ProcedureResult>((resolve, reject) => {
+    scheduledProcedureCalls.push({
+      procedureCall,
+      resolve,
+      reject,
+    });
+  });
+  const dataView = new DataView(result.value.buffer, result.value.byteOffset);
+  const navball = dataView.getUint8(0) !== 0;
+  console.log(navball);
+  return navball;
 };
 
 const sendRequest = () => {
-  const getUtRequest = krpc.Request.fromPartial({
-    calls: [
-      {
-        service: "SpaceCenter",
-        procedure: "get_UT",
-      },
-      {
-        service: "SpaceCenter",
-        procedure: "get_Navball",
-      },
-    ],
+  const request = krpc.Request.fromPartial({
+    calls: [],
   });
-  rpcConnection.send(krpc.Request.encode(getUtRequest).finish());
-  queue.push((response) => {
-    const output = response.results[0].value;
-    const dataView = new DataView(output.buffer);
-    ut.value = dataView.getFloat64(output.byteOffset, true);
-    console.log(response.results[1].value);
 
-    const dataView2 = new DataView(response.results[1].value.buffer);
-    navball.value =
-      dataView2.getUint8(response.results[1].value.byteOffset) !== 0;
-  });
+  // Add scheduled procedure calls
+  for (
+    let scheduledProcedureCall;
+    (scheduledProcedureCall = scheduledProcedureCalls.shift());
+
+  ) {
+    request.calls.push(scheduledProcedureCall.procedureCall);
+    pendingProcedureCalls.push({
+      resolve: scheduledProcedureCall.resolve,
+      reject: scheduledProcedureCall.reject,
+    });
+  }
+
+  rpcConnection.send(krpc.Request.encode(request).finish());
 };
 
 rpcConnection.onopen = (e) => {
-  const request = krpc.Request.fromPartial({
-    calls: [
-      {
-        service: "KRPC",
-        procedure: "GetStatus",
-      },
-    ],
-  });
-
-  rpcConnection.send(krpc.Request.encode(request).finish());
-  queue.push((response) => {
-    const status = krpc.Status.decode(response.results[0].value);
-    version.value = status.version;
-  });
+  sendRequest();
 };
 
-let cnt = 0;
-const start = Date.now();
 rpcConnection.onmessage = (e) => {
   const response = krpc.Response.decode(new Uint8Array(e.data));
-  const callback = queue.shift();
-  queueLength.value = queue.length;
-  if (callback === undefined) return;
-  callback(response);
+  response.results.forEach((result) => {
+    const pendingProcedureCall = pendingProcedureCalls.shift();
+    pendingProcedureCall?.resolve(result);
+  });
 
-  // send next request
   sendRequest();
-  cnt += 1;
-  const now = Date.now();
-  const diff = now - start;
-  // console.log((1000 * cnt) / diff);
 };
+
+const loop = async () => {
+  for (;;) {
+    const result = await Promise.all([getUT(), getNavball()]);
+    ut.value = result[0];
+    navball.value = result[1];
+  }
+};
+
+loop();
 
 defineProps<{ msg: string }>();
 
