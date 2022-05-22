@@ -2,7 +2,10 @@
 import { ref } from "vue";
 
 import * as krpc from "../generated/proto/krpc";
-import * as protobufjs from "protobufjs";
+import ByteBuffer from "bytebuffer";
+import type Long from "long";
+
+ByteBuffer.DEFAULT_ENDIAN = true;
 
 const version = ref("loading");
 const ut = ref(0);
@@ -11,8 +14,6 @@ const queueLength = ref(0);
 
 const rpcConnection = new WebSocket("ws://127.0.0.1:50000");
 rpcConnection.binaryType = "arraybuffer";
-
-const queue: Array<(response: krpc.Response) => void> = [];
 
 type ScheduledProcedureCall = {
   procedureCall: krpc.ProcedureCall;
@@ -28,6 +29,28 @@ type PendingProcedureCall = {
 const scheduledProcedureCalls: Array<ScheduledProcedureCall> = [];
 const pendingProcedureCalls: Array<PendingProcedureCall> = [];
 
+class Vessel {
+  private id: Long;
+  constructor(id: Long) {
+    this.id = id;
+  }
+}
+const getActiveVessel = async (): Promise<Vessel> => {
+  const procedureCall = krpc.ProcedureCall.fromPartial({
+    service: "SpaceCenter",
+    procedure: "get_ActiveVessel",
+  });
+  const result = await new Promise<krpc.ProcedureResult>((resolve, reject) => {
+    scheduledProcedureCalls.push({
+      procedureCall,
+      resolve,
+      reject,
+    });
+  });
+  const bytebuffer = ByteBuffer.wrap(result.value);
+  return new Vessel(bytebuffer.readVarint64());
+};
+
 const getUT = async (): Promise<number> => {
   // schedule the request
   const procedureCall = krpc.ProcedureCall.fromPartial({
@@ -41,8 +64,8 @@ const getUT = async (): Promise<number> => {
       reject,
     });
   });
-  const dataView = new DataView(result.value.buffer, result.value.byteOffset);
-  const ut = dataView.getFloat64(0, true);
+  const bytebuffer = ByteBuffer.wrap(result.value);
+  const ut = bytebuffer.readFloat64();
   return ut;
 };
 
@@ -58,9 +81,7 @@ const getNavball = async (): Promise<boolean> => {
       reject,
     });
   });
-  const dataView = new DataView(result.value.buffer, result.value.byteOffset);
-  const navball = dataView.getUint8(0) !== 0;
-  console.log(navball);
+  const navball = ByteBuffer.wrap(result.value).readUint8() !== 0;
   return navball;
 };
 
@@ -82,6 +103,8 @@ const sendRequest = () => {
     });
   }
 
+  // send = Date.now();
+  // console.log(`${send} send`);
   rpcConnection.send(krpc.Request.encode(request).finish());
 };
 
@@ -90,16 +113,23 @@ rpcConnection.onopen = (e) => {
 };
 
 rpcConnection.onmessage = (e) => {
+  // const now = Date.now();
+  // console.log(`${now} answer`);
   const response = krpc.Response.decode(new Uint8Array(e.data));
   response.results.forEach((result) => {
     const pendingProcedureCall = pendingProcedureCalls.shift();
     pendingProcedureCall?.resolve(result);
   });
 
-  sendRequest();
+  // console.log(scheduledProcedureCalls.length, pendingProcedureCalls.length);
+  setTimeout(() => {
+    sendRequest();
+  }, 5);
 };
 
 const loop = async () => {
+  const activeVessel = await getActiveVessel();
+  console.log(activeVessel);
   for (;;) {
     const result = await Promise.all([getUT(), getNavball()]);
     ut.value = result[0];
