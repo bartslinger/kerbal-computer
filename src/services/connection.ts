@@ -1,4 +1,4 @@
-import * as krpc from "./generated/proto/krpc";
+import * as krpc from "../generated/proto/krpc";
 export type ScheduledProcedureCall = {
   procedureCall: krpc.ProcedureCall;
   resolve: (value: krpc.ProcedureResult) => void;
@@ -66,3 +66,5 @@ export class KRPCConnection {
     this.scheduledProcedureCalls.push(call);
   }
 }
+
+export const conn = new KRPCConnection();

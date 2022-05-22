@@ -1,9 +1,9 @@
 import Long from "long";
 import { KRPCConnection } from "./connection";
-import * as krpc from "./generated/proto/krpc";
+import * as krpc from "../generated/proto/krpc";
 import ByteBuffer from "bytebuffer";
-
 ByteBuffer.DEFAULT_ENDIAN = true;
+
 export class SpaceCenter {
   private conn: KRPCConnection;
   constructor(conn: KRPCConnection) {

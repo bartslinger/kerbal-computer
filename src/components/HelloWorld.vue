@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-import * as krpc from "../generated/proto/krpc";
-import { KRPC } from "../krpc";
-import { SpaceCenter } from "../space-center";
-import { KRPCConnection } from "../connection";
+import { KRPC } from "../services/krpc";
+import { SpaceCenter } from "../services/space-center";
+import { conn } from "../services/connection";
 import ByteBuffer from "bytebuffer";
 
 ByteBuffer.DEFAULT_ENDIAN = true;
@@ -15,17 +14,15 @@ const navball = ref(false);
 const meanAltitude = ref(0);
 const queueLength = ref(0);
 
-const connection = new KRPCConnection();
-
 const loop = async () => {
-  const krpc = new KRPC(connection);
+  const krpc = new KRPC(conn);
   const status = await krpc.getStatus();
   version.value = status.version;
-  const spaceCenter = new SpaceCenter(connection);
+  const spaceCenter = new SpaceCenter(conn);
   const activeVessel = await spaceCenter.getActiveVessel();
   console.log(activeVessel);
-  // const control = await activeVessel.getControl();
-  // console.log(control);
+  const control = await activeVessel.getControl();
+  console.log(control);
   const flight = await activeVessel.flight();
   console.log("flight:");
   console.log(flight);

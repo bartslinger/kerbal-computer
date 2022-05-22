@@ -1,6 +1,5 @@
 import { KRPCConnection } from "./connection";
-import * as krpc from "./generated/proto/krpc";
-import ByteBuffer from "bytebuffer";
+import * as krpc from "../generated/proto/krpc";
 
 export class KRPC {
   private conn: KRPCConnection;
