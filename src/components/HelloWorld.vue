@@ -18,14 +18,19 @@ const connection = new KRPCConnection();
 
 const loop = async () => {
   const krpc = new KRPC(connection);
+  const status = await krpc.getStatus();
+  version.value = status.version;
   const spaceCenter = new SpaceCenter(connection);
   const activeVessel = await spaceCenter.getActiveVessel();
   console.log(activeVessel);
   const control = await activeVessel.getControl();
   console.log(control);
-  await control.activateNextStage();
+  // await control.activateNextStage();
   for (;;) {
-    const result = await Promise.all([krpc.getUT(), krpc.getNavball()]);
+    const result = await Promise.all([
+      spaceCenter.getUT(),
+      spaceCenter.getNavball(),
+    ]);
     ut.value = result[0];
     navball.value = result[1];
   }

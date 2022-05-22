@@ -8,11 +8,10 @@ export class KRPC {
     this.conn = conn;
   }
 
-  async getUT(): Promise<number> {
-    // schedule the request
+  async getStatus(): Promise<krpc.Status> {
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "SpaceCenter",
-      procedure: "get_UT",
+      service: "KRPC",
+      procedure: "GetStatus",
     });
     const result = await new Promise<krpc.ProcedureResult>(
       (resolve, reject) => {
@@ -23,26 +22,8 @@ export class KRPC {
         });
       }
     );
-    const bytebuffer = ByteBuffer.wrap(result.value);
-    const ut = bytebuffer.readFloat64();
-    return ut;
-  }
+    const status = krpc.Status.decode(result.value);
 
-  async getNavball(): Promise<boolean> {
-    const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "SpaceCenter",
-      procedure: "get_Navball",
-    });
-    const result = await new Promise<krpc.ProcedureResult>(
-      (resolve, reject) => {
-        this.conn.scheduleProcedureCall({
-          procedureCall,
-          resolve,
-          reject,
-        });
-      }
-    );
-    const navball = ByteBuffer.wrap(result.value).readUint8() !== 0;
-    return navball;
+    return status;
   }
 }
