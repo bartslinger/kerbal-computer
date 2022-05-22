@@ -1,49 +1,34 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-import * as protobufjs from "protobufjs";
+import * as krpc from "../generated/proto/krpc";
 
 const version = ref("loading");
 
-const connect = async () => {
-  const proto = await protobufjs.load("src/assets/krpc.proto");
+const rpcConnection = new WebSocket("ws://127.0.0.1:50000");
+rpcConnection.binaryType = "arraybuffer";
+rpcConnection.onopen = (e) => {
+  const request = krpc.Request.fromPartial({
+    calls: [
+      {
+        service: "KRPC",
+        procedure: "GetStatus",
+      },
+    ],
+  });
 
-  const rpcConnection = new WebSocket("ws://127.0.0.1:50000");
-  rpcConnection.binaryType = "arraybuffer";
-  rpcConnection.onopen = (e) => {
-    console.log(proto);
-    const procedureCall = proto.lookupType("krpc.ProcedureCall");
-    const message = procedureCall.create({
-      service: "KRPC",
-      procedure: "GetStatus",
-    });
+  rpcConnection.send(krpc.Request.encode(request).finish());
+};
 
-    const request = proto.lookupType("krpc.Request");
-    const requestMessage = request.create({
-      calls: [message],
-    });
-
-    console.log(requestMessage);
-    rpcConnection.send(request.encode(requestMessage).finish());
-  };
-
-  rpcConnection.onmessage = (e) => {
-    const responseType = proto.lookupType("krpc.Response");
-    const response = responseType.decode(new Uint8Array(e.data));
-    console.log(response.results[0].value);
-
-    const statusType = proto.lookupType("krpc.Status");
-    const status = statusType.decode(response.results[0].value);
-    console.log(status);
-    version.value = status.version;
-  };
+rpcConnection.onmessage = (e) => {
+  const response = krpc.Response.decode(new Uint8Array(e.data));
+  const status = krpc.Status.decode(response.results[0].value);
+  version.value = status.version;
 };
 
 defineProps<{ msg: string }>();
 
 const count = ref(0);
-
-connect();
 </script>
 
 <template>
