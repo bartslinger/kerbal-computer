@@ -104,3 +104,10 @@ export const decodeList = (
 ): krpc.List => {
   return krpc.List.decode(result);
 };
+
+export const decodeDict = (
+  conn: KRPCConnection,
+  result: Uint8Array
+): krpc.Dictionary => {
+  return krpc.Dictionary.decode(result);
+};
