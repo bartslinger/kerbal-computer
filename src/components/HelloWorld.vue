@@ -2,6 +2,7 @@
 import { ref } from "vue";
 
 import * as krpc from "../generated/proto/krpc";
+import { KRPC } from "../krpc";
 import { SpaceCenter } from "../space-center";
 import { KRPCConnection } from "../connection";
 import ByteBuffer from "bytebuffer";
@@ -15,61 +16,13 @@ const queueLength = ref(0);
 
 const connection = new KRPCConnection();
 
-const getActiveVessel = async (): Promise<SpaceCenter.Vessel> => {
-  const procedureCall = krpc.ProcedureCall.fromPartial({
-    service: "SpaceCenter",
-    procedure: "get_ActiveVessel",
-  });
-  const result = await new Promise<krpc.ProcedureResult>((resolve, reject) => {
-    connection.scheduleProcedureCall({
-      procedureCall,
-      resolve,
-      reject,
-    });
-  });
-  const bytebuffer = ByteBuffer.wrap(result.value);
-  return new SpaceCenter.Vessel(bytebuffer.readVarint64());
-};
-
-const getUT = async (): Promise<number> => {
-  // schedule the request
-  const procedureCall = krpc.ProcedureCall.fromPartial({
-    service: "SpaceCenter",
-    procedure: "get_UT",
-  });
-  const result = await new Promise<krpc.ProcedureResult>((resolve, reject) => {
-    connection.scheduleProcedureCall({
-      procedureCall,
-      resolve,
-      reject,
-    });
-  });
-  const bytebuffer = ByteBuffer.wrap(result.value);
-  const ut = bytebuffer.readFloat64();
-  return ut;
-};
-
-const getNavball = async (): Promise<boolean> => {
-  const procedureCall = krpc.ProcedureCall.fromPartial({
-    service: "SpaceCenter",
-    procedure: "get_Navball",
-  });
-  const result = await new Promise<krpc.ProcedureResult>((resolve, reject) => {
-    connection.scheduleProcedureCall({
-      procedureCall,
-      resolve,
-      reject,
-    });
-  });
-  const navball = ByteBuffer.wrap(result.value).readUint8() !== 0;
-  return navball;
-};
-
 const loop = async () => {
-  const activeVessel = await getActiveVessel();
+  const krpc = new KRPC(connection);
+  const spaceCenter = new SpaceCenter(connection);
+  const activeVessel = await spaceCenter.getActiveVessel();
   console.log(activeVessel);
   for (;;) {
-    const result = await Promise.all([getUT(), getNavball()]);
+    const result = await Promise.all([krpc.getUT(), krpc.getNavball()]);
     ut.value = result[0];
     navball.value = result[1];
   }
