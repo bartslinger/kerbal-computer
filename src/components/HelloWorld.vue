@@ -2,8 +2,9 @@
 import { ref } from "vue";
 
 import * as krpc from "../generated/proto/krpc";
+import { SpaceCenter } from "../space-center";
+import { KRPCConnection } from "../connection";
 import ByteBuffer from "bytebuffer";
-import type Long from "long";
 
 ByteBuffer.DEFAULT_ENDIAN = true;
 
@@ -12,43 +13,22 @@ const ut = ref(0);
 const navball = ref(false);
 const queueLength = ref(0);
 
-const rpcConnection = new WebSocket("ws://127.0.0.1:50000");
-rpcConnection.binaryType = "arraybuffer";
+const connection = new KRPCConnection();
 
-type ScheduledProcedureCall = {
-  procedureCall: krpc.ProcedureCall;
-  resolve: (value: krpc.ProcedureResult) => void;
-  reject: () => void;
-};
-
-type PendingProcedureCall = {
-  resolve: (value: krpc.ProcedureResult) => void;
-  reject: () => void;
-};
-
-const scheduledProcedureCalls: Array<ScheduledProcedureCall> = [];
-const pendingProcedureCalls: Array<PendingProcedureCall> = [];
-
-class Vessel {
-  private id: Long;
-  constructor(id: Long) {
-    this.id = id;
-  }
-}
-const getActiveVessel = async (): Promise<Vessel> => {
+const getActiveVessel = async (): Promise<SpaceCenter.Vessel> => {
   const procedureCall = krpc.ProcedureCall.fromPartial({
     service: "SpaceCenter",
     procedure: "get_ActiveVessel",
   });
   const result = await new Promise<krpc.ProcedureResult>((resolve, reject) => {
-    scheduledProcedureCalls.push({
+    connection.scheduleProcedureCall({
       procedureCall,
       resolve,
       reject,
     });
   });
   const bytebuffer = ByteBuffer.wrap(result.value);
-  return new Vessel(bytebuffer.readVarint64());
+  return new SpaceCenter.Vessel(bytebuffer.readVarint64());
 };
 
 const getUT = async (): Promise<number> => {
@@ -58,7 +38,7 @@ const getUT = async (): Promise<number> => {
     procedure: "get_UT",
   });
   const result = await new Promise<krpc.ProcedureResult>((resolve, reject) => {
-    scheduledProcedureCalls.push({
+    connection.scheduleProcedureCall({
       procedureCall,
       resolve,
       reject,
@@ -75,7 +55,7 @@ const getNavball = async (): Promise<boolean> => {
     procedure: "get_Navball",
   });
   const result = await new Promise<krpc.ProcedureResult>((resolve, reject) => {
-    scheduledProcedureCalls.push({
+    connection.scheduleProcedureCall({
       procedureCall,
       resolve,
       reject,
@@ -83,48 +63,6 @@ const getNavball = async (): Promise<boolean> => {
   });
   const navball = ByteBuffer.wrap(result.value).readUint8() !== 0;
   return navball;
-};
-
-const sendRequest = () => {
-  const request = krpc.Request.fromPartial({
-    calls: [],
-  });
-
-  // Add scheduled procedure calls
-  for (
-    let scheduledProcedureCall;
-    (scheduledProcedureCall = scheduledProcedureCalls.shift());
-
-  ) {
-    request.calls.push(scheduledProcedureCall.procedureCall);
-    pendingProcedureCalls.push({
-      resolve: scheduledProcedureCall.resolve,
-      reject: scheduledProcedureCall.reject,
-    });
-  }
-
-  // send = Date.now();
-  // console.log(`${send} send`);
-  rpcConnection.send(krpc.Request.encode(request).finish());
-};
-
-rpcConnection.onopen = (e) => {
-  sendRequest();
-};
-
-rpcConnection.onmessage = (e) => {
-  // const now = Date.now();
-  // console.log(`${now} answer`);
-  const response = krpc.Response.decode(new Uint8Array(e.data));
-  response.results.forEach((result) => {
-    const pendingProcedureCall = pendingProcedureCalls.shift();
-    pendingProcedureCall?.resolve(result);
-  });
-
-  // console.log(scheduledProcedureCalls.length, pendingProcedureCalls.length);
-  setTimeout(() => {
-    sendRequest();
-  }, 5);
 };
 
 const loop = async () => {
