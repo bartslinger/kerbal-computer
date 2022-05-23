@@ -1,5 +1,5 @@
 import ByteBuffer from "bytebuffer";
-import type Long from "long";
+import Long from "long";
 import * as protobufjs from "protobufjs";
 import * as krpc from "../generated/proto/krpc";
 import { KRPCConnection } from "./connection";
@@ -87,8 +87,9 @@ export const decodeUint32 = (
   return new protobufjs.Reader(result).uint32();
 };
 
-export const decodeEnum = (conn: KRPCConnection, result: Uint8Array): void => {
-  return undefined;
+export const decodeVarint64 = (conn: KRPCConnection, result: Uint8Array) => {
+  const value = new protobufjs.Reader(result).uint64();
+  return new Long(value.low, value.high, value.unsigned);
 };
 
 export const decodeTuple = (
@@ -110,4 +111,11 @@ export const decodeDict = (
   result: Uint8Array
 ): krpc.Dictionary => {
   return krpc.Dictionary.decode(result);
+};
+
+export const decodeSet = (
+  conn: KRPCConnection,
+  result: Uint8Array
+): krpc.Set => {
+  return krpc.Set.decode(result);
 };
