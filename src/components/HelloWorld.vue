@@ -2,7 +2,7 @@
 import { ref } from "vue";
 
 import { KRPC } from "../services/krpc";
-import { SpaceCenter } from "../services/space-center";
+import { SpaceCenter } from "../generated/services/space-center";
 import { conn } from "../services/connection";
 import ByteBuffer from "bytebuffer";
 
@@ -37,7 +37,7 @@ const loop = async () => {
   let pitchTarget = 90;
   for (;;) {
     const result = await Promise.all([
-      spaceCenter.getUT(),
+      spaceCenter.getUt(),
       spaceCenter.getNavball(),
       flight.getMeanAltitude(),
       autopilot.setTargetPitch(pitchTarget),

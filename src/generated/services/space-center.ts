@@ -7,29 +7,29 @@ import * as encoding from "../../services/encoding";
 import ByteBuffer from "bytebuffer";
 ByteBuffer.DEFAULT_ENDIAN = true;
 
-enum MotorState {
-  Idle = 0,
-  Running = 1,
-  Disabled = 2,
-  Inoperable = 3,
-  NotEnoughResources = 4,
+enum ResourceFlowMode {
+  Vessel = 0,
+  Stage = 1,
+  Adjacent = 2,
+  None = 3,
 }
 
-enum ParachuteState {
-  Stowed = 0,
-  Armed = 1,
-  Active = 2,
-  SemiDeployed = 3,
-  Deployed = 4,
-  Cut = 5,
+enum VesselType {
+  Base = 0,
+  Debris = 1,
+  Lander = 2,
+  Plane = 3,
+  Probe = 4,
+  Relay = 5,
+  Rover = 6,
+  Ship = 7,
+  Station = 8,
 }
 
-enum ResourceHarvesterState {
-  Deploying = 0,
-  Deployed = 1,
-  Retracting = 2,
-  Retracted = 3,
-  Active = 4,
+enum ControlSource {
+  Kerbal = 0,
+  Probe = 1,
+  None = 2,
 }
 
 enum ContractState {
@@ -53,6 +53,20 @@ enum SolarPanelState {
   Broken = 4,
 }
 
+enum ControlState {
+  Full = 0,
+  Partial = 1,
+  None = 2,
+}
+
+enum WheelState {
+  Deployed = 0,
+  Retracted = 1,
+  Deploying = 2,
+  Retracting = 3,
+  Broken = 4,
+}
+
 enum SASMode {
   StabilityAssist = 0,
   Maneuver = 1,
@@ -66,7 +80,24 @@ enum SASMode {
   AntiTarget = 9,
 }
 
-enum LegState {
+enum WarpMode {
+  Rails = 0,
+  Physics = 1,
+  None = 2,
+}
+
+enum VesselSituation {
+  PreLaunch = 0,
+  Orbiting = 1,
+  SubOrbital = 2,
+  Escaping = 3,
+  Flying = 4,
+  Landed = 5,
+  Splashed = 6,
+  Docked = 7,
+}
+
+enum AntennaState {
   Deployed = 0,
   Retracted = 1,
   Deploying = 2,
@@ -74,10 +105,23 @@ enum LegState {
   Broken = 4,
 }
 
-enum CommLinkType {
-  Home = 0,
-  Control = 1,
-  Relay = 2,
+enum CameraMode {
+  Automatic = 0,
+  Free = 1,
+  Chase = 2,
+  Locked = 3,
+  Orbital = 4,
+  IVA = 5,
+  Map = 6,
+}
+
+enum DockingPortState {
+  Ready = 0,
+  Docked = 1,
+  Docking = 2,
+  Undocking = 3,
+  Shielded = 4,
+  Moving = 5,
 }
 
 enum RadiatorState {
@@ -97,106 +141,12 @@ enum ResourceConverterState {
   Unknown = 5,
 }
 
-enum ControlInputMode {
-  Additive = 0,
-  Override = 1,
-}
-
-enum ControlState {
-  Full = 0,
-  Partial = 1,
-  None = 2,
-}
-
-enum CrewMemberType {
-  Applicant = 0,
-  Crew = 1,
-  Tourist = 2,
-  Unowned = 3,
-}
-
-enum AntennaState {
-  Deployed = 0,
-  Retracted = 1,
-  Deploying = 2,
-  Retracting = 3,
-  Broken = 4,
-}
-
-enum CargoBayState {
-  Open = 0,
-  Closed = 1,
-  Opening = 2,
-  Closing = 3,
-}
-
-enum WheelState {
-  Deployed = 0,
-  Retracted = 1,
-  Deploying = 2,
-  Retracting = 3,
-  Broken = 4,
-}
-
-enum CameraMode {
-  Automatic = 0,
-  Free = 1,
-  Chase = 2,
-  Locked = 3,
-  Orbital = 4,
-  IVA = 5,
-  Map = 6,
-}
-
-enum VesselSituation {
-  PreLaunch = 0,
-  Orbiting = 1,
-  SubOrbital = 2,
-  Escaping = 3,
-  Flying = 4,
-  Landed = 5,
-  Splashed = 6,
-  Docked = 7,
-}
-
-enum VesselType {
-  Base = 0,
-  Debris = 1,
-  Lander = 2,
-  Plane = 3,
-  Probe = 4,
-  Relay = 5,
-  Rover = 6,
-  Ship = 7,
-  Station = 8,
-}
-
-enum WarpMode {
-  Rails = 0,
-  Physics = 1,
-  None = 2,
-}
-
-enum ControlSource {
-  Kerbal = 0,
-  Probe = 1,
-  None = 2,
-}
-
-enum DockingPortState {
-  Ready = 0,
-  Docked = 1,
-  Docking = 2,
-  Undocking = 3,
-  Shielded = 4,
-  Moving = 5,
-}
-
-enum ResourceFlowMode {
-  Vessel = 0,
-  Stage = 1,
-  Adjacent = 2,
-  None = 3,
+enum ResourceHarvesterState {
+  Deploying = 0,
+  Deployed = 1,
+  Retracting = 2,
+  Retracted = 3,
+  Active = 4,
 }
 
 enum GameMode {
@@ -210,10 +160,60 @@ enum GameMode {
   ScenarioNonResumable = 7,
 }
 
+enum CargoBayState {
+  Open = 0,
+  Closed = 1,
+  Opening = 2,
+  Closing = 3,
+}
+
+enum LegState {
+  Deployed = 0,
+  Retracted = 1,
+  Deploying = 2,
+  Retracting = 3,
+  Broken = 4,
+}
+
+enum CrewMemberType {
+  Applicant = 0,
+  Crew = 1,
+  Tourist = 2,
+  Unowned = 3,
+}
+
+enum MotorState {
+  Idle = 0,
+  Running = 1,
+  Disabled = 2,
+  Inoperable = 3,
+  NotEnoughResources = 4,
+}
+
 enum SpeedMode {
   Orbit = 0,
   Surface = 1,
   Target = 2,
+}
+
+enum ParachuteState {
+  Stowed = 0,
+  Armed = 1,
+  Active = 2,
+  SemiDeployed = 3,
+  Deployed = 4,
+  Cut = 5,
+}
+
+enum ControlInputMode {
+  Additive = 0,
+  Override = 1,
+}
+
+enum CommLinkType {
+  Home = 0,
+  Control = 1,
+  Relay = 2,
 }
 
 export class SpaceCenter {
@@ -245,12 +245,11 @@ export class SpaceCenter {
 
   async launchableVessels(craftDirectory: string): Promise<string[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeString(craftDirectory),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeString(craftDirectory),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "LaunchableVessels",
@@ -276,27 +275,28 @@ export class SpaceCenter {
     craftDirectory: string,
     name: string,
     launchSite: string,
-    recover: boolean
+    recover?: boolean
   ): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeString(craftDirectory),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(name),
-      },
-      {
-        position: 2,
-        value: encoding.encodeString(launchSite),
-      },
-      {
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeString(craftDirectory),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(name),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeString(launchSite),
+    });
+    if (recover !== undefined) {
+      args.push({
         position: 3,
         value: encoding.encodeBool(recover),
-      },
-    ];
+      });
+    }
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "LaunchVessel",
@@ -315,18 +315,19 @@ export class SpaceCenter {
     return undefined;
   }
 
-  async launchVesselFromVab(name: string, recover: boolean): Promise<void> {
+  async launchVesselFromVab(name: string, recover?: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeString(name),
-      },
-      {
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeString(name),
+    });
+    if (recover !== undefined) {
+      args.push({
         position: 1,
         value: encoding.encodeBool(recover),
-      },
-    ];
+      });
+    }
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "LaunchVesselFromVAB",
@@ -345,18 +346,19 @@ export class SpaceCenter {
     return undefined;
   }
 
-  async launchVesselFromSph(name: string, recover: boolean): Promise<void> {
+  async launchVesselFromSph(name: string, recover?: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeString(name),
-      },
-      {
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeString(name),
+    });
+    if (recover !== undefined) {
+      args.push({
         position: 1,
         value: encoding.encodeBool(recover),
-      },
-    ];
+      });
+    }
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "LaunchVesselFromSPH",
@@ -377,12 +379,11 @@ export class SpaceCenter {
 
   async save(name: string): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "Save",
@@ -403,12 +404,11 @@ export class SpaceCenter {
 
   async load(name: string): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "Load",
@@ -469,14 +469,15 @@ export class SpaceCenter {
     return undefined;
   }
 
-  async canRailsWarpAt(factor: number): Promise<boolean> {
+  async canRailsWarpAt(factor?: number): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
+    const args: krpc.Argument[] = [];
+    if (factor !== undefined) {
+      args.push({
         position: 0,
         value: encoding.encodeSint32(factor),
-      },
-    ];
+      });
+    }
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "CanRailsWarpAt",
@@ -497,24 +498,27 @@ export class SpaceCenter {
 
   async warpTo(
     ut: number,
-    maxRailsRate: number,
-    maxPhysicsRate: number
+    maxRailsRate?: number,
+    maxPhysicsRate?: number
   ): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeDouble(ut),
-      },
-      {
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeDouble(ut),
+    });
+    if (maxRailsRate !== undefined) {
+      args.push({
         position: 1,
         value: encoding.encodeFloat(maxRailsRate),
-      },
-      {
+      });
+    }
+    if (maxPhysicsRate !== undefined) {
+      args.push({
         position: 2,
         value: encoding.encodeFloat(maxPhysicsRate),
-      },
-    ];
+      });
+    }
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "WarpTo",
@@ -539,20 +543,19 @@ export class SpaceCenter {
     to: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeTuple(position),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(from.id),
-      },
-      {
-        position: 2,
-        value: encoding.encodeVarint64(to.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeTuple(position),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(from.id),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeVarint64(to.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "TransformPosition",
@@ -582,20 +585,19 @@ export class SpaceCenter {
     to: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeTuple(direction),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(from.id),
-      },
-      {
-        position: 2,
-        value: encoding.encodeVarint64(to.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeTuple(direction),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(from.id),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeVarint64(to.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "TransformDirection",
@@ -625,20 +627,19 @@ export class SpaceCenter {
     to: ReferenceFrame
   ): Promise<[number, number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeTuple(rotation),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(from.id),
-      },
-      {
-        position: 2,
-        value: encoding.encodeVarint64(to.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeTuple(rotation),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(from.id),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeVarint64(to.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "TransformRotation",
@@ -670,24 +671,23 @@ export class SpaceCenter {
     to: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeTuple(position),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(velocity),
-      },
-      {
-        position: 2,
-        value: encoding.encodeVarint64(from.id),
-      },
-      {
-        position: 3,
-        value: encoding.encodeVarint64(to.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeTuple(position),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(velocity),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeVarint64(from.id),
+    });
+    args.push({
+      position: 3,
+      value: encoding.encodeVarint64(to.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "TransformVelocity",
@@ -717,20 +717,19 @@ export class SpaceCenter {
     referenceFrame: ReferenceFrame
   ): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeTuple(position),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(direction),
-      },
-      {
-        position: 2,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeTuple(position),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(direction),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "RaycastDistance",
@@ -755,20 +754,19 @@ export class SpaceCenter {
     referenceFrame: ReferenceFrame
   ): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeTuple(position),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(direction),
-      },
-      {
-        position: 2,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeTuple(position),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(direction),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "RaycastPart",
@@ -901,12 +899,11 @@ export class SpaceCenter {
 
   async setActiveVessel(value: Vessel): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(value.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(value.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "set_ActiveVessel",
@@ -1001,12 +998,11 @@ export class SpaceCenter {
 
   async setTargetBody(value: CelestialBody): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(value.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(value.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "set_TargetBody",
@@ -1050,12 +1046,11 @@ export class SpaceCenter {
 
   async setTargetVessel(value: Vessel): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(value.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(value.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "set_TargetVessel",
@@ -1099,12 +1094,11 @@ export class SpaceCenter {
 
   async setTargetDockingPort(value: DockingPort): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(value.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(value.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "set_TargetDockingPort",
@@ -1214,12 +1208,11 @@ export class SpaceCenter {
 
   async setUiVisible(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "set_UIVisible",
@@ -1263,12 +1256,11 @@ export class SpaceCenter {
 
   async setNavball(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "set_Navball",
@@ -1424,12 +1416,11 @@ export class SpaceCenter {
 
   async setRailsWarpFactor(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeSint32(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeSint32(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "set_RailsWarpFactor",
@@ -1473,12 +1464,11 @@ export class SpaceCenter {
 
   async setPhysicsWarpFactor(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeSint32(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeSint32(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
       procedure: "set_PhysicsWarpFactor",
@@ -1559,12 +1549,11 @@ export class Antenna {
 
   async transmit(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Antenna_Transmit",
@@ -1585,12 +1574,11 @@ export class Antenna {
 
   async cancel(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Antenna_Cancel",
@@ -1611,12 +1599,11 @@ export class Antenna {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Antenna_get_Part",
@@ -1638,12 +1625,11 @@ export class Antenna {
 
   async getState(): Promise<AntennaState> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Antenna_get_State",
@@ -1667,12 +1653,11 @@ export class Antenna {
 
   async getDeployable(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Antenna_get_Deployable",
@@ -1694,12 +1679,11 @@ export class Antenna {
 
   async getDeployed(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Antenna_get_Deployed",
@@ -1721,16 +1705,15 @@ export class Antenna {
 
   async setDeployed(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Antenna_set_Deployed",
@@ -1752,12 +1735,11 @@ export class Antenna {
 
   async getCanTransmit(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Antenna_get_CanTransmit",
@@ -1779,12 +1761,11 @@ export class Antenna {
 
   async getAllowPartial(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Antenna_get_AllowPartial",
@@ -1806,16 +1787,15 @@ export class Antenna {
 
   async setAllowPartial(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Antenna_set_AllowPartial",
@@ -1837,12 +1817,11 @@ export class Antenna {
 
   async getPower(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Antenna_get_Power",
@@ -1864,12 +1843,11 @@ export class Antenna {
 
   async getCombinable(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Antenna_get_Combinable",
@@ -1891,12 +1869,11 @@ export class Antenna {
 
   async getCombinableExponent(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Antenna_get_CombinableExponent",
@@ -1918,12 +1895,11 @@ export class Antenna {
 
   async getPacketInterval(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Antenna_get_PacketInterval",
@@ -1945,12 +1921,11 @@ export class Antenna {
 
   async getPacketSize(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Antenna_get_PacketSize",
@@ -1972,12 +1947,11 @@ export class Antenna {
 
   async getPacketResourceCost(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Antenna_get_PacketResourceCost",
@@ -2015,12 +1989,11 @@ export class AutoPilot {
 
   async engage(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_Engage",
@@ -2041,12 +2014,11 @@ export class AutoPilot {
 
   async disengage(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_Disengage",
@@ -2067,12 +2039,11 @@ export class AutoPilot {
 
   async wait(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_Wait",
@@ -2093,20 +2064,19 @@ export class AutoPilot {
 
   async targetPitchAndHeading(pitch: number, heading: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(pitch),
-      },
-      {
-        position: 2,
-        value: encoding.encodeFloat(heading),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(pitch),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeFloat(heading),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_TargetPitchAndHeading",
@@ -2127,12 +2097,11 @@ export class AutoPilot {
 
   async getError(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_Error",
@@ -2154,12 +2123,11 @@ export class AutoPilot {
 
   async getPitchError(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_PitchError",
@@ -2181,12 +2149,11 @@ export class AutoPilot {
 
   async getHeadingError(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_HeadingError",
@@ -2208,12 +2175,11 @@ export class AutoPilot {
 
   async getRollError(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_RollError",
@@ -2235,12 +2201,11 @@ export class AutoPilot {
 
   async getReferenceFrame(): Promise<ReferenceFrame> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_ReferenceFrame",
@@ -2262,16 +2227,15 @@ export class AutoPilot {
 
   async setReferenceFrame(value: ReferenceFrame): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(value.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(value.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_ReferenceFrame",
@@ -2293,12 +2257,11 @@ export class AutoPilot {
 
   async getTargetPitch(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_TargetPitch",
@@ -2320,16 +2283,15 @@ export class AutoPilot {
 
   async setTargetPitch(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_TargetPitch",
@@ -2351,12 +2313,11 @@ export class AutoPilot {
 
   async getTargetHeading(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_TargetHeading",
@@ -2378,16 +2339,15 @@ export class AutoPilot {
 
   async setTargetHeading(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_TargetHeading",
@@ -2409,12 +2369,11 @@ export class AutoPilot {
 
   async getTargetRoll(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_TargetRoll",
@@ -2436,16 +2395,15 @@ export class AutoPilot {
 
   async setTargetRoll(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_TargetRoll",
@@ -2467,12 +2425,11 @@ export class AutoPilot {
 
   async getTargetDirection(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_TargetDirection",
@@ -2498,16 +2455,15 @@ export class AutoPilot {
 
   async setTargetDirection(value: [number, number, number]): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_TargetDirection",
@@ -2529,12 +2485,11 @@ export class AutoPilot {
 
   async getSas(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_SAS",
@@ -2556,16 +2511,15 @@ export class AutoPilot {
 
   async setSas(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_SAS",
@@ -2587,12 +2541,11 @@ export class AutoPilot {
 
   async getSasMode(): Promise<SASMode> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_SASMode",
@@ -2616,16 +2569,15 @@ export class AutoPilot {
 
   async setSasMode(value: SASMode): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_SASMode",
@@ -2647,12 +2599,11 @@ export class AutoPilot {
 
   async getRollThreshold(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_RollThreshold",
@@ -2674,16 +2625,15 @@ export class AutoPilot {
 
   async setRollThreshold(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_RollThreshold",
@@ -2705,12 +2655,11 @@ export class AutoPilot {
 
   async getStoppingTime(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_StoppingTime",
@@ -2736,16 +2685,15 @@ export class AutoPilot {
 
   async setStoppingTime(value: [number, number, number]): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_StoppingTime",
@@ -2767,12 +2715,11 @@ export class AutoPilot {
 
   async getDecelerationTime(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_DecelerationTime",
@@ -2798,16 +2745,15 @@ export class AutoPilot {
 
   async setDecelerationTime(value: [number, number, number]): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_DecelerationTime",
@@ -2829,12 +2775,11 @@ export class AutoPilot {
 
   async getAttenuationAngle(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_AttenuationAngle",
@@ -2860,16 +2805,15 @@ export class AutoPilot {
 
   async setAttenuationAngle(value: [number, number, number]): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_AttenuationAngle",
@@ -2891,12 +2835,11 @@ export class AutoPilot {
 
   async getAutoTune(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_AutoTune",
@@ -2918,16 +2861,15 @@ export class AutoPilot {
 
   async setAutoTune(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_AutoTune",
@@ -2949,12 +2891,11 @@ export class AutoPilot {
 
   async getTimeToPeak(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_TimeToPeak",
@@ -2980,16 +2921,15 @@ export class AutoPilot {
 
   async setTimeToPeak(value: [number, number, number]): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_TimeToPeak",
@@ -3011,12 +2951,11 @@ export class AutoPilot {
 
   async getOvershoot(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_Overshoot",
@@ -3042,16 +2981,15 @@ export class AutoPilot {
 
   async setOvershoot(value: [number, number, number]): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_Overshoot",
@@ -3073,12 +3011,11 @@ export class AutoPilot {
 
   async getPitchPidGains(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_PitchPIDGains",
@@ -3104,16 +3041,15 @@ export class AutoPilot {
 
   async setPitchPidGains(value: [number, number, number]): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_PitchPIDGains",
@@ -3135,12 +3071,11 @@ export class AutoPilot {
 
   async getRollPidGains(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_RollPIDGains",
@@ -3166,16 +3101,15 @@ export class AutoPilot {
 
   async setRollPidGains(value: [number, number, number]): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_RollPIDGains",
@@ -3197,12 +3131,11 @@ export class AutoPilot {
 
   async getYawPidGains(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_get_YawPIDGains",
@@ -3228,16 +3161,15 @@ export class AutoPilot {
 
   async setYawPidGains(value: [number, number, number]): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "AutoPilot_set_YawPIDGains",
@@ -3275,12 +3207,11 @@ export class Camera {
 
   async getMode(): Promise<CameraMode> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_get_Mode",
@@ -3304,16 +3235,15 @@ export class Camera {
 
   async setMode(value: CameraMode): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_set_Mode",
@@ -3335,12 +3265,11 @@ export class Camera {
 
   async getPitch(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_get_Pitch",
@@ -3362,16 +3291,15 @@ export class Camera {
 
   async setPitch(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_set_Pitch",
@@ -3393,12 +3321,11 @@ export class Camera {
 
   async getHeading(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_get_Heading",
@@ -3420,16 +3347,15 @@ export class Camera {
 
   async setHeading(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_set_Heading",
@@ -3451,12 +3377,11 @@ export class Camera {
 
   async getDistance(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_get_Distance",
@@ -3478,16 +3403,15 @@ export class Camera {
 
   async setDistance(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_set_Distance",
@@ -3509,12 +3433,11 @@ export class Camera {
 
   async getMinPitch(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_get_MinPitch",
@@ -3536,12 +3459,11 @@ export class Camera {
 
   async getMaxPitch(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_get_MaxPitch",
@@ -3563,12 +3485,11 @@ export class Camera {
 
   async getMinDistance(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_get_MinDistance",
@@ -3590,12 +3511,11 @@ export class Camera {
 
   async getMaxDistance(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_get_MaxDistance",
@@ -3617,12 +3537,11 @@ export class Camera {
 
   async getDefaultDistance(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_get_DefaultDistance",
@@ -3644,12 +3563,11 @@ export class Camera {
 
   async getFocussedBody(): Promise<CelestialBody> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_get_FocussedBody",
@@ -3671,16 +3589,15 @@ export class Camera {
 
   async setFocussedBody(value: CelestialBody): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(value.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(value.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_set_FocussedBody",
@@ -3702,12 +3619,11 @@ export class Camera {
 
   async getFocussedVessel(): Promise<Vessel> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_get_FocussedVessel",
@@ -3729,16 +3645,15 @@ export class Camera {
 
   async setFocussedVessel(value: Vessel): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(value.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(value.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_set_FocussedVessel",
@@ -3760,12 +3675,11 @@ export class Camera {
 
   async getFocussedNode(): Promise<Node> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_get_FocussedNode",
@@ -3787,16 +3701,15 @@ export class Camera {
 
   async setFocussedNode(value: Node): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(value.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(value.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Camera_set_FocussedNode",
@@ -3834,12 +3747,11 @@ export class CargoBay {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CargoBay_get_Part",
@@ -3861,12 +3773,11 @@ export class CargoBay {
 
   async getState(): Promise<CargoBayState> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CargoBay_get_State",
@@ -3890,12 +3801,11 @@ export class CargoBay {
 
   async getOpen(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CargoBay_get_Open",
@@ -3917,16 +3827,15 @@ export class CargoBay {
 
   async setOpen(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CargoBay_set_Open",
@@ -3964,20 +3873,19 @@ export class CelestialBody {
 
   async surfaceHeight(latitude: number, longitude: number): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(latitude),
-      },
-      {
-        position: 2,
-        value: encoding.encodeDouble(longitude),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(latitude),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeDouble(longitude),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_SurfaceHeight",
@@ -3998,20 +3906,19 @@ export class CelestialBody {
 
   async bedrockHeight(latitude: number, longitude: number): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(latitude),
-      },
-      {
-        position: 2,
-        value: encoding.encodeDouble(longitude),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(latitude),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeDouble(longitude),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_BedrockHeight",
@@ -4036,24 +3943,23 @@ export class CelestialBody {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(latitude),
-      },
-      {
-        position: 2,
-        value: encoding.encodeDouble(longitude),
-      },
-      {
-        position: 3,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(latitude),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeDouble(longitude),
+    });
+    args.push({
+      position: 3,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_MSLPosition",
@@ -4083,24 +3989,23 @@ export class CelestialBody {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(latitude),
-      },
-      {
-        position: 2,
-        value: encoding.encodeDouble(longitude),
-      },
-      {
-        position: 3,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(latitude),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeDouble(longitude),
+    });
+    args.push({
+      position: 3,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_SurfacePosition",
@@ -4130,24 +4035,23 @@ export class CelestialBody {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(latitude),
-      },
-      {
-        position: 2,
-        value: encoding.encodeDouble(longitude),
-      },
-      {
-        position: 3,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(latitude),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeDouble(longitude),
+    });
+    args.push({
+      position: 3,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_BedrockPosition",
@@ -4178,28 +4082,27 @@ export class CelestialBody {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(latitude),
-      },
-      {
-        position: 2,
-        value: encoding.encodeDouble(longitude),
-      },
-      {
-        position: 3,
-        value: encoding.encodeDouble(altitude),
-      },
-      {
-        position: 4,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(latitude),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeDouble(longitude),
+    });
+    args.push({
+      position: 3,
+      value: encoding.encodeDouble(altitude),
+    });
+    args.push({
+      position: 4,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_PositionAtAltitude",
@@ -4228,20 +4131,19 @@ export class CelestialBody {
     referenceFrame: ReferenceFrame
   ): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(position),
-      },
-      {
-        position: 2,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(position),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_LatitudeAtPosition",
@@ -4265,20 +4167,19 @@ export class CelestialBody {
     referenceFrame: ReferenceFrame
   ): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(position),
-      },
-      {
-        position: 2,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(position),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_LongitudeAtPosition",
@@ -4302,20 +4203,19 @@ export class CelestialBody {
     referenceFrame: ReferenceFrame
   ): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(position),
-      },
-      {
-        position: 2,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(position),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_AltitudeAtPosition",
@@ -4339,20 +4239,19 @@ export class CelestialBody {
     referenceFrame: ReferenceFrame
   ): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(position),
-      },
-      {
-        position: 2,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(position),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_AtmosphericDensityAtPosition",
@@ -4376,20 +4275,19 @@ export class CelestialBody {
     referenceFrame: ReferenceFrame
   ): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(position),
-      },
-      {
-        position: 2,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(position),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_TemperatureAt",
@@ -4410,16 +4308,15 @@ export class CelestialBody {
 
   async densityAt(altitude: number): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(altitude),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(altitude),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_DensityAt",
@@ -4440,16 +4337,15 @@ export class CelestialBody {
 
   async pressureAt(altitude: number): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(altitude),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(altitude),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_PressureAt",
@@ -4470,20 +4366,19 @@ export class CelestialBody {
 
   async biomeAt(latitude: number, longitude: number): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(latitude),
-      },
-      {
-        position: 2,
-        value: encoding.encodeDouble(longitude),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(latitude),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeDouble(longitude),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_BiomeAt",
@@ -4506,16 +4401,15 @@ export class CelestialBody {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_Position",
@@ -4543,16 +4437,15 @@ export class CelestialBody {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_Velocity",
@@ -4580,16 +4473,15 @@ export class CelestialBody {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_Rotation",
@@ -4618,16 +4510,15 @@ export class CelestialBody {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_Direction",
@@ -4655,16 +4546,15 @@ export class CelestialBody {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_AngularVelocity",
@@ -4690,12 +4580,11 @@ export class CelestialBody {
 
   async getName(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_Name",
@@ -4717,12 +4606,11 @@ export class CelestialBody {
 
   async getSatellites(): Promise<CelestialBody[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_Satellites",
@@ -4746,12 +4634,11 @@ export class CelestialBody {
 
   async getMass(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_Mass",
@@ -4773,12 +4660,11 @@ export class CelestialBody {
 
   async getGravitationalParameter(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_GravitationalParameter",
@@ -4800,12 +4686,11 @@ export class CelestialBody {
 
   async getSurfaceGravity(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_SurfaceGravity",
@@ -4827,12 +4712,11 @@ export class CelestialBody {
 
   async getRotationalPeriod(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_RotationalPeriod",
@@ -4854,12 +4738,11 @@ export class CelestialBody {
 
   async getRotationalSpeed(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_RotationalSpeed",
@@ -4881,12 +4764,11 @@ export class CelestialBody {
 
   async getRotationAngle(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_RotationAngle",
@@ -4908,12 +4790,11 @@ export class CelestialBody {
 
   async getInitialRotation(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_InitialRotation",
@@ -4935,12 +4816,11 @@ export class CelestialBody {
 
   async getEquatorialRadius(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_EquatorialRadius",
@@ -4962,12 +4842,11 @@ export class CelestialBody {
 
   async getSphereOfInfluence(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_SphereOfInfluence",
@@ -4989,12 +4868,11 @@ export class CelestialBody {
 
   async getOrbit(): Promise<Orbit> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_Orbit",
@@ -5016,12 +4894,11 @@ export class CelestialBody {
 
   async getHasAtmosphere(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_HasAtmosphere",
@@ -5043,12 +4920,11 @@ export class CelestialBody {
 
   async getAtmosphereDepth(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_AtmosphereDepth",
@@ -5070,12 +4946,11 @@ export class CelestialBody {
 
   async getHasAtmosphericOxygen(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_HasAtmosphericOxygen",
@@ -5097,12 +4972,11 @@ export class CelestialBody {
 
   async getBiomes(): Promise<Set<string>> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_Biomes",
@@ -5127,12 +5001,11 @@ export class CelestialBody {
 
   async getFlyingHighAltitudeThreshold(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_FlyingHighAltitudeThreshold",
@@ -5154,12 +5027,11 @@ export class CelestialBody {
 
   async getSpaceHighAltitudeThreshold(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_SpaceHighAltitudeThreshold",
@@ -5181,12 +5053,11 @@ export class CelestialBody {
 
   async getReferenceFrame(): Promise<ReferenceFrame> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_ReferenceFrame",
@@ -5208,12 +5079,11 @@ export class CelestialBody {
 
   async getNonRotatingReferenceFrame(): Promise<ReferenceFrame> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_NonRotatingReferenceFrame",
@@ -5235,12 +5105,11 @@ export class CelestialBody {
 
   async getOrbitalReferenceFrame(): Promise<ReferenceFrame> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CelestialBody_get_OrbitalReferenceFrame",
@@ -5278,12 +5147,11 @@ export class CommLink {
 
   async getType(): Promise<CommLinkType> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CommLink_get_Type",
@@ -5307,12 +5175,11 @@ export class CommLink {
 
   async getSignalStrength(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CommLink_get_SignalStrength",
@@ -5334,12 +5201,11 @@ export class CommLink {
 
   async getStart(): Promise<CommNode> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CommLink_get_Start",
@@ -5361,12 +5227,11 @@ export class CommLink {
 
   async getEnd(): Promise<CommNode> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CommLink_get_End",
@@ -5404,12 +5269,11 @@ export class CommNode {
 
   async getName(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CommNode_get_Name",
@@ -5431,12 +5295,11 @@ export class CommNode {
 
   async getIsHome(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CommNode_get_IsHome",
@@ -5458,12 +5321,11 @@ export class CommNode {
 
   async getIsControlPoint(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CommNode_get_IsControlPoint",
@@ -5485,12 +5347,11 @@ export class CommNode {
 
   async getIsVessel(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CommNode_get_IsVessel",
@@ -5512,12 +5373,11 @@ export class CommNode {
 
   async getVessel(): Promise<Vessel> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CommNode_get_Vessel",
@@ -5555,12 +5415,11 @@ export class Comms {
 
   async getCanCommunicate(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Comms_get_CanCommunicate",
@@ -5582,12 +5441,11 @@ export class Comms {
 
   async getCanTransmitScience(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Comms_get_CanTransmitScience",
@@ -5609,12 +5467,11 @@ export class Comms {
 
   async getSignalStrength(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Comms_get_SignalStrength",
@@ -5636,12 +5493,11 @@ export class Comms {
 
   async getSignalDelay(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Comms_get_SignalDelay",
@@ -5663,12 +5519,11 @@ export class Comms {
 
   async getPower(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Comms_get_Power",
@@ -5690,12 +5545,11 @@ export class Comms {
 
   async getControlPath(): Promise<CommLink[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Comms_get_ControlPath",
@@ -5735,12 +5589,11 @@ export class Contract {
 
   async cancel(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_Cancel",
@@ -5761,12 +5614,11 @@ export class Contract {
 
   async accept(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_Accept",
@@ -5787,12 +5639,11 @@ export class Contract {
 
   async decline(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_Decline",
@@ -5813,12 +5664,11 @@ export class Contract {
 
   async getType(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_Type",
@@ -5840,12 +5690,11 @@ export class Contract {
 
   async getTitle(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_Title",
@@ -5867,12 +5716,11 @@ export class Contract {
 
   async getDescription(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_Description",
@@ -5894,12 +5742,11 @@ export class Contract {
 
   async getNotes(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_Notes",
@@ -5921,12 +5768,11 @@ export class Contract {
 
   async getSynopsis(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_Synopsis",
@@ -5948,12 +5794,11 @@ export class Contract {
 
   async getKeywords(): Promise<string[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_Keywords",
@@ -5977,12 +5822,11 @@ export class Contract {
 
   async getState(): Promise<ContractState> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_State",
@@ -6006,12 +5850,11 @@ export class Contract {
 
   async getActive(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_Active",
@@ -6033,12 +5876,11 @@ export class Contract {
 
   async getFailed(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_Failed",
@@ -6060,12 +5902,11 @@ export class Contract {
 
   async getSeen(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_Seen",
@@ -6087,12 +5928,11 @@ export class Contract {
 
   async getRead(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_Read",
@@ -6114,12 +5954,11 @@ export class Contract {
 
   async getCanBeCanceled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_CanBeCanceled",
@@ -6141,12 +5980,11 @@ export class Contract {
 
   async getCanBeDeclined(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_CanBeDeclined",
@@ -6168,12 +6006,11 @@ export class Contract {
 
   async getCanBeFailed(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_CanBeFailed",
@@ -6195,12 +6032,11 @@ export class Contract {
 
   async getFundsAdvance(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_FundsAdvance",
@@ -6222,12 +6058,11 @@ export class Contract {
 
   async getFundsCompletion(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_FundsCompletion",
@@ -6249,12 +6084,11 @@ export class Contract {
 
   async getFundsFailure(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_FundsFailure",
@@ -6276,12 +6110,11 @@ export class Contract {
 
   async getReputationCompletion(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_ReputationCompletion",
@@ -6303,12 +6136,11 @@ export class Contract {
 
   async getReputationFailure(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_ReputationFailure",
@@ -6330,12 +6162,11 @@ export class Contract {
 
   async getScienceCompletion(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_ScienceCompletion",
@@ -6357,12 +6188,11 @@ export class Contract {
 
   async getParameters(): Promise<ContractParameter[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Contract_get_Parameters",
@@ -6402,12 +6232,11 @@ export class ContractManager {
 
   async getTypes(): Promise<Set<string>> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractManager_get_Types",
@@ -6432,12 +6261,11 @@ export class ContractManager {
 
   async getAllContracts(): Promise<Contract[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractManager_get_AllContracts",
@@ -6461,12 +6289,11 @@ export class ContractManager {
 
   async getActiveContracts(): Promise<Contract[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractManager_get_ActiveContracts",
@@ -6490,12 +6317,11 @@ export class ContractManager {
 
   async getOfferedContracts(): Promise<Contract[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractManager_get_OfferedContracts",
@@ -6519,12 +6345,11 @@ export class ContractManager {
 
   async getCompletedContracts(): Promise<Contract[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractManager_get_CompletedContracts",
@@ -6548,12 +6373,11 @@ export class ContractManager {
 
   async getFailedContracts(): Promise<Contract[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractManager_get_FailedContracts",
@@ -6593,12 +6417,11 @@ export class ContractParameter {
 
   async getTitle(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractParameter_get_Title",
@@ -6620,12 +6443,11 @@ export class ContractParameter {
 
   async getNotes(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractParameter_get_Notes",
@@ -6647,12 +6469,11 @@ export class ContractParameter {
 
   async getChildren(): Promise<ContractParameter[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractParameter_get_Children",
@@ -6676,12 +6497,11 @@ export class ContractParameter {
 
   async getCompleted(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractParameter_get_Completed",
@@ -6703,12 +6523,11 @@ export class ContractParameter {
 
   async getFailed(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractParameter_get_Failed",
@@ -6730,12 +6549,11 @@ export class ContractParameter {
 
   async getOptional(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractParameter_get_Optional",
@@ -6757,12 +6575,11 @@ export class ContractParameter {
 
   async getFundsCompletion(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractParameter_get_FundsCompletion",
@@ -6784,12 +6601,11 @@ export class ContractParameter {
 
   async getFundsFailure(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractParameter_get_FundsFailure",
@@ -6811,12 +6627,11 @@ export class ContractParameter {
 
   async getReputationCompletion(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractParameter_get_ReputationCompletion",
@@ -6838,12 +6653,11 @@ export class ContractParameter {
 
   async getReputationFailure(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractParameter_get_ReputationFailure",
@@ -6865,12 +6679,11 @@ export class ContractParameter {
 
   async getScienceCompletion(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ContractParameter_get_ScienceCompletion",
@@ -6908,12 +6721,11 @@ export class Control {
 
   async activateNextStage(): Promise<Vessel[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_ActivateNextStage",
@@ -6937,16 +6749,15 @@ export class Control {
 
   async getActionGroup(group: number): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeUint32(group),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeUint32(group),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_GetActionGroup",
@@ -6967,20 +6778,19 @@ export class Control {
 
   async setActionGroup(group: number, state: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeUint32(group),
-      },
-      {
-        position: 2,
-        value: encoding.encodeBool(state),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeUint32(group),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeBool(state),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_SetActionGroup",
@@ -7001,16 +6811,15 @@ export class Control {
 
   async toggleActionGroup(group: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeUint32(group),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeUint32(group),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_ToggleActionGroup",
@@ -7031,33 +6840,38 @@ export class Control {
 
   async addNode(
     ut: number,
-    prograde: number,
-    normal: number,
-    radial: number
+    prograde?: number,
+    normal?: number,
+    radial?: number
   ): Promise<Node> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(ut),
-      },
-      {
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(ut),
+    });
+    if (prograde !== undefined) {
+      args.push({
         position: 2,
         value: encoding.encodeFloat(prograde),
-      },
-      {
+      });
+    }
+    if (normal !== undefined) {
+      args.push({
         position: 3,
         value: encoding.encodeFloat(normal),
-      },
-      {
+      });
+    }
+    if (radial !== undefined) {
+      args.push({
         position: 4,
         value: encoding.encodeFloat(radial),
-      },
-    ];
+      });
+    }
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_AddNode",
@@ -7078,12 +6892,11 @@ export class Control {
 
   async removeNodes(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_RemoveNodes",
@@ -7104,12 +6917,11 @@ export class Control {
 
   async getState(): Promise<ControlState> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_State",
@@ -7133,12 +6945,11 @@ export class Control {
 
   async getSource(): Promise<ControlSource> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Source",
@@ -7162,12 +6973,11 @@ export class Control {
 
   async getSas(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_SAS",
@@ -7189,16 +6999,15 @@ export class Control {
 
   async setSas(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_SAS",
@@ -7220,12 +7029,11 @@ export class Control {
 
   async getSasMode(): Promise<SASMode> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_SASMode",
@@ -7249,16 +7057,15 @@ export class Control {
 
   async setSasMode(value: SASMode): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_SASMode",
@@ -7280,12 +7087,11 @@ export class Control {
 
   async getSpeedMode(): Promise<SpeedMode> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_SpeedMode",
@@ -7309,16 +7115,15 @@ export class Control {
 
   async setSpeedMode(value: SpeedMode): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_SpeedMode",
@@ -7340,12 +7145,11 @@ export class Control {
 
   async getRcs(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_RCS",
@@ -7367,16 +7171,15 @@ export class Control {
 
   async setRcs(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_RCS",
@@ -7398,12 +7201,11 @@ export class Control {
 
   async getReactionWheels(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_ReactionWheels",
@@ -7425,16 +7227,15 @@ export class Control {
 
   async setReactionWheels(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_ReactionWheels",
@@ -7456,12 +7257,11 @@ export class Control {
 
   async getGear(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Gear",
@@ -7483,16 +7283,15 @@ export class Control {
 
   async setGear(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Gear",
@@ -7514,12 +7313,11 @@ export class Control {
 
   async getLegs(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Legs",
@@ -7541,16 +7339,15 @@ export class Control {
 
   async setLegs(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Legs",
@@ -7572,12 +7369,11 @@ export class Control {
 
   async getWheels(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Wheels",
@@ -7599,16 +7395,15 @@ export class Control {
 
   async setWheels(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Wheels",
@@ -7630,12 +7425,11 @@ export class Control {
 
   async getLights(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Lights",
@@ -7657,16 +7451,15 @@ export class Control {
 
   async setLights(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Lights",
@@ -7688,12 +7481,11 @@ export class Control {
 
   async getBrakes(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Brakes",
@@ -7715,16 +7507,15 @@ export class Control {
 
   async setBrakes(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Brakes",
@@ -7746,12 +7537,11 @@ export class Control {
 
   async getAntennas(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Antennas",
@@ -7773,16 +7563,15 @@ export class Control {
 
   async setAntennas(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Antennas",
@@ -7804,12 +7593,11 @@ export class Control {
 
   async getCargoBays(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_CargoBays",
@@ -7831,16 +7619,15 @@ export class Control {
 
   async setCargoBays(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_CargoBays",
@@ -7862,12 +7649,11 @@ export class Control {
 
   async getIntakes(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Intakes",
@@ -7889,16 +7675,15 @@ export class Control {
 
   async setIntakes(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Intakes",
@@ -7920,12 +7705,11 @@ export class Control {
 
   async getParachutes(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Parachutes",
@@ -7947,16 +7731,15 @@ export class Control {
 
   async setParachutes(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Parachutes",
@@ -7978,12 +7761,11 @@ export class Control {
 
   async getRadiators(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Radiators",
@@ -8005,16 +7787,15 @@ export class Control {
 
   async setRadiators(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Radiators",
@@ -8036,12 +7817,11 @@ export class Control {
 
   async getResourceHarvesters(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_ResourceHarvesters",
@@ -8063,16 +7843,15 @@ export class Control {
 
   async setResourceHarvesters(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_ResourceHarvesters",
@@ -8094,12 +7873,11 @@ export class Control {
 
   async getResourceHarvestersActive(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_ResourceHarvestersActive",
@@ -8121,16 +7899,15 @@ export class Control {
 
   async setResourceHarvestersActive(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_ResourceHarvestersActive",
@@ -8152,12 +7929,11 @@ export class Control {
 
   async getSolarPanels(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_SolarPanels",
@@ -8179,16 +7955,15 @@ export class Control {
 
   async setSolarPanels(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_SolarPanels",
@@ -8210,12 +7985,11 @@ export class Control {
 
   async getAbort(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Abort",
@@ -8237,16 +8011,15 @@ export class Control {
 
   async setAbort(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Abort",
@@ -8268,12 +8041,11 @@ export class Control {
 
   async getThrottle(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Throttle",
@@ -8295,16 +8067,15 @@ export class Control {
 
   async setThrottle(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Throttle",
@@ -8326,12 +8097,11 @@ export class Control {
 
   async getInputMode(): Promise<ControlInputMode> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_InputMode",
@@ -8355,16 +8125,15 @@ export class Control {
 
   async setInputMode(value: ControlInputMode): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_InputMode",
@@ -8386,12 +8155,11 @@ export class Control {
 
   async getPitch(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Pitch",
@@ -8413,16 +8181,15 @@ export class Control {
 
   async setPitch(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Pitch",
@@ -8444,12 +8211,11 @@ export class Control {
 
   async getYaw(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Yaw",
@@ -8471,16 +8237,15 @@ export class Control {
 
   async setYaw(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Yaw",
@@ -8502,12 +8267,11 @@ export class Control {
 
   async getRoll(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Roll",
@@ -8529,16 +8293,15 @@ export class Control {
 
   async setRoll(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Roll",
@@ -8560,12 +8323,11 @@ export class Control {
 
   async getForward(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Forward",
@@ -8587,16 +8349,15 @@ export class Control {
 
   async setForward(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Forward",
@@ -8618,12 +8379,11 @@ export class Control {
 
   async getUp(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Up",
@@ -8645,16 +8405,15 @@ export class Control {
 
   async setUp(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Up",
@@ -8676,12 +8435,11 @@ export class Control {
 
   async getRight(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Right",
@@ -8703,16 +8461,15 @@ export class Control {
 
   async setRight(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_Right",
@@ -8734,12 +8491,11 @@ export class Control {
 
   async getWheelThrottle(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_WheelThrottle",
@@ -8761,16 +8517,15 @@ export class Control {
 
   async setWheelThrottle(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_WheelThrottle",
@@ -8792,12 +8547,11 @@ export class Control {
 
   async getWheelSteering(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_WheelSteering",
@@ -8819,16 +8573,15 @@ export class Control {
 
   async setWheelSteering(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_set_WheelSteering",
@@ -8850,12 +8603,11 @@ export class Control {
 
   async getCurrentStage(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_CurrentStage",
@@ -8877,12 +8629,11 @@ export class Control {
 
   async getNodes(): Promise<Node[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Control_get_Nodes",
@@ -8922,12 +8673,11 @@ export class ControlSurface {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ControlSurface_get_Part",
@@ -8949,12 +8699,11 @@ export class ControlSurface {
 
   async getPitchEnabled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ControlSurface_get_PitchEnabled",
@@ -8976,16 +8725,15 @@ export class ControlSurface {
 
   async setPitchEnabled(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ControlSurface_set_PitchEnabled",
@@ -9007,12 +8755,11 @@ export class ControlSurface {
 
   async getYawEnabled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ControlSurface_get_YawEnabled",
@@ -9034,16 +8781,15 @@ export class ControlSurface {
 
   async setYawEnabled(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ControlSurface_set_YawEnabled",
@@ -9065,12 +8811,11 @@ export class ControlSurface {
 
   async getRollEnabled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ControlSurface_get_RollEnabled",
@@ -9092,16 +8837,15 @@ export class ControlSurface {
 
   async setRollEnabled(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ControlSurface_set_RollEnabled",
@@ -9123,12 +8867,11 @@ export class ControlSurface {
 
   async getAuthorityLimiter(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ControlSurface_get_AuthorityLimiter",
@@ -9150,16 +8893,15 @@ export class ControlSurface {
 
   async setAuthorityLimiter(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ControlSurface_set_AuthorityLimiter",
@@ -9181,12 +8923,11 @@ export class ControlSurface {
 
   async getInverted(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ControlSurface_get_Inverted",
@@ -9208,16 +8949,15 @@ export class ControlSurface {
 
   async setInverted(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ControlSurface_set_Inverted",
@@ -9239,12 +8979,11 @@ export class ControlSurface {
 
   async getDeployed(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ControlSurface_get_Deployed",
@@ -9266,16 +9005,15 @@ export class ControlSurface {
 
   async setDeployed(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ControlSurface_set_Deployed",
@@ -9297,12 +9035,11 @@ export class ControlSurface {
 
   async getSurfaceArea(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ControlSurface_get_SurfaceArea",
@@ -9326,12 +9063,11 @@ export class ControlSurface {
     [[number, number, number], [number, number, number]]
   > {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ControlSurface_get_AvailableTorque",
@@ -9380,12 +9116,11 @@ export class CrewMember {
 
   async getName(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CrewMember_get_Name",
@@ -9407,16 +9142,15 @@ export class CrewMember {
 
   async setName(value: string): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CrewMember_set_Name",
@@ -9438,12 +9172,11 @@ export class CrewMember {
 
   async getType(): Promise<CrewMemberType> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CrewMember_get_Type",
@@ -9467,12 +9200,11 @@ export class CrewMember {
 
   async getOnMission(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CrewMember_get_OnMission",
@@ -9494,12 +9226,11 @@ export class CrewMember {
 
   async getCourage(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CrewMember_get_Courage",
@@ -9521,16 +9252,15 @@ export class CrewMember {
 
   async setCourage(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CrewMember_set_Courage",
@@ -9552,12 +9282,11 @@ export class CrewMember {
 
   async getStupidity(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CrewMember_get_Stupidity",
@@ -9579,16 +9308,15 @@ export class CrewMember {
 
   async setStupidity(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CrewMember_set_Stupidity",
@@ -9610,12 +9338,11 @@ export class CrewMember {
 
   async getExperience(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CrewMember_get_Experience",
@@ -9637,16 +9364,15 @@ export class CrewMember {
 
   async setExperience(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CrewMember_set_Experience",
@@ -9668,12 +9394,11 @@ export class CrewMember {
 
   async getBadass(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CrewMember_get_Badass",
@@ -9695,16 +9420,15 @@ export class CrewMember {
 
   async setBadass(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CrewMember_set_Badass",
@@ -9726,12 +9450,11 @@ export class CrewMember {
 
   async getVeteran(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CrewMember_get_Veteran",
@@ -9753,16 +9476,15 @@ export class CrewMember {
 
   async setVeteran(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "CrewMember_set_Veteran",
@@ -9800,12 +9522,11 @@ export class Decoupler {
 
   async decouple(): Promise<Vessel> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Decoupler_Decouple",
@@ -9826,12 +9547,11 @@ export class Decoupler {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Decoupler_get_Part",
@@ -9853,12 +9573,11 @@ export class Decoupler {
 
   async getDecoupled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Decoupler_get_Decoupled",
@@ -9880,12 +9599,11 @@ export class Decoupler {
 
   async getStaged(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Decoupler_get_Staged",
@@ -9907,12 +9625,11 @@ export class Decoupler {
 
   async getImpulse(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Decoupler_get_Impulse",
@@ -9950,12 +9667,11 @@ export class DockingPort {
 
   async undock(): Promise<Vessel> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "DockingPort_Undock",
@@ -9978,16 +9694,15 @@ export class DockingPort {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "DockingPort_Position",
@@ -10015,16 +9730,15 @@ export class DockingPort {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "DockingPort_Direction",
@@ -10052,16 +9766,15 @@ export class DockingPort {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "DockingPort_Rotation",
@@ -10088,12 +9801,11 @@ export class DockingPort {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "DockingPort_get_Part",
@@ -10115,12 +9827,11 @@ export class DockingPort {
 
   async getState(): Promise<DockingPortState> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "DockingPort_get_State",
@@ -10144,12 +9855,11 @@ export class DockingPort {
 
   async getDockedPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "DockingPort_get_DockedPart",
@@ -10171,12 +9881,11 @@ export class DockingPort {
 
   async getReengageDistance(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "DockingPort_get_ReengageDistance",
@@ -10198,12 +9907,11 @@ export class DockingPort {
 
   async getHasShield(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "DockingPort_get_HasShield",
@@ -10225,12 +9933,11 @@ export class DockingPort {
 
   async getShielded(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "DockingPort_get_Shielded",
@@ -10252,16 +9959,15 @@ export class DockingPort {
 
   async setShielded(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "DockingPort_set_Shielded",
@@ -10283,12 +9989,11 @@ export class DockingPort {
 
   async getReferenceFrame(): Promise<ReferenceFrame> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "DockingPort_get_ReferenceFrame",
@@ -10326,12 +10031,11 @@ export class Engine {
 
   async toggleMode(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_ToggleMode",
@@ -10352,12 +10056,11 @@ export class Engine {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_Part",
@@ -10379,12 +10082,11 @@ export class Engine {
 
   async getActive(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_Active",
@@ -10406,16 +10108,15 @@ export class Engine {
 
   async setActive(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_set_Active",
@@ -10437,12 +10138,11 @@ export class Engine {
 
   async getThrust(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_Thrust",
@@ -10464,12 +10164,11 @@ export class Engine {
 
   async getAvailableThrust(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_AvailableThrust",
@@ -10491,12 +10190,11 @@ export class Engine {
 
   async getMaxThrust(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_MaxThrust",
@@ -10518,12 +10216,11 @@ export class Engine {
 
   async getMaxVacuumThrust(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_MaxVacuumThrust",
@@ -10545,12 +10242,11 @@ export class Engine {
 
   async getThrustLimit(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_ThrustLimit",
@@ -10572,16 +10268,15 @@ export class Engine {
 
   async setThrustLimit(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_set_ThrustLimit",
@@ -10603,12 +10298,11 @@ export class Engine {
 
   async getThrusters(): Promise<Thruster[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_Thrusters",
@@ -10632,12 +10326,11 @@ export class Engine {
 
   async getSpecificImpulse(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_SpecificImpulse",
@@ -10659,12 +10352,11 @@ export class Engine {
 
   async getVacuumSpecificImpulse(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_VacuumSpecificImpulse",
@@ -10686,12 +10378,11 @@ export class Engine {
 
   async getKerbinSeaLevelSpecificImpulse(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_KerbinSeaLevelSpecificImpulse",
@@ -10713,12 +10404,11 @@ export class Engine {
 
   async getPropellantNames(): Promise<string[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_PropellantNames",
@@ -10742,12 +10432,11 @@ export class Engine {
 
   async getPropellants(): Promise<Propellant[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_Propellants",
@@ -10771,12 +10460,11 @@ export class Engine {
 
   async getPropellantRatios(): Promise<Record<string, number>> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_PropellantRatios",
@@ -10803,12 +10491,11 @@ export class Engine {
 
   async getHasFuel(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_HasFuel",
@@ -10830,12 +10517,11 @@ export class Engine {
 
   async getThrottle(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_Throttle",
@@ -10857,12 +10543,11 @@ export class Engine {
 
   async getThrottleLocked(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_ThrottleLocked",
@@ -10884,12 +10569,11 @@ export class Engine {
 
   async getCanRestart(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_CanRestart",
@@ -10911,12 +10595,11 @@ export class Engine {
 
   async getCanShutdown(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_CanShutdown",
@@ -10938,12 +10621,11 @@ export class Engine {
 
   async getHasModes(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_HasModes",
@@ -10965,12 +10647,11 @@ export class Engine {
 
   async getMode(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_Mode",
@@ -10992,16 +10673,15 @@ export class Engine {
 
   async setMode(value: string): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_set_Mode",
@@ -11023,12 +10703,11 @@ export class Engine {
 
   async getModes(): Promise<Record<string, Engine>> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_Modes",
@@ -11055,12 +10734,11 @@ export class Engine {
 
   async getAutoModeSwitch(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_AutoModeSwitch",
@@ -11082,16 +10760,15 @@ export class Engine {
 
   async setAutoModeSwitch(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_set_AutoModeSwitch",
@@ -11113,12 +10790,11 @@ export class Engine {
 
   async getGimballed(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_Gimballed",
@@ -11140,12 +10816,11 @@ export class Engine {
 
   async getGimbalRange(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_GimbalRange",
@@ -11167,12 +10842,11 @@ export class Engine {
 
   async getGimbalLocked(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_GimbalLocked",
@@ -11194,16 +10868,15 @@ export class Engine {
 
   async setGimbalLocked(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_set_GimbalLocked",
@@ -11225,12 +10898,11 @@ export class Engine {
 
   async getGimbalLimit(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_GimbalLimit",
@@ -11252,16 +10924,15 @@ export class Engine {
 
   async setGimbalLimit(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_set_GimbalLimit",
@@ -11285,12 +10956,11 @@ export class Engine {
     [[number, number, number], [number, number, number]]
   > {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Engine_get_AvailableTorque",
@@ -11339,12 +11009,11 @@ export class Experiment {
 
   async run(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Experiment_Run",
@@ -11365,12 +11034,11 @@ export class Experiment {
 
   async transmit(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Experiment_Transmit",
@@ -11391,12 +11059,11 @@ export class Experiment {
 
   async dump(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Experiment_Dump",
@@ -11417,12 +11084,11 @@ export class Experiment {
 
   async reset(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Experiment_Reset",
@@ -11443,12 +11109,11 @@ export class Experiment {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Experiment_get_Part",
@@ -11470,12 +11135,11 @@ export class Experiment {
 
   async getInoperable(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Experiment_get_Inoperable",
@@ -11497,12 +11161,11 @@ export class Experiment {
 
   async getDeployed(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Experiment_get_Deployed",
@@ -11524,12 +11187,11 @@ export class Experiment {
 
   async getRerunnable(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Experiment_get_Rerunnable",
@@ -11551,12 +11213,11 @@ export class Experiment {
 
   async getHasData(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Experiment_get_HasData",
@@ -11578,12 +11239,11 @@ export class Experiment {
 
   async getData(): Promise<ScienceData[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Experiment_get_Data",
@@ -11607,12 +11267,11 @@ export class Experiment {
 
   async getAvailable(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Experiment_get_Available",
@@ -11634,12 +11293,11 @@ export class Experiment {
 
   async getBiome(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Experiment_get_Biome",
@@ -11661,12 +11319,11 @@ export class Experiment {
 
   async getScienceSubject(): Promise<ScienceSubject> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Experiment_get_ScienceSubject",
@@ -11704,12 +11361,11 @@ export class Fairing {
 
   async jettison(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Fairing_Jettison",
@@ -11730,12 +11386,11 @@ export class Fairing {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Fairing_get_Part",
@@ -11757,12 +11412,11 @@ export class Fairing {
 
   async getJettisoned(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Fairing_get_Jettisoned",
@@ -11804,24 +11458,23 @@ export class Flight {
     velocity: [number, number, number]
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(body.id),
-      },
-      {
-        position: 2,
-        value: encoding.encodeTuple(position),
-      },
-      {
-        position: 3,
-        value: encoding.encodeTuple(velocity),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(body.id),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeTuple(position),
+    });
+    args.push({
+      position: 3,
+      value: encoding.encodeTuple(velocity),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_SimulateAerodynamicForceAt",
@@ -11847,12 +11500,11 @@ export class Flight {
 
   async getGForce(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_GForce",
@@ -11874,12 +11526,11 @@ export class Flight {
 
   async getMeanAltitude(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_MeanAltitude",
@@ -11901,12 +11552,11 @@ export class Flight {
 
   async getSurfaceAltitude(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_SurfaceAltitude",
@@ -11928,12 +11578,11 @@ export class Flight {
 
   async getBedrockAltitude(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_BedrockAltitude",
@@ -11955,12 +11604,11 @@ export class Flight {
 
   async getElevation(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Elevation",
@@ -11982,12 +11630,11 @@ export class Flight {
 
   async getLatitude(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Latitude",
@@ -12009,12 +11656,11 @@ export class Flight {
 
   async getLongitude(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Longitude",
@@ -12036,12 +11682,11 @@ export class Flight {
 
   async getVelocity(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Velocity",
@@ -12067,12 +11712,11 @@ export class Flight {
 
   async getSpeed(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Speed",
@@ -12094,12 +11738,11 @@ export class Flight {
 
   async getHorizontalSpeed(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_HorizontalSpeed",
@@ -12121,12 +11764,11 @@ export class Flight {
 
   async getVerticalSpeed(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_VerticalSpeed",
@@ -12148,12 +11790,11 @@ export class Flight {
 
   async getCenterOfMass(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_CenterOfMass",
@@ -12179,12 +11820,11 @@ export class Flight {
 
   async getRotation(): Promise<[number, number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Rotation",
@@ -12211,12 +11851,11 @@ export class Flight {
 
   async getDirection(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Direction",
@@ -12242,12 +11881,11 @@ export class Flight {
 
   async getPitch(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Pitch",
@@ -12269,12 +11907,11 @@ export class Flight {
 
   async getHeading(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Heading",
@@ -12296,12 +11933,11 @@ export class Flight {
 
   async getRoll(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Roll",
@@ -12323,12 +11959,11 @@ export class Flight {
 
   async getPrograde(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Prograde",
@@ -12354,12 +11989,11 @@ export class Flight {
 
   async getRetrograde(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Retrograde",
@@ -12385,12 +12019,11 @@ export class Flight {
 
   async getNormal(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Normal",
@@ -12416,12 +12049,11 @@ export class Flight {
 
   async getAntiNormal(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_AntiNormal",
@@ -12447,12 +12079,11 @@ export class Flight {
 
   async getRadial(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Radial",
@@ -12478,12 +12109,11 @@ export class Flight {
 
   async getAntiRadial(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_AntiRadial",
@@ -12509,12 +12139,11 @@ export class Flight {
 
   async getAtmosphereDensity(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_AtmosphereDensity",
@@ -12536,12 +12165,11 @@ export class Flight {
 
   async getDynamicPressure(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_DynamicPressure",
@@ -12563,12 +12191,11 @@ export class Flight {
 
   async getStaticPressureAtMsl(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_StaticPressureAtMSL",
@@ -12590,12 +12217,11 @@ export class Flight {
 
   async getStaticPressure(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_StaticPressure",
@@ -12617,12 +12243,11 @@ export class Flight {
 
   async getAerodynamicForce(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_AerodynamicForce",
@@ -12648,12 +12273,11 @@ export class Flight {
 
   async getLift(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Lift",
@@ -12679,12 +12303,11 @@ export class Flight {
 
   async getDrag(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Drag",
@@ -12710,12 +12333,11 @@ export class Flight {
 
   async getSpeedOfSound(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_SpeedOfSound",
@@ -12737,12 +12359,11 @@ export class Flight {
 
   async getMach(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_Mach",
@@ -12764,12 +12385,11 @@ export class Flight {
 
   async getReynoldsNumber(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_ReynoldsNumber",
@@ -12791,12 +12411,11 @@ export class Flight {
 
   async getTrueAirSpeed(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_TrueAirSpeed",
@@ -12818,12 +12437,11 @@ export class Flight {
 
   async getEquivalentAirSpeed(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_EquivalentAirSpeed",
@@ -12845,12 +12463,11 @@ export class Flight {
 
   async getTerminalVelocity(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_TerminalVelocity",
@@ -12872,12 +12489,11 @@ export class Flight {
 
   async getAngleOfAttack(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_AngleOfAttack",
@@ -12899,12 +12515,11 @@ export class Flight {
 
   async getSideslipAngle(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_SideslipAngle",
@@ -12926,12 +12541,11 @@ export class Flight {
 
   async getTotalAirTemperature(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_TotalAirTemperature",
@@ -12953,12 +12567,11 @@ export class Flight {
 
   async getStaticAirTemperature(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_StaticAirTemperature",
@@ -12980,12 +12593,11 @@ export class Flight {
 
   async getStallFraction(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_StallFraction",
@@ -13007,12 +12619,11 @@ export class Flight {
 
   async getDragCoefficient(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_DragCoefficient",
@@ -13034,12 +12645,11 @@ export class Flight {
 
   async getLiftCoefficient(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_LiftCoefficient",
@@ -13061,12 +12671,11 @@ export class Flight {
 
   async getBallisticCoefficient(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_BallisticCoefficient",
@@ -13088,12 +12697,11 @@ export class Flight {
 
   async getThrustSpecificFuelConsumption(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Flight_get_ThrustSpecificFuelConsumption",
@@ -13131,12 +12739,11 @@ export class Force {
 
   async remove(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Force_Remove",
@@ -13157,12 +12764,11 @@ export class Force {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Force_get_Part",
@@ -13184,12 +12790,11 @@ export class Force {
 
   async getForceVector(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Force_get_ForceVector",
@@ -13215,16 +12820,15 @@ export class Force {
 
   async setForceVector(value: [number, number, number]): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Force_set_ForceVector",
@@ -13246,12 +12850,11 @@ export class Force {
 
   async getPosition(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Force_get_Position",
@@ -13277,16 +12880,15 @@ export class Force {
 
   async setPosition(value: [number, number, number]): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Force_set_Position",
@@ -13308,12 +12910,11 @@ export class Force {
 
   async getReferenceFrame(): Promise<ReferenceFrame> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Force_get_ReferenceFrame",
@@ -13335,16 +12936,15 @@ export class Force {
 
   async setReferenceFrame(value: ReferenceFrame): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(value.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(value.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Force_set_ReferenceFrame",
@@ -13382,12 +12982,11 @@ export class Intake {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Intake_get_Part",
@@ -13409,12 +13008,11 @@ export class Intake {
 
   async getOpen(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Intake_get_Open",
@@ -13436,16 +13034,15 @@ export class Intake {
 
   async setOpen(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Intake_set_Open",
@@ -13467,12 +13064,11 @@ export class Intake {
 
   async getSpeed(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Intake_get_Speed",
@@ -13494,12 +13090,11 @@ export class Intake {
 
   async getFlow(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Intake_get_Flow",
@@ -13521,12 +13116,11 @@ export class Intake {
 
   async getArea(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Intake_get_Area",
@@ -13564,12 +13158,11 @@ export class LaunchClamp {
 
   async release(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "LaunchClamp_Release",
@@ -13590,12 +13183,11 @@ export class LaunchClamp {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "LaunchClamp_get_Part",
@@ -13633,12 +13225,11 @@ export class Leg {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Leg_get_Part",
@@ -13660,12 +13251,11 @@ export class Leg {
 
   async getState(): Promise<LegState> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Leg_get_State",
@@ -13689,12 +13279,11 @@ export class Leg {
 
   async getDeployable(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Leg_get_Deployable",
@@ -13716,12 +13305,11 @@ export class Leg {
 
   async getDeployed(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Leg_get_Deployed",
@@ -13743,16 +13331,15 @@ export class Leg {
 
   async setDeployed(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Leg_set_Deployed",
@@ -13774,12 +13361,11 @@ export class Leg {
 
   async getIsGrounded(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Leg_get_IsGrounded",
@@ -13817,12 +13403,11 @@ export class Light {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Light_get_Part",
@@ -13844,12 +13429,11 @@ export class Light {
 
   async getActive(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Light_get_Active",
@@ -13871,16 +13455,15 @@ export class Light {
 
   async setActive(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Light_set_Active",
@@ -13902,12 +13485,11 @@ export class Light {
 
   async getColor(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Light_get_Color",
@@ -13933,16 +13515,15 @@ export class Light {
 
   async setColor(value: [number, number, number]): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Light_set_Color",
@@ -13964,12 +13545,11 @@ export class Light {
 
   async getPowerUsage(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Light_get_PowerUsage",
@@ -14007,16 +13587,15 @@ export class Module {
 
   async hasField(name: string): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Module_HasField",
@@ -14037,16 +13616,15 @@ export class Module {
 
   async getField(name: string): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Module_GetField",
@@ -14067,20 +13645,19 @@ export class Module {
 
   async setFieldInt(name: string, value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(name),
-      },
-      {
-        position: 2,
-        value: encoding.encodeSint32(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(name),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeSint32(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Module_SetFieldInt",
@@ -14101,20 +13678,19 @@ export class Module {
 
   async setFieldFloat(name: string, value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(name),
-      },
-      {
-        position: 2,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(name),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Module_SetFieldFloat",
@@ -14135,20 +13711,19 @@ export class Module {
 
   async setFieldString(name: string, value: string): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(name),
-      },
-      {
-        position: 2,
-        value: encoding.encodeString(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(name),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeString(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Module_SetFieldString",
@@ -14169,16 +13744,15 @@ export class Module {
 
   async resetField(name: string): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Module_ResetField",
@@ -14199,16 +13773,15 @@ export class Module {
 
   async hasEvent(name: string): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Module_HasEvent",
@@ -14229,16 +13802,15 @@ export class Module {
 
   async triggerEvent(name: string): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Module_TriggerEvent",
@@ -14259,16 +13831,15 @@ export class Module {
 
   async hasAction(name: string): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Module_HasAction",
@@ -14287,22 +13858,23 @@ export class Module {
     return encoding.decodeBool(conn, result.value);
   }
 
-  async setAction(name: string, value: boolean): Promise<void> {
+  async setAction(name: string, value?: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(name),
-      },
-      {
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(name),
+    });
+    if (value !== undefined) {
+      args.push({
         position: 2,
         value: encoding.encodeBool(value),
-      },
-    ];
+      });
+    }
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Module_SetAction",
@@ -14323,12 +13895,11 @@ export class Module {
 
   async getName(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Module_get_Name",
@@ -14350,12 +13921,11 @@ export class Module {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Module_get_Part",
@@ -14377,12 +13947,11 @@ export class Module {
 
   async getFields(): Promise<Record<string, string>> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Module_get_Fields",
@@ -14409,12 +13978,11 @@ export class Module {
 
   async getEvents(): Promise<string[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Module_get_Events",
@@ -14438,12 +14006,11 @@ export class Module {
 
   async getActions(): Promise<string[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Module_get_Actions",
@@ -14482,19 +14049,20 @@ export class Node {
   }
 
   async burnVector(
-    referenceFrame: ReferenceFrame
+    referenceFrame?: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    if (referenceFrame !== undefined) {
+      args.push({
         position: 1,
         value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+      });
+    }
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_BurnVector",
@@ -14519,19 +14087,20 @@ export class Node {
   }
 
   async remainingBurnVector(
-    referenceFrame: ReferenceFrame
+    referenceFrame?: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    if (referenceFrame !== undefined) {
+      args.push({
         position: 1,
         value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+      });
+    }
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_RemainingBurnVector",
@@ -14557,12 +14126,11 @@ export class Node {
 
   async remove(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_Remove",
@@ -14585,16 +14153,15 @@ export class Node {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_Position",
@@ -14622,16 +14189,15 @@ export class Node {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_Direction",
@@ -14657,12 +14223,11 @@ export class Node {
 
   async getPrograde(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_get_Prograde",
@@ -14684,16 +14249,15 @@ export class Node {
 
   async setPrograde(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_set_Prograde",
@@ -14715,12 +14279,11 @@ export class Node {
 
   async getNormal(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_get_Normal",
@@ -14742,16 +14305,15 @@ export class Node {
 
   async setNormal(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_set_Normal",
@@ -14773,12 +14335,11 @@ export class Node {
 
   async getRadial(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_get_Radial",
@@ -14800,16 +14361,15 @@ export class Node {
 
   async setRadial(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_set_Radial",
@@ -14831,12 +14391,11 @@ export class Node {
 
   async getDeltaV(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_get_DeltaV",
@@ -14858,16 +14417,15 @@ export class Node {
 
   async setDeltaV(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_set_DeltaV",
@@ -14889,12 +14447,11 @@ export class Node {
 
   async getRemainingDeltaV(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_get_RemainingDeltaV",
@@ -14916,12 +14473,11 @@ export class Node {
 
   async getUt(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_get_UT",
@@ -14943,16 +14499,15 @@ export class Node {
 
   async setUt(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_set_UT",
@@ -14974,12 +14529,11 @@ export class Node {
 
   async getTimeTo(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_get_TimeTo",
@@ -15001,12 +14555,11 @@ export class Node {
 
   async getOrbit(): Promise<Orbit> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_get_Orbit",
@@ -15028,12 +14581,11 @@ export class Node {
 
   async getReferenceFrame(): Promise<ReferenceFrame> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_get_ReferenceFrame",
@@ -15055,12 +14607,11 @@ export class Node {
 
   async getOrbitalReferenceFrame(): Promise<ReferenceFrame> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Node_get_OrbitalReferenceFrame",
@@ -15098,16 +14649,15 @@ export class Orbit {
 
   async meanAnomalyAtUt(ut: number): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(ut),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(ut),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_MeanAnomalyAtUT",
@@ -15128,16 +14678,15 @@ export class Orbit {
 
   async radiusAtTrueAnomaly(trueAnomaly: number): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(trueAnomaly),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(trueAnomaly),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_RadiusAtTrueAnomaly",
@@ -15158,16 +14707,15 @@ export class Orbit {
 
   async trueAnomalyAtRadius(radius: number): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(radius),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(radius),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_TrueAnomalyAtRadius",
@@ -15188,16 +14736,15 @@ export class Orbit {
 
   async trueAnomalyAtUt(ut: number): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(ut),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(ut),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_TrueAnomalyAtUT",
@@ -15218,16 +14765,15 @@ export class Orbit {
 
   async utAtTrueAnomaly(trueAnomaly: number): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(trueAnomaly),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(trueAnomaly),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_UTAtTrueAnomaly",
@@ -15248,16 +14794,15 @@ export class Orbit {
 
   async eccentricAnomalyAtUt(ut: number): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(ut),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(ut),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_EccentricAnomalyAtUT",
@@ -15278,16 +14823,15 @@ export class Orbit {
 
   async orbitalSpeedAt(time: number): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(time),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(time),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_OrbitalSpeedAt",
@@ -15308,16 +14852,15 @@ export class Orbit {
 
   async radiusAt(ut: number): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(ut),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(ut),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_RadiusAt",
@@ -15341,20 +14884,19 @@ export class Orbit {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(ut),
-      },
-      {
-        position: 2,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(ut),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_PositionAt",
@@ -15380,16 +14922,15 @@ export class Orbit {
 
   async timeOfClosestApproach(target: Orbit): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(target.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(target.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_TimeOfClosestApproach",
@@ -15410,16 +14951,15 @@ export class Orbit {
 
   async distanceAtClosestApproach(target: Orbit): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(target.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(target.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_DistanceAtClosestApproach",
@@ -15443,20 +14983,19 @@ export class Orbit {
     orbits: number
   ): Promise<number[][]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(target.id),
-      },
-      {
-        position: 2,
-        value: encoding.encodeSint32(orbits),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(target.id),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeSint32(orbits),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_ListClosestApproaches",
@@ -15482,16 +15021,15 @@ export class Orbit {
 
   async trueAnomalyAtAn(target: Orbit): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(target.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(target.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_TrueAnomalyAtAN",
@@ -15512,16 +15050,15 @@ export class Orbit {
 
   async trueAnomalyAtDn(target: Orbit): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(target.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(target.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_TrueAnomalyAtDN",
@@ -15542,16 +15079,15 @@ export class Orbit {
 
   async relativeInclination(target: Orbit): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(target.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(target.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_RelativeInclination",
@@ -15572,12 +15108,11 @@ export class Orbit {
 
   async getBody(): Promise<CelestialBody> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_Body",
@@ -15599,12 +15134,11 @@ export class Orbit {
 
   async getApoapsis(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_Apoapsis",
@@ -15626,12 +15160,11 @@ export class Orbit {
 
   async getPeriapsis(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_Periapsis",
@@ -15653,12 +15186,11 @@ export class Orbit {
 
   async getApoapsisAltitude(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_ApoapsisAltitude",
@@ -15680,12 +15212,11 @@ export class Orbit {
 
   async getPeriapsisAltitude(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_PeriapsisAltitude",
@@ -15707,12 +15238,11 @@ export class Orbit {
 
   async getSemiMajorAxis(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_SemiMajorAxis",
@@ -15734,12 +15264,11 @@ export class Orbit {
 
   async getSemiMinorAxis(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_SemiMinorAxis",
@@ -15761,12 +15290,11 @@ export class Orbit {
 
   async getRadius(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_Radius",
@@ -15788,12 +15316,11 @@ export class Orbit {
 
   async getSpeed(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_Speed",
@@ -15815,12 +15342,11 @@ export class Orbit {
 
   async getPeriod(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_Period",
@@ -15842,12 +15368,11 @@ export class Orbit {
 
   async getTimeToApoapsis(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_TimeToApoapsis",
@@ -15869,12 +15394,11 @@ export class Orbit {
 
   async getTimeToPeriapsis(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_TimeToPeriapsis",
@@ -15896,12 +15420,11 @@ export class Orbit {
 
   async getEccentricity(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_Eccentricity",
@@ -15923,12 +15446,11 @@ export class Orbit {
 
   async getInclination(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_Inclination",
@@ -15950,12 +15472,11 @@ export class Orbit {
 
   async getLongitudeOfAscendingNode(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_LongitudeOfAscendingNode",
@@ -15977,12 +15498,11 @@ export class Orbit {
 
   async getArgumentOfPeriapsis(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_ArgumentOfPeriapsis",
@@ -16004,12 +15524,11 @@ export class Orbit {
 
   async getMeanAnomalyAtEpoch(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_MeanAnomalyAtEpoch",
@@ -16031,12 +15550,11 @@ export class Orbit {
 
   async getEpoch(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_Epoch",
@@ -16058,12 +15576,11 @@ export class Orbit {
 
   async getMeanAnomaly(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_MeanAnomaly",
@@ -16085,12 +15602,11 @@ export class Orbit {
 
   async getEccentricAnomaly(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_EccentricAnomaly",
@@ -16112,12 +15628,11 @@ export class Orbit {
 
   async getTrueAnomaly(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_TrueAnomaly",
@@ -16139,12 +15654,11 @@ export class Orbit {
 
   async getNextOrbit(): Promise<Orbit> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_NextOrbit",
@@ -16166,12 +15680,11 @@ export class Orbit {
 
   async getTimeToSoiChange(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_TimeToSOIChange",
@@ -16193,12 +15706,11 @@ export class Orbit {
 
   async getOrbitalSpeed(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_get_OrbitalSpeed",
@@ -16223,12 +15735,11 @@ export class Orbit {
     conn: KRPCConnection,
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_static_ReferencePlaneNormal",
@@ -16256,12 +15767,11 @@ export class Orbit {
     conn: KRPCConnection,
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Orbit_static_ReferencePlaneDirection",
@@ -16301,12 +15811,11 @@ export class Parachute {
 
   async deploy(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parachute_Deploy",
@@ -16327,12 +15836,11 @@ export class Parachute {
 
   async arm(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parachute_Arm",
@@ -16353,12 +15861,11 @@ export class Parachute {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parachute_get_Part",
@@ -16380,12 +15887,11 @@ export class Parachute {
 
   async getDeployed(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parachute_get_Deployed",
@@ -16407,12 +15913,11 @@ export class Parachute {
 
   async getArmed(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parachute_get_Armed",
@@ -16434,12 +15939,11 @@ export class Parachute {
 
   async getState(): Promise<ParachuteState> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parachute_get_State",
@@ -16463,12 +15967,11 @@ export class Parachute {
 
   async getDeployAltitude(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parachute_get_DeployAltitude",
@@ -16490,16 +15993,15 @@ export class Parachute {
 
   async setDeployAltitude(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parachute_set_DeployAltitude",
@@ -16521,12 +16023,11 @@ export class Parachute {
 
   async getDeployMinPressure(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parachute_get_DeployMinPressure",
@@ -16548,16 +16049,15 @@ export class Parachute {
 
   async setDeployMinPressure(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parachute_set_DeployMinPressure",
@@ -16597,16 +16097,15 @@ export class Part {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_Position",
@@ -16634,16 +16133,15 @@ export class Part {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_CenterOfMass",
@@ -16671,16 +16169,15 @@ export class Part {
     referenceFrame: ReferenceFrame
   ): Promise<[[number, number, number], [number, number, number]]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_BoundingBox",
@@ -16715,16 +16212,15 @@ export class Part {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_Direction",
@@ -16752,16 +16248,15 @@ export class Part {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_Velocity",
@@ -16789,16 +16284,15 @@ export class Part {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_Rotation",
@@ -16829,24 +16323,23 @@ export class Part {
     referenceFrame: ReferenceFrame
   ): Promise<Force> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(force),
-      },
-      {
-        position: 2,
-        value: encoding.encodeTuple(position),
-      },
-      {
-        position: 3,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(force),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeTuple(position),
+    });
+    args.push({
+      position: 3,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_AddForce",
@@ -16871,24 +16364,23 @@ export class Part {
     referenceFrame: ReferenceFrame
   ): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(force),
-      },
-      {
-        position: 2,
-        value: encoding.encodeTuple(position),
-      },
-      {
-        position: 3,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(force),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeTuple(position),
+    });
+    args.push({
+      position: 3,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_InstantaneousForce",
@@ -16909,12 +16401,11 @@ export class Part {
 
   async getName(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Name",
@@ -16936,12 +16427,11 @@ export class Part {
 
   async getTitle(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Title",
@@ -16963,12 +16453,11 @@ export class Part {
 
   async getTag(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Tag",
@@ -16990,16 +16479,15 @@ export class Part {
 
   async setTag(value: string): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_set_Tag",
@@ -17021,12 +16509,11 @@ export class Part {
 
   async getHighlighted(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Highlighted",
@@ -17048,16 +16535,15 @@ export class Part {
 
   async setHighlighted(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_set_Highlighted",
@@ -17079,12 +16565,11 @@ export class Part {
 
   async getHighlightColor(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_HighlightColor",
@@ -17110,16 +16595,15 @@ export class Part {
 
   async setHighlightColor(value: [number, number, number]): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeTuple(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeTuple(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_set_HighlightColor",
@@ -17141,12 +16625,11 @@ export class Part {
 
   async getCost(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Cost",
@@ -17168,12 +16651,11 @@ export class Part {
 
   async getVessel(): Promise<Vessel> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Vessel",
@@ -17195,12 +16677,11 @@ export class Part {
 
   async getParent(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Parent",
@@ -17222,12 +16703,11 @@ export class Part {
 
   async getChildren(): Promise<Part[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Children",
@@ -17251,12 +16731,11 @@ export class Part {
 
   async getAxiallyAttached(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_AxiallyAttached",
@@ -17278,12 +16757,11 @@ export class Part {
 
   async getRadiallyAttached(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_RadiallyAttached",
@@ -17305,12 +16783,11 @@ export class Part {
 
   async getStage(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Stage",
@@ -17332,12 +16809,11 @@ export class Part {
 
   async getDecoupleStage(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_DecoupleStage",
@@ -17359,12 +16835,11 @@ export class Part {
 
   async getMassless(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Massless",
@@ -17386,12 +16861,11 @@ export class Part {
 
   async getMass(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Mass",
@@ -17413,12 +16887,11 @@ export class Part {
 
   async getDryMass(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_DryMass",
@@ -17440,12 +16913,11 @@ export class Part {
 
   async getShielded(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Shielded",
@@ -17467,12 +16939,11 @@ export class Part {
 
   async getDynamicPressure(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_DynamicPressure",
@@ -17494,12 +16965,11 @@ export class Part {
 
   async getImpactTolerance(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_ImpactTolerance",
@@ -17521,12 +16991,11 @@ export class Part {
 
   async getTemperature(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Temperature",
@@ -17548,12 +17017,11 @@ export class Part {
 
   async getSkinTemperature(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_SkinTemperature",
@@ -17575,12 +17043,11 @@ export class Part {
 
   async getMaxTemperature(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_MaxTemperature",
@@ -17602,12 +17069,11 @@ export class Part {
 
   async getMaxSkinTemperature(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_MaxSkinTemperature",
@@ -17629,12 +17095,11 @@ export class Part {
 
   async getThermalMass(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_ThermalMass",
@@ -17656,12 +17121,11 @@ export class Part {
 
   async getThermalSkinMass(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_ThermalSkinMass",
@@ -17683,12 +17147,11 @@ export class Part {
 
   async getThermalResourceMass(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_ThermalResourceMass",
@@ -17710,12 +17173,11 @@ export class Part {
 
   async getThermalInternalFlux(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_ThermalInternalFlux",
@@ -17737,12 +17199,11 @@ export class Part {
 
   async getThermalConductionFlux(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_ThermalConductionFlux",
@@ -17764,12 +17225,11 @@ export class Part {
 
   async getThermalConvectionFlux(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_ThermalConvectionFlux",
@@ -17791,12 +17251,11 @@ export class Part {
 
   async getThermalRadiationFlux(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_ThermalRadiationFlux",
@@ -17818,12 +17277,11 @@ export class Part {
 
   async getThermalSkinToInternalFlux(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_ThermalSkinToInternalFlux",
@@ -17845,12 +17303,11 @@ export class Part {
 
   async getResources(): Promise<Resources> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Resources",
@@ -17872,12 +17329,11 @@ export class Part {
 
   async getCrossfeed(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Crossfeed",
@@ -17899,12 +17355,11 @@ export class Part {
 
   async getIsFuelLine(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_IsFuelLine",
@@ -17926,12 +17381,11 @@ export class Part {
 
   async getFuelLinesFrom(): Promise<Part[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_FuelLinesFrom",
@@ -17955,12 +17409,11 @@ export class Part {
 
   async getFuelLinesTo(): Promise<Part[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_FuelLinesTo",
@@ -17984,12 +17437,11 @@ export class Part {
 
   async getModules(): Promise<Module[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Modules",
@@ -18013,12 +17465,11 @@ export class Part {
 
   async getAntenna(): Promise<Antenna> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Antenna",
@@ -18040,12 +17491,11 @@ export class Part {
 
   async getCargoBay(): Promise<CargoBay> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_CargoBay",
@@ -18067,12 +17517,11 @@ export class Part {
 
   async getControlSurface(): Promise<ControlSurface> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_ControlSurface",
@@ -18094,12 +17543,11 @@ export class Part {
 
   async getDecoupler(): Promise<Decoupler> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Decoupler",
@@ -18121,12 +17569,11 @@ export class Part {
 
   async getDockingPort(): Promise<DockingPort> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_DockingPort",
@@ -18148,12 +17595,11 @@ export class Part {
 
   async getEngine(): Promise<Engine> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Engine",
@@ -18175,12 +17621,11 @@ export class Part {
 
   async getExperiment(): Promise<Experiment> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Experiment",
@@ -18202,12 +17647,11 @@ export class Part {
 
   async getFairing(): Promise<Fairing> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Fairing",
@@ -18229,12 +17673,11 @@ export class Part {
 
   async getIntake(): Promise<Intake> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Intake",
@@ -18256,12 +17699,11 @@ export class Part {
 
   async getLeg(): Promise<Leg> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Leg",
@@ -18283,12 +17725,11 @@ export class Part {
 
   async getLaunchClamp(): Promise<LaunchClamp> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_LaunchClamp",
@@ -18310,12 +17751,11 @@ export class Part {
 
   async getLight(): Promise<Light> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Light",
@@ -18337,12 +17777,11 @@ export class Part {
 
   async getParachute(): Promise<Parachute> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Parachute",
@@ -18364,12 +17803,11 @@ export class Part {
 
   async getRadiator(): Promise<Radiator> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Radiator",
@@ -18391,12 +17829,11 @@ export class Part {
 
   async getRcs(): Promise<RCS> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_RCS",
@@ -18418,12 +17855,11 @@ export class Part {
 
   async getReactionWheel(): Promise<ReactionWheel> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_ReactionWheel",
@@ -18445,12 +17881,11 @@ export class Part {
 
   async getResourceConverter(): Promise<ResourceConverter> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_ResourceConverter",
@@ -18472,12 +17907,11 @@ export class Part {
 
   async getResourceHarvester(): Promise<ResourceHarvester> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_ResourceHarvester",
@@ -18499,12 +17933,11 @@ export class Part {
 
   async getSensor(): Promise<Sensor> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Sensor",
@@ -18526,12 +17959,11 @@ export class Part {
 
   async getSolarPanel(): Promise<SolarPanel> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_SolarPanel",
@@ -18553,12 +17985,11 @@ export class Part {
 
   async getWheel(): Promise<Wheel> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_Wheel",
@@ -18580,12 +18011,11 @@ export class Part {
 
   async getMomentOfInertia(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_MomentOfInertia",
@@ -18611,12 +18041,11 @@ export class Part {
 
   async getInertiaTensor(): Promise<number[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_InertiaTensor",
@@ -18640,12 +18069,11 @@ export class Part {
 
   async getReferenceFrame(): Promise<ReferenceFrame> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_ReferenceFrame",
@@ -18667,12 +18095,11 @@ export class Part {
 
   async getCenterOfMassReferenceFrame(): Promise<ReferenceFrame> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Part_get_CenterOfMassReferenceFrame",
@@ -18710,16 +18137,15 @@ export class Parts {
 
   async withName(name: string): Promise<Part[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_WithName",
@@ -18743,16 +18169,15 @@ export class Parts {
 
   async withTitle(title: string): Promise<Part[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(title),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(title),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_WithTitle",
@@ -18776,16 +18201,15 @@ export class Parts {
 
   async withTag(tag: string): Promise<Part[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(tag),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(tag),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_WithTag",
@@ -18809,16 +18233,15 @@ export class Parts {
 
   async withModule(moduleName: string): Promise<Part[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(moduleName),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(moduleName),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_WithModule",
@@ -18842,16 +18265,15 @@ export class Parts {
 
   async inStage(stage: number): Promise<Part[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeSint32(stage),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeSint32(stage),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_InStage",
@@ -18875,16 +18297,15 @@ export class Parts {
 
   async inDecoupleStage(stage: number): Promise<Part[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeSint32(stage),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeSint32(stage),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_InDecoupleStage",
@@ -18908,16 +18329,15 @@ export class Parts {
 
   async modulesWithName(moduleName: string): Promise<Module[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(moduleName),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(moduleName),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_ModulesWithName",
@@ -18941,12 +18361,11 @@ export class Parts {
 
   async getAll(): Promise<Part[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_All",
@@ -18970,12 +18389,11 @@ export class Parts {
 
   async getRoot(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_Root",
@@ -18997,12 +18415,11 @@ export class Parts {
 
   async getControlling(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_Controlling",
@@ -19024,16 +18441,15 @@ export class Parts {
 
   async setControlling(value: Part): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(value.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(value.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_set_Controlling",
@@ -19055,12 +18471,11 @@ export class Parts {
 
   async getAntennas(): Promise<Antenna[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_Antennas",
@@ -19084,12 +18499,11 @@ export class Parts {
 
   async getControlSurfaces(): Promise<ControlSurface[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_ControlSurfaces",
@@ -19113,12 +18527,11 @@ export class Parts {
 
   async getCargoBays(): Promise<CargoBay[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_CargoBays",
@@ -19142,12 +18555,11 @@ export class Parts {
 
   async getDecouplers(): Promise<Decoupler[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_Decouplers",
@@ -19171,12 +18583,11 @@ export class Parts {
 
   async getDockingPorts(): Promise<DockingPort[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_DockingPorts",
@@ -19200,12 +18611,11 @@ export class Parts {
 
   async getEngines(): Promise<Engine[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_Engines",
@@ -19229,12 +18639,11 @@ export class Parts {
 
   async getExperiments(): Promise<Experiment[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_Experiments",
@@ -19258,12 +18667,11 @@ export class Parts {
 
   async getFairings(): Promise<Fairing[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_Fairings",
@@ -19287,12 +18695,11 @@ export class Parts {
 
   async getIntakes(): Promise<Intake[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_Intakes",
@@ -19316,12 +18723,11 @@ export class Parts {
 
   async getLegs(): Promise<Leg[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_Legs",
@@ -19345,12 +18751,11 @@ export class Parts {
 
   async getLaunchClamps(): Promise<LaunchClamp[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_LaunchClamps",
@@ -19374,12 +18779,11 @@ export class Parts {
 
   async getLights(): Promise<Light[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_Lights",
@@ -19403,12 +18807,11 @@ export class Parts {
 
   async getParachutes(): Promise<Parachute[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_Parachutes",
@@ -19432,12 +18835,11 @@ export class Parts {
 
   async getRadiators(): Promise<Radiator[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_Radiators",
@@ -19461,12 +18863,11 @@ export class Parts {
 
   async getRcs(): Promise<RCS[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_RCS",
@@ -19490,12 +18891,11 @@ export class Parts {
 
   async getReactionWheels(): Promise<ReactionWheel[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_ReactionWheels",
@@ -19519,12 +18919,11 @@ export class Parts {
 
   async getResourceConverters(): Promise<ResourceConverter[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_ResourceConverters",
@@ -19548,12 +18947,11 @@ export class Parts {
 
   async getResourceHarvesters(): Promise<ResourceHarvester[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_ResourceHarvesters",
@@ -19577,12 +18975,11 @@ export class Parts {
 
   async getSensors(): Promise<Sensor[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_Sensors",
@@ -19606,12 +19003,11 @@ export class Parts {
 
   async getSolarPanels(): Promise<SolarPanel[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_SolarPanels",
@@ -19635,12 +19031,11 @@ export class Parts {
 
   async getWheels(): Promise<Wheel[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Parts_get_Wheels",
@@ -19680,12 +19075,11 @@ export class Propellant {
 
   async getName(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Propellant_get_Name",
@@ -19707,12 +19101,11 @@ export class Propellant {
 
   async getCurrentAmount(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Propellant_get_CurrentAmount",
@@ -19734,12 +19127,11 @@ export class Propellant {
 
   async getCurrentRequirement(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Propellant_get_CurrentRequirement",
@@ -19761,12 +19153,11 @@ export class Propellant {
 
   async getTotalResourceAvailable(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Propellant_get_TotalResourceAvailable",
@@ -19788,12 +19179,11 @@ export class Propellant {
 
   async getTotalResourceCapacity(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Propellant_get_TotalResourceCapacity",
@@ -19815,12 +19205,11 @@ export class Propellant {
 
   async getIgnoreForIsp(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Propellant_get_IgnoreForIsp",
@@ -19842,12 +19231,11 @@ export class Propellant {
 
   async getIgnoreForThrustCurve(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Propellant_get_IgnoreForThrustCurve",
@@ -19869,12 +19257,11 @@ export class Propellant {
 
   async getDrawStackGauge(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Propellant_get_DrawStackGauge",
@@ -19896,12 +19283,11 @@ export class Propellant {
 
   async getIsDeprived(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Propellant_get_IsDeprived",
@@ -19923,12 +19309,11 @@ export class Propellant {
 
   async getRatio(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Propellant_get_Ratio",
@@ -19966,12 +19351,11 @@ export class RCS {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_Part",
@@ -19993,12 +19377,11 @@ export class RCS {
 
   async getActive(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_Active",
@@ -20020,12 +19403,11 @@ export class RCS {
 
   async getEnabled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_Enabled",
@@ -20047,16 +19429,15 @@ export class RCS {
 
   async setEnabled(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_set_Enabled",
@@ -20078,12 +19459,11 @@ export class RCS {
 
   async getPitchEnabled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_PitchEnabled",
@@ -20105,16 +19485,15 @@ export class RCS {
 
   async setPitchEnabled(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_set_PitchEnabled",
@@ -20136,12 +19515,11 @@ export class RCS {
 
   async getYawEnabled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_YawEnabled",
@@ -20163,16 +19541,15 @@ export class RCS {
 
   async setYawEnabled(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_set_YawEnabled",
@@ -20194,12 +19571,11 @@ export class RCS {
 
   async getRollEnabled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_RollEnabled",
@@ -20221,16 +19597,15 @@ export class RCS {
 
   async setRollEnabled(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_set_RollEnabled",
@@ -20252,12 +19627,11 @@ export class RCS {
 
   async getForwardEnabled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_ForwardEnabled",
@@ -20279,16 +19653,15 @@ export class RCS {
 
   async setForwardEnabled(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_set_ForwardEnabled",
@@ -20310,12 +19683,11 @@ export class RCS {
 
   async getUpEnabled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_UpEnabled",
@@ -20337,16 +19709,15 @@ export class RCS {
 
   async setUpEnabled(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_set_UpEnabled",
@@ -20368,12 +19739,11 @@ export class RCS {
 
   async getRightEnabled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_RightEnabled",
@@ -20395,16 +19765,15 @@ export class RCS {
 
   async setRightEnabled(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_set_RightEnabled",
@@ -20428,12 +19797,11 @@ export class RCS {
     [[number, number, number], [number, number, number]]
   > {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_AvailableTorque",
@@ -20466,12 +19834,11 @@ export class RCS {
 
   async getMaxThrust(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_MaxThrust",
@@ -20493,12 +19860,11 @@ export class RCS {
 
   async getMaxVacuumThrust(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_MaxVacuumThrust",
@@ -20520,12 +19886,11 @@ export class RCS {
 
   async getThrusters(): Promise<Thruster[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_Thrusters",
@@ -20549,12 +19914,11 @@ export class RCS {
 
   async getSpecificImpulse(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_SpecificImpulse",
@@ -20576,12 +19940,11 @@ export class RCS {
 
   async getVacuumSpecificImpulse(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_VacuumSpecificImpulse",
@@ -20603,12 +19966,11 @@ export class RCS {
 
   async getKerbinSeaLevelSpecificImpulse(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_KerbinSeaLevelSpecificImpulse",
@@ -20630,12 +19992,11 @@ export class RCS {
 
   async getPropellants(): Promise<string[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_Propellants",
@@ -20659,12 +20020,11 @@ export class RCS {
 
   async getPropellantRatios(): Promise<Record<string, number>> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_PropellantRatios",
@@ -20691,12 +20051,11 @@ export class RCS {
 
   async getHasFuel(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "RCS_get_HasFuel",
@@ -20734,12 +20093,11 @@ export class Radiator {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Radiator_get_Part",
@@ -20761,12 +20119,11 @@ export class Radiator {
 
   async getDeployable(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Radiator_get_Deployable",
@@ -20788,12 +20145,11 @@ export class Radiator {
 
   async getDeployed(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Radiator_get_Deployed",
@@ -20815,16 +20171,15 @@ export class Radiator {
 
   async setDeployed(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Radiator_set_Deployed",
@@ -20846,12 +20201,11 @@ export class Radiator {
 
   async getState(): Promise<RadiatorState> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Radiator_get_State",
@@ -20891,12 +20245,11 @@ export class ReactionWheel {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ReactionWheel_get_Part",
@@ -20918,12 +20271,11 @@ export class ReactionWheel {
 
   async getActive(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ReactionWheel_get_Active",
@@ -20945,16 +20297,15 @@ export class ReactionWheel {
 
   async setActive(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ReactionWheel_set_Active",
@@ -20976,12 +20327,11 @@ export class ReactionWheel {
 
   async getBroken(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ReactionWheel_get_Broken",
@@ -21005,12 +20355,11 @@ export class ReactionWheel {
     [[number, number, number], [number, number, number]]
   > {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ReactionWheel_get_AvailableTorque",
@@ -21045,12 +20394,11 @@ export class ReactionWheel {
     [[number, number, number], [number, number, number]]
   > {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ReactionWheel_get_MaxTorque",
@@ -21101,33 +20449,40 @@ export class ReferenceFrame {
   static async createRelative(
     conn: KRPCConnection,
     referenceFrame: ReferenceFrame,
-    position: [number, number, number],
-    rotation: [number, number, number, number],
-    velocity: [number, number, number],
-    angularVelocity: [number, number, number]
+    position?: [number, number, number],
+    rotation?: [number, number, number, number],
+    velocity?: [number, number, number],
+    angularVelocity?: [number, number, number]
   ): Promise<ReferenceFrame> {
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-      {
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
+    if (position !== undefined) {
+      args.push({
         position: 1,
         value: encoding.encodeTuple(position),
-      },
-      {
+      });
+    }
+    if (rotation !== undefined) {
+      args.push({
         position: 2,
         value: encoding.encodeTuple(rotation),
-      },
-      {
+      });
+    }
+    if (velocity !== undefined) {
+      args.push({
         position: 3,
         value: encoding.encodeTuple(velocity),
-      },
-      {
+      });
+    }
+    if (angularVelocity !== undefined) {
+      args.push({
         position: 4,
         value: encoding.encodeTuple(angularVelocity),
-      },
-    ];
+      });
+    }
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ReferenceFrame_static_CreateRelative",
@@ -21150,28 +20505,33 @@ export class ReferenceFrame {
   static async createHybrid(
     conn: KRPCConnection,
     position: ReferenceFrame,
-    rotation: ReferenceFrame,
-    velocity: ReferenceFrame,
-    angularVelocity: ReferenceFrame
+    rotation?: ReferenceFrame,
+    velocity?: ReferenceFrame,
+    angularVelocity?: ReferenceFrame
   ): Promise<ReferenceFrame> {
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(position.id),
-      },
-      {
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(position.id),
+    });
+    if (rotation !== undefined) {
+      args.push({
         position: 1,
         value: encoding.encodeVarint64(rotation.id),
-      },
-      {
+      });
+    }
+    if (velocity !== undefined) {
+      args.push({
         position: 2,
         value: encoding.encodeVarint64(velocity.id),
-      },
-      {
+      });
+    }
+    if (angularVelocity !== undefined) {
+      args.push({
         position: 3,
         value: encoding.encodeVarint64(angularVelocity.id),
-      },
-    ];
+      });
+    }
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ReferenceFrame_static_CreateHybrid",
@@ -21207,12 +20567,11 @@ export class Resource {
 
   async getName(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resource_get_Name",
@@ -21234,12 +20593,11 @@ export class Resource {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resource_get_Part",
@@ -21261,12 +20619,11 @@ export class Resource {
 
   async getMax(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resource_get_Max",
@@ -21288,12 +20645,11 @@ export class Resource {
 
   async getAmount(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resource_get_Amount",
@@ -21315,12 +20671,11 @@ export class Resource {
 
   async getDensity(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resource_get_Density",
@@ -21342,12 +20697,11 @@ export class Resource {
 
   async getFlowMode(): Promise<ResourceFlowMode> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resource_get_FlowMode",
@@ -21371,12 +20725,11 @@ export class Resource {
 
   async getEnabled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resource_get_Enabled",
@@ -21398,16 +20751,15 @@ export class Resource {
 
   async setEnabled(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resource_set_Enabled",
@@ -21445,16 +20797,15 @@ export class ResourceConverter {
 
   async active(index: number): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeSint32(index),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeSint32(index),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceConverter_Active",
@@ -21475,16 +20826,15 @@ export class ResourceConverter {
 
   async name(index: number): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeSint32(index),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeSint32(index),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceConverter_Name",
@@ -21505,16 +20855,15 @@ export class ResourceConverter {
 
   async start(index: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeSint32(index),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeSint32(index),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceConverter_Start",
@@ -21535,16 +20884,15 @@ export class ResourceConverter {
 
   async stop(index: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeSint32(index),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeSint32(index),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceConverter_Stop",
@@ -21565,16 +20913,15 @@ export class ResourceConverter {
 
   async state(index: number): Promise<ResourceConverterState> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeSint32(index),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeSint32(index),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceConverter_State",
@@ -21598,16 +20945,15 @@ export class ResourceConverter {
 
   async statusInfo(index: number): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeSint32(index),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeSint32(index),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceConverter_StatusInfo",
@@ -21628,16 +20974,15 @@ export class ResourceConverter {
 
   async inputs(index: number): Promise<string[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeSint32(index),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeSint32(index),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceConverter_Inputs",
@@ -21661,16 +21006,15 @@ export class ResourceConverter {
 
   async outputs(index: number): Promise<string[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeSint32(index),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeSint32(index),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceConverter_Outputs",
@@ -21694,12 +21038,11 @@ export class ResourceConverter {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceConverter_get_Part",
@@ -21721,12 +21064,11 @@ export class ResourceConverter {
 
   async getCount(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceConverter_get_Count",
@@ -21748,12 +21090,11 @@ export class ResourceConverter {
 
   async getThermalEfficiency(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceConverter_get_ThermalEfficiency",
@@ -21775,12 +21116,11 @@ export class ResourceConverter {
 
   async getCoreTemperature(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceConverter_get_CoreTemperature",
@@ -21802,12 +21142,11 @@ export class ResourceConverter {
 
   async getOptimumCoreTemperature(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceConverter_get_OptimumCoreTemperature",
@@ -21845,12 +21184,11 @@ export class ResourceHarvester {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceHarvester_get_Part",
@@ -21872,12 +21210,11 @@ export class ResourceHarvester {
 
   async getState(): Promise<ResourceHarvesterState> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceHarvester_get_State",
@@ -21901,12 +21238,11 @@ export class ResourceHarvester {
 
   async getDeployed(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceHarvester_get_Deployed",
@@ -21928,16 +21264,15 @@ export class ResourceHarvester {
 
   async setDeployed(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceHarvester_set_Deployed",
@@ -21959,12 +21294,11 @@ export class ResourceHarvester {
 
   async getActive(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceHarvester_get_Active",
@@ -21986,16 +21320,15 @@ export class ResourceHarvester {
 
   async setActive(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceHarvester_set_Active",
@@ -22017,12 +21350,11 @@ export class ResourceHarvester {
 
   async getExtractionRate(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceHarvester_get_ExtractionRate",
@@ -22044,12 +21376,11 @@ export class ResourceHarvester {
 
   async getThermalEfficiency(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceHarvester_get_ThermalEfficiency",
@@ -22071,12 +21402,11 @@ export class ResourceHarvester {
 
   async getCoreTemperature(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceHarvester_get_CoreTemperature",
@@ -22098,12 +21428,11 @@ export class ResourceHarvester {
 
   async getOptimumCoreTemperature(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceHarvester_get_OptimumCoreTemperature",
@@ -22141,12 +21470,11 @@ export class ResourceTransfer {
 
   async getComplete(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceTransfer_get_Complete",
@@ -22168,12 +21496,11 @@ export class ResourceTransfer {
 
   async getAmount(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceTransfer_get_Amount",
@@ -22201,24 +21528,23 @@ export class ResourceTransfer {
     resource: string,
     maxAmount: number
   ): Promise<ResourceTransfer> {
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(fromPart.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(toPart.id),
-      },
-      {
-        position: 2,
-        value: encoding.encodeString(resource),
-      },
-      {
-        position: 3,
-        value: encoding.encodeFloat(maxAmount),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(fromPart.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(toPart.id),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeString(resource),
+    });
+    args.push({
+      position: 3,
+      value: encoding.encodeFloat(maxAmount),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ResourceTransfer_static_Start",
@@ -22254,16 +21580,15 @@ export class Resources {
 
   async withResource(name: string): Promise<Resource[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resources_WithResource",
@@ -22287,16 +21612,15 @@ export class Resources {
 
   async hasResource(name: string): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resources_HasResource",
@@ -22317,16 +21641,15 @@ export class Resources {
 
   async max(name: string): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resources_Max",
@@ -22347,16 +21670,15 @@ export class Resources {
 
   async amount(name: string): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resources_Amount",
@@ -22377,12 +21699,11 @@ export class Resources {
 
   async getAll(): Promise<Resource[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resources_get_All",
@@ -22406,12 +21727,11 @@ export class Resources {
 
   async getNames(): Promise<string[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resources_get_Names",
@@ -22435,12 +21755,11 @@ export class Resources {
 
   async getEnabled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resources_get_Enabled",
@@ -22462,16 +21781,15 @@ export class Resources {
 
   async setEnabled(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resources_set_Enabled",
@@ -22493,12 +21811,11 @@ export class Resources {
 
   // static methods
   static async density(conn: KRPCConnection, name: string): Promise<number> {
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resources_static_Density",
@@ -22522,12 +21839,11 @@ export class Resources {
     conn: KRPCConnection,
     name: string
   ): Promise<ResourceFlowMode> {
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Resources_static_FlowMode",
@@ -22565,12 +21881,11 @@ export class ScienceData {
 
   async getDataAmount(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ScienceData_get_DataAmount",
@@ -22592,12 +21907,11 @@ export class ScienceData {
 
   async getScienceValue(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ScienceData_get_ScienceValue",
@@ -22619,12 +21933,11 @@ export class ScienceData {
 
   async getTransmitValue(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ScienceData_get_TransmitValue",
@@ -22662,12 +21975,11 @@ export class ScienceSubject {
 
   async getScience(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ScienceSubject_get_Science",
@@ -22689,12 +22001,11 @@ export class ScienceSubject {
 
   async getScienceCap(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ScienceSubject_get_ScienceCap",
@@ -22716,12 +22027,11 @@ export class ScienceSubject {
 
   async getIsComplete(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ScienceSubject_get_IsComplete",
@@ -22743,12 +22053,11 @@ export class ScienceSubject {
 
   async getDataScale(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ScienceSubject_get_DataScale",
@@ -22770,12 +22079,11 @@ export class ScienceSubject {
 
   async getScientificValue(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ScienceSubject_get_ScientificValue",
@@ -22797,12 +22105,11 @@ export class ScienceSubject {
 
   async getSubjectValue(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ScienceSubject_get_SubjectValue",
@@ -22824,12 +22131,11 @@ export class ScienceSubject {
 
   async getTitle(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "ScienceSubject_get_Title",
@@ -22867,12 +22173,11 @@ export class Sensor {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Sensor_get_Part",
@@ -22894,12 +22199,11 @@ export class Sensor {
 
   async getActive(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Sensor_get_Active",
@@ -22921,16 +22225,15 @@ export class Sensor {
 
   async setActive(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Sensor_set_Active",
@@ -22952,12 +22255,11 @@ export class Sensor {
 
   async getValue(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Sensor_get_Value",
@@ -22995,12 +22297,11 @@ export class SolarPanel {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "SolarPanel_get_Part",
@@ -23022,12 +22323,11 @@ export class SolarPanel {
 
   async getDeployable(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "SolarPanel_get_Deployable",
@@ -23049,12 +22349,11 @@ export class SolarPanel {
 
   async getDeployed(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "SolarPanel_get_Deployed",
@@ -23076,16 +22375,15 @@ export class SolarPanel {
 
   async setDeployed(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "SolarPanel_set_Deployed",
@@ -23107,12 +22405,11 @@ export class SolarPanel {
 
   async getState(): Promise<SolarPanelState> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "SolarPanel_get_State",
@@ -23136,12 +22433,11 @@ export class SolarPanel {
 
   async getEnergyFlow(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "SolarPanel_get_EnergyFlow",
@@ -23163,12 +22459,11 @@ export class SolarPanel {
 
   async getSunExposure(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "SolarPanel_get_SunExposure",
@@ -23208,16 +22503,15 @@ export class Thruster {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Thruster_ThrustPosition",
@@ -23245,16 +22539,15 @@ export class Thruster {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Thruster_ThrustDirection",
@@ -23282,16 +22575,15 @@ export class Thruster {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Thruster_InitialThrustPosition",
@@ -23319,16 +22611,15 @@ export class Thruster {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Thruster_InitialThrustDirection",
@@ -23356,16 +22647,15 @@ export class Thruster {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Thruster_GimbalPosition",
@@ -23391,12 +22681,11 @@ export class Thruster {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Thruster_get_Part",
@@ -23418,12 +22707,11 @@ export class Thruster {
 
   async getThrustReferenceFrame(): Promise<ReferenceFrame> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Thruster_get_ThrustReferenceFrame",
@@ -23445,12 +22733,11 @@ export class Thruster {
 
   async getGimballed(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Thruster_get_Gimballed",
@@ -23472,12 +22759,11 @@ export class Thruster {
 
   async getGimbalAngle(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Thruster_get_GimbalAngle",
@@ -23519,12 +22805,11 @@ export class Vessel {
 
   async recover(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_Recover",
@@ -23543,18 +22828,19 @@ export class Vessel {
     return undefined;
   }
 
-  async flight(referenceFrame: ReferenceFrame): Promise<Flight> {
+  async flight(referenceFrame?: ReferenceFrame): Promise<Flight> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    if (referenceFrame !== undefined) {
+      args.push({
         position: 1,
         value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+      });
+    }
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_Flight",
@@ -23575,23 +22861,24 @@ export class Vessel {
 
   async resourcesInDecoupleStage(
     stage: number,
-    cumulative: boolean
+    cumulative?: boolean
   ): Promise<Resources> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeSint32(stage),
-      },
-      {
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeSint32(stage),
+    });
+    if (cumulative !== undefined) {
+      args.push({
         position: 2,
         value: encoding.encodeBool(cumulative),
-      },
-    ];
+      });
+    }
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_ResourcesInDecoupleStage",
@@ -23614,16 +22901,15 @@ export class Vessel {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_Position",
@@ -23651,16 +22937,15 @@ export class Vessel {
     referenceFrame: ReferenceFrame
   ): Promise<[[number, number, number], [number, number, number]]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_BoundingBox",
@@ -23695,16 +22980,15 @@ export class Vessel {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_Velocity",
@@ -23732,16 +23016,15 @@ export class Vessel {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_Rotation",
@@ -23770,16 +23053,15 @@ export class Vessel {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_Direction",
@@ -23807,16 +23089,15 @@ export class Vessel {
     referenceFrame: ReferenceFrame
   ): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(referenceFrame.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(referenceFrame.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_AngularVelocity",
@@ -23842,12 +23123,11 @@ export class Vessel {
 
   async getName(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_Name",
@@ -23869,16 +23149,15 @@ export class Vessel {
 
   async setName(value: string): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_set_Name",
@@ -23900,12 +23179,11 @@ export class Vessel {
 
   async getType(): Promise<VesselType> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_Type",
@@ -23929,16 +23207,15 @@ export class Vessel {
 
   async setType(value: VesselType): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_set_Type",
@@ -23960,12 +23237,11 @@ export class Vessel {
 
   async getSituation(): Promise<VesselSituation> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_Situation",
@@ -23989,12 +23265,11 @@ export class Vessel {
 
   async getRecoverable(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_Recoverable",
@@ -24016,12 +23291,11 @@ export class Vessel {
 
   async getMet(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_MET",
@@ -24043,12 +23317,11 @@ export class Vessel {
 
   async getBiome(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_Biome",
@@ -24070,12 +23343,11 @@ export class Vessel {
 
   async getOrbit(): Promise<Orbit> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_Orbit",
@@ -24097,12 +23369,11 @@ export class Vessel {
 
   async getControl(): Promise<Control> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_Control",
@@ -24124,12 +23395,11 @@ export class Vessel {
 
   async getComms(): Promise<Comms> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_Comms",
@@ -24151,12 +23421,11 @@ export class Vessel {
 
   async getAutoPilot(): Promise<AutoPilot> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_AutoPilot",
@@ -24178,12 +23447,11 @@ export class Vessel {
 
   async getCrewCapacity(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_CrewCapacity",
@@ -24205,12 +23473,11 @@ export class Vessel {
 
   async getCrewCount(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_CrewCount",
@@ -24232,12 +23499,11 @@ export class Vessel {
 
   async getCrew(): Promise<CrewMember[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_Crew",
@@ -24261,12 +23527,11 @@ export class Vessel {
 
   async getResources(): Promise<Resources> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_Resources",
@@ -24288,12 +23553,11 @@ export class Vessel {
 
   async getParts(): Promise<Parts> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_Parts",
@@ -24315,12 +23579,11 @@ export class Vessel {
 
   async getMass(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_Mass",
@@ -24342,12 +23605,11 @@ export class Vessel {
 
   async getDryMass(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_DryMass",
@@ -24369,12 +23631,11 @@ export class Vessel {
 
   async getThrust(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_Thrust",
@@ -24396,12 +23657,11 @@ export class Vessel {
 
   async getAvailableThrust(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_AvailableThrust",
@@ -24423,12 +23683,11 @@ export class Vessel {
 
   async getMaxThrust(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_MaxThrust",
@@ -24450,12 +23709,11 @@ export class Vessel {
 
   async getMaxVacuumThrust(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_MaxVacuumThrust",
@@ -24477,12 +23735,11 @@ export class Vessel {
 
   async getSpecificImpulse(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_SpecificImpulse",
@@ -24504,12 +23761,11 @@ export class Vessel {
 
   async getVacuumSpecificImpulse(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_VacuumSpecificImpulse",
@@ -24531,12 +23787,11 @@ export class Vessel {
 
   async getKerbinSeaLevelSpecificImpulse(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_KerbinSeaLevelSpecificImpulse",
@@ -24558,12 +23813,11 @@ export class Vessel {
 
   async getMomentOfInertia(): Promise<[number, number, number]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_MomentOfInertia",
@@ -24589,12 +23843,11 @@ export class Vessel {
 
   async getInertiaTensor(): Promise<number[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_InertiaTensor",
@@ -24620,12 +23873,11 @@ export class Vessel {
     [[number, number, number], [number, number, number]]
   > {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_AvailableTorque",
@@ -24660,12 +23912,11 @@ export class Vessel {
     [[number, number, number], [number, number, number]]
   > {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_AvailableReactionWheelTorque",
@@ -24700,12 +23951,11 @@ export class Vessel {
     [[number, number, number], [number, number, number]]
   > {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_AvailableRCSTorque",
@@ -24740,12 +23990,11 @@ export class Vessel {
     [[number, number, number], [number, number, number]]
   > {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_AvailableEngineTorque",
@@ -24780,12 +24029,11 @@ export class Vessel {
     [[number, number, number], [number, number, number]]
   > {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_AvailableControlSurfaceTorque",
@@ -24820,12 +24068,11 @@ export class Vessel {
     [[number, number, number], [number, number, number]]
   > {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_AvailableOtherTorque",
@@ -24858,12 +24105,11 @@ export class Vessel {
 
   async getReferenceFrame(): Promise<ReferenceFrame> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_ReferenceFrame",
@@ -24885,12 +24131,11 @@ export class Vessel {
 
   async getOrbitalReferenceFrame(): Promise<ReferenceFrame> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_OrbitalReferenceFrame",
@@ -24912,12 +24157,11 @@ export class Vessel {
 
   async getSurfaceReferenceFrame(): Promise<ReferenceFrame> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_SurfaceReferenceFrame",
@@ -24939,12 +24183,11 @@ export class Vessel {
 
   async getSurfaceVelocityReferenceFrame(): Promise<ReferenceFrame> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Vessel_get_SurfaceVelocityReferenceFrame",
@@ -24982,12 +24225,11 @@ export class Waypoint {
 
   async remove(): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_Remove",
@@ -25008,12 +24250,11 @@ export class Waypoint {
 
   async getBody(): Promise<CelestialBody> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_get_Body",
@@ -25035,16 +24276,15 @@ export class Waypoint {
 
   async setBody(value: CelestialBody): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeVarint64(value.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeVarint64(value.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_set_Body",
@@ -25066,12 +24306,11 @@ export class Waypoint {
 
   async getName(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_get_Name",
@@ -25093,16 +24332,15 @@ export class Waypoint {
 
   async setName(value: string): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_set_Name",
@@ -25124,12 +24362,11 @@ export class Waypoint {
 
   async getColor(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_get_Color",
@@ -25151,16 +24388,15 @@ export class Waypoint {
 
   async setColor(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeSint32(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeSint32(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_set_Color",
@@ -25182,12 +24418,11 @@ export class Waypoint {
 
   async getIcon(): Promise<string> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_get_Icon",
@@ -25209,16 +24444,15 @@ export class Waypoint {
 
   async setIcon(value: string): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeString(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeString(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_set_Icon",
@@ -25240,12 +24474,11 @@ export class Waypoint {
 
   async getLatitude(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_get_Latitude",
@@ -25267,16 +24500,15 @@ export class Waypoint {
 
   async setLatitude(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_set_Latitude",
@@ -25298,12 +24530,11 @@ export class Waypoint {
 
   async getLongitude(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_get_Longitude",
@@ -25325,16 +24556,15 @@ export class Waypoint {
 
   async setLongitude(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_set_Longitude",
@@ -25356,12 +24586,11 @@ export class Waypoint {
 
   async getMeanAltitude(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_get_MeanAltitude",
@@ -25383,16 +24612,15 @@ export class Waypoint {
 
   async setMeanAltitude(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_set_MeanAltitude",
@@ -25414,12 +24642,11 @@ export class Waypoint {
 
   async getSurfaceAltitude(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_get_SurfaceAltitude",
@@ -25441,16 +24668,15 @@ export class Waypoint {
 
   async setSurfaceAltitude(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_set_SurfaceAltitude",
@@ -25472,12 +24698,11 @@ export class Waypoint {
 
   async getBedrockAltitude(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_get_BedrockAltitude",
@@ -25499,16 +24724,15 @@ export class Waypoint {
 
   async setBedrockAltitude(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_set_BedrockAltitude",
@@ -25530,12 +24754,11 @@ export class Waypoint {
 
   async getNearSurface(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_get_NearSurface",
@@ -25557,12 +24780,11 @@ export class Waypoint {
 
   async getGrounded(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_get_Grounded",
@@ -25584,12 +24806,11 @@ export class Waypoint {
 
   async getIndex(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_get_Index",
@@ -25611,12 +24832,11 @@ export class Waypoint {
 
   async getClustered(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_get_Clustered",
@@ -25638,12 +24858,11 @@ export class Waypoint {
 
   async getHasContract(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_get_HasContract",
@@ -25665,12 +24884,11 @@ export class Waypoint {
 
   async getContract(): Promise<Contract> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Waypoint_get_Contract",
@@ -25713,28 +24931,27 @@ export class WaypointManager {
     name: string
   ): Promise<Waypoint> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(latitude),
-      },
-      {
-        position: 2,
-        value: encoding.encodeDouble(longitude),
-      },
-      {
-        position: 3,
-        value: encoding.encodeVarint64(body.id),
-      },
-      {
-        position: 4,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(latitude),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeDouble(longitude),
+    });
+    args.push({
+      position: 3,
+      value: encoding.encodeVarint64(body.id),
+    });
+    args.push({
+      position: 4,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "WaypointManager_AddWaypoint",
@@ -25761,32 +24978,31 @@ export class WaypointManager {
     name: string
   ): Promise<Waypoint> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeDouble(latitude),
-      },
-      {
-        position: 2,
-        value: encoding.encodeDouble(longitude),
-      },
-      {
-        position: 3,
-        value: encoding.encodeDouble(altitude),
-      },
-      {
-        position: 4,
-        value: encoding.encodeVarint64(body.id),
-      },
-      {
-        position: 5,
-        value: encoding.encodeString(name),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeDouble(latitude),
+    });
+    args.push({
+      position: 2,
+      value: encoding.encodeDouble(longitude),
+    });
+    args.push({
+      position: 3,
+      value: encoding.encodeDouble(altitude),
+    });
+    args.push({
+      position: 4,
+      value: encoding.encodeVarint64(body.id),
+    });
+    args.push({
+      position: 5,
+      value: encoding.encodeString(name),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "WaypointManager_AddWaypointAtAltitude",
@@ -25807,12 +25023,11 @@ export class WaypointManager {
 
   async getWaypoints(): Promise<Waypoint[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "WaypointManager_get_Waypoints",
@@ -25836,12 +25051,11 @@ export class WaypointManager {
 
   async getIcons(): Promise<string[]> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "WaypointManager_get_Icons",
@@ -25865,12 +25079,11 @@ export class WaypointManager {
 
   async getColors(): Promise<Record<string, number>> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "WaypointManager_get_Colors",
@@ -25913,12 +25126,11 @@ export class Wheel {
 
   async getPart(): Promise<Part> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_Part",
@@ -25940,12 +25152,11 @@ export class Wheel {
 
   async getState(): Promise<WheelState> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_State",
@@ -25969,12 +25180,11 @@ export class Wheel {
 
   async getRadius(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_Radius",
@@ -25996,12 +25206,11 @@ export class Wheel {
 
   async getGrounded(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_Grounded",
@@ -26023,12 +25232,11 @@ export class Wheel {
 
   async getHasBrakes(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_HasBrakes",
@@ -26050,12 +25258,11 @@ export class Wheel {
 
   async getBrakes(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_Brakes",
@@ -26077,16 +25284,15 @@ export class Wheel {
 
   async setBrakes(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_set_Brakes",
@@ -26108,12 +25314,11 @@ export class Wheel {
 
   async getAutoFrictionControl(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_AutoFrictionControl",
@@ -26135,16 +25340,15 @@ export class Wheel {
 
   async setAutoFrictionControl(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_set_AutoFrictionControl",
@@ -26166,12 +25370,11 @@ export class Wheel {
 
   async getManualFrictionControl(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_ManualFrictionControl",
@@ -26193,16 +25396,15 @@ export class Wheel {
 
   async setManualFrictionControl(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_set_ManualFrictionControl",
@@ -26224,12 +25426,11 @@ export class Wheel {
 
   async getDeployable(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_Deployable",
@@ -26251,12 +25452,11 @@ export class Wheel {
 
   async getDeployed(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_Deployed",
@@ -26278,16 +25478,15 @@ export class Wheel {
 
   async setDeployed(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_set_Deployed",
@@ -26309,12 +25508,11 @@ export class Wheel {
 
   async getPowered(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_Powered",
@@ -26336,12 +25534,11 @@ export class Wheel {
 
   async getMotorEnabled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_MotorEnabled",
@@ -26363,16 +25560,15 @@ export class Wheel {
 
   async setMotorEnabled(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_set_MotorEnabled",
@@ -26394,12 +25590,11 @@ export class Wheel {
 
   async getMotorInverted(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_MotorInverted",
@@ -26421,16 +25616,15 @@ export class Wheel {
 
   async setMotorInverted(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_set_MotorInverted",
@@ -26452,12 +25646,11 @@ export class Wheel {
 
   async getMotorState(): Promise<MotorState> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_MotorState",
@@ -26481,12 +25674,11 @@ export class Wheel {
 
   async getMotorOutput(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_MotorOutput",
@@ -26508,12 +25700,11 @@ export class Wheel {
 
   async getTractionControlEnabled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_TractionControlEnabled",
@@ -26535,16 +25726,15 @@ export class Wheel {
 
   async setTractionControlEnabled(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_set_TractionControlEnabled",
@@ -26566,12 +25756,11 @@ export class Wheel {
 
   async getTractionControl(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_TractionControl",
@@ -26593,16 +25782,15 @@ export class Wheel {
 
   async setTractionControl(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_set_TractionControl",
@@ -26624,12 +25812,11 @@ export class Wheel {
 
   async getDriveLimiter(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_DriveLimiter",
@@ -26651,16 +25838,15 @@ export class Wheel {
 
   async setDriveLimiter(value: number): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeFloat(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeFloat(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_set_DriveLimiter",
@@ -26682,12 +25868,11 @@ export class Wheel {
 
   async getSteerable(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_Steerable",
@@ -26709,12 +25894,11 @@ export class Wheel {
 
   async getSteeringEnabled(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_SteeringEnabled",
@@ -26736,16 +25920,15 @@ export class Wheel {
 
   async setSteeringEnabled(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_set_SteeringEnabled",
@@ -26767,12 +25950,11 @@ export class Wheel {
 
   async getSteeringInverted(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_SteeringInverted",
@@ -26794,16 +25976,15 @@ export class Wheel {
 
   async setSteeringInverted(value: boolean): Promise<void> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-      {
-        position: 1,
-        value: encoding.encodeBool(value),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
+    args.push({
+      position: 1,
+      value: encoding.encodeBool(value),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_set_SteeringInverted",
@@ -26825,12 +26006,11 @@ export class Wheel {
 
   async getHasSuspension(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_HasSuspension",
@@ -26852,12 +26032,11 @@ export class Wheel {
 
   async getSuspensionSpringStrength(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_SuspensionSpringStrength",
@@ -26879,12 +26058,11 @@ export class Wheel {
 
   async getSuspensionDamperStrength(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_SuspensionDamperStrength",
@@ -26906,12 +26084,11 @@ export class Wheel {
 
   async getBroken(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_Broken",
@@ -26933,12 +26110,11 @@ export class Wheel {
 
   async getRepairable(): Promise<boolean> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_Repairable",
@@ -26960,12 +26136,11 @@ export class Wheel {
 
   async getStress(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_Stress",
@@ -26987,12 +26162,11 @@ export class Wheel {
 
   async getStressTolerance(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_StressTolerance",
@@ -27014,12 +26188,11 @@ export class Wheel {
 
   async getStressPercentage(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_StressPercentage",
@@ -27041,12 +26214,11 @@ export class Wheel {
 
   async getDeflection(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_Deflection",
@@ -27068,12 +26240,11 @@ export class Wheel {
 
   async getSlip(): Promise<number> {
     const conn = this.conn;
-    const args = [
-      {
-        position: 0,
-        value: encoding.encodeVarint64(this.id),
-      },
-    ];
+    const args: krpc.Argument[] = [];
+    args.push({
+      position: 0,
+      value: encoding.encodeVarint64(this.id),
+    });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "",
       procedure: "Wheel_get_Slip",
