@@ -7,94 +7,12 @@ import * as encoding from "../../services/encoding";
 import ByteBuffer from "bytebuffer";
 ByteBuffer.DEFAULT_ENDIAN = true;
 
-enum ResourceFlowMode {
-  Vessel = 0,
-  Stage = 1,
-  Adjacent = 2,
-  None = 3,
-}
-
-enum VesselType {
-  Base = 0,
-  Debris = 1,
-  Lander = 2,
-  Plane = 3,
-  Probe = 4,
-  Relay = 5,
-  Rover = 6,
-  Ship = 7,
-  Station = 8,
-}
-
-enum ControlSource {
-  Kerbal = 0,
-  Probe = 1,
-  None = 2,
-}
-
-enum ContractState {
-  Active = 0,
-  Canceled = 1,
-  Completed = 2,
-  DeadlineExpired = 3,
-  Declined = 4,
-  Failed = 5,
-  Generated = 6,
-  Offered = 7,
-  OfferExpired = 8,
-  Withdrawn = 9,
-}
-
-enum SolarPanelState {
-  Extended = 0,
-  Retracted = 1,
-  Extending = 2,
-  Retracting = 3,
-  Broken = 4,
-}
-
-enum ControlState {
-  Full = 0,
-  Partial = 1,
-  None = 2,
-}
-
-enum WheelState {
-  Deployed = 0,
-  Retracted = 1,
-  Deploying = 2,
-  Retracting = 3,
-  Broken = 4,
-}
-
-enum SASMode {
-  StabilityAssist = 0,
-  Maneuver = 1,
-  Prograde = 2,
-  Retrograde = 3,
-  Normal = 4,
-  AntiNormal = 5,
-  Radial = 6,
-  AntiRadial = 7,
-  Target = 8,
-  AntiTarget = 9,
-}
-
-enum WarpMode {
-  Rails = 0,
-  Physics = 1,
-  None = 2,
-}
-
-enum VesselSituation {
-  PreLaunch = 0,
-  Orbiting = 1,
-  SubOrbital = 2,
-  Escaping = 3,
-  Flying = 4,
-  Landed = 5,
-  Splashed = 6,
-  Docked = 7,
+enum MotorState {
+  Idle = 0,
+  Running = 1,
+  Disabled = 2,
+  Inoperable = 3,
+  NotEnoughResources = 4,
 }
 
 enum AntennaState {
@@ -103,50 +21,6 @@ enum AntennaState {
   Deploying = 2,
   Retracting = 3,
   Broken = 4,
-}
-
-enum CameraMode {
-  Automatic = 0,
-  Free = 1,
-  Chase = 2,
-  Locked = 3,
-  Orbital = 4,
-  IVA = 5,
-  Map = 6,
-}
-
-enum DockingPortState {
-  Ready = 0,
-  Docked = 1,
-  Docking = 2,
-  Undocking = 3,
-  Shielded = 4,
-  Moving = 5,
-}
-
-enum RadiatorState {
-  Extended = 0,
-  Retracted = 1,
-  Extending = 2,
-  Retracting = 3,
-  Broken = 4,
-}
-
-enum ResourceConverterState {
-  Running = 0,
-  Idle = 1,
-  MissingResource = 2,
-  StorageFull = 3,
-  Capacity = 4,
-  Unknown = 5,
-}
-
-enum ResourceHarvesterState {
-  Deploying = 0,
-  Deployed = 1,
-  Retracting = 2,
-  Retracted = 3,
-  Active = 4,
 }
 
 enum GameMode {
@@ -167,35 +41,6 @@ enum CargoBayState {
   Closing = 3,
 }
 
-enum LegState {
-  Deployed = 0,
-  Retracted = 1,
-  Deploying = 2,
-  Retracting = 3,
-  Broken = 4,
-}
-
-enum CrewMemberType {
-  Applicant = 0,
-  Crew = 1,
-  Tourist = 2,
-  Unowned = 3,
-}
-
-enum MotorState {
-  Idle = 0,
-  Running = 1,
-  Disabled = 2,
-  Inoperable = 3,
-  NotEnoughResources = 4,
-}
-
-enum SpeedMode {
-  Orbit = 0,
-  Surface = 1,
-  Target = 2,
-}
-
 enum ParachuteState {
   Stowed = 0,
   Armed = 1,
@@ -205,15 +50,170 @@ enum ParachuteState {
   Cut = 5,
 }
 
+enum ControlState {
+  Full = 0,
+  Partial = 1,
+  None = 2,
+}
+
+enum ContractState {
+  Active = 0,
+  Canceled = 1,
+  Completed = 2,
+  DeadlineExpired = 3,
+  Declined = 4,
+  Failed = 5,
+  Generated = 6,
+  Offered = 7,
+  OfferExpired = 8,
+  Withdrawn = 9,
+}
+
+enum LegState {
+  Deployed = 0,
+  Retracted = 1,
+  Deploying = 2,
+  Retracting = 3,
+  Broken = 4,
+}
+
+enum CameraMode {
+  Automatic = 0,
+  Free = 1,
+  Chase = 2,
+  Locked = 3,
+  Orbital = 4,
+  IVA = 5,
+  Map = 6,
+}
+
+enum ControlSource {
+  Kerbal = 0,
+  Probe = 1,
+  None = 2,
+}
+
+enum RadiatorState {
+  Extended = 0,
+  Retracted = 1,
+  Extending = 2,
+  Retracting = 3,
+  Broken = 4,
+}
+
+enum ResourceHarvesterState {
+  Deploying = 0,
+  Deployed = 1,
+  Retracting = 2,
+  Retracted = 3,
+  Active = 4,
+}
+
 enum ControlInputMode {
   Additive = 0,
   Override = 1,
+}
+
+enum SolarPanelState {
+  Extended = 0,
+  Retracted = 1,
+  Extending = 2,
+  Retracting = 3,
+  Broken = 4,
+}
+
+enum ResourceFlowMode {
+  Vessel = 0,
+  Stage = 1,
+  Adjacent = 2,
+  None = 3,
+}
+
+enum ResourceConverterState {
+  Running = 0,
+  Idle = 1,
+  MissingResource = 2,
+  StorageFull = 3,
+  Capacity = 4,
+  Unknown = 5,
+}
+
+enum WheelState {
+  Deployed = 0,
+  Retracted = 1,
+  Deploying = 2,
+  Retracting = 3,
+  Broken = 4,
+}
+
+enum VesselSituation {
+  PreLaunch = 0,
+  Orbiting = 1,
+  SubOrbital = 2,
+  Escaping = 3,
+  Flying = 4,
+  Landed = 5,
+  Splashed = 6,
+  Docked = 7,
+}
+
+enum WarpMode {
+  Rails = 0,
+  Physics = 1,
+  None = 2,
+}
+
+enum DockingPortState {
+  Ready = 0,
+  Docked = 1,
+  Docking = 2,
+  Undocking = 3,
+  Shielded = 4,
+  Moving = 5,
 }
 
 enum CommLinkType {
   Home = 0,
   Control = 1,
   Relay = 2,
+}
+
+enum CrewMemberType {
+  Applicant = 0,
+  Crew = 1,
+  Tourist = 2,
+  Unowned = 3,
+}
+
+enum SASMode {
+  StabilityAssist = 0,
+  Maneuver = 1,
+  Prograde = 2,
+  Retrograde = 3,
+  Normal = 4,
+  AntiNormal = 5,
+  Radial = 6,
+  AntiRadial = 7,
+  Target = 8,
+  AntiTarget = 9,
+}
+
+enum SpeedMode {
+  Orbit = 0,
+  Surface = 1,
+  Target = 2,
+}
+
+enum VesselType {
+  Base = 0,
+  Debris = 1,
+  Lander = 2,
+  Plane = 3,
+  Probe = 4,
+  Relay = 5,
+  Rover = 6,
+  Ship = 7,
+  Station = 8,
 }
 
 export class SpaceCenter {
@@ -1555,7 +1555,7 @@ export class Antenna {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Antenna_Transmit",
       arguments: args,
     });
@@ -1580,7 +1580,7 @@ export class Antenna {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Antenna_Cancel",
       arguments: args,
     });
@@ -1605,7 +1605,7 @@ export class Antenna {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Antenna_get_Part",
       arguments: args,
     });
@@ -1631,7 +1631,7 @@ export class Antenna {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Antenna_get_State",
       arguments: args,
     });
@@ -1659,7 +1659,7 @@ export class Antenna {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Antenna_get_Deployable",
       arguments: args,
     });
@@ -1685,7 +1685,7 @@ export class Antenna {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Antenna_get_Deployed",
       arguments: args,
     });
@@ -1715,7 +1715,7 @@ export class Antenna {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Antenna_set_Deployed",
       arguments: args,
     });
@@ -1741,7 +1741,7 @@ export class Antenna {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Antenna_get_CanTransmit",
       arguments: args,
     });
@@ -1767,7 +1767,7 @@ export class Antenna {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Antenna_get_AllowPartial",
       arguments: args,
     });
@@ -1797,7 +1797,7 @@ export class Antenna {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Antenna_set_AllowPartial",
       arguments: args,
     });
@@ -1823,7 +1823,7 @@ export class Antenna {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Antenna_get_Power",
       arguments: args,
     });
@@ -1849,7 +1849,7 @@ export class Antenna {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Antenna_get_Combinable",
       arguments: args,
     });
@@ -1875,7 +1875,7 @@ export class Antenna {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Antenna_get_CombinableExponent",
       arguments: args,
     });
@@ -1901,7 +1901,7 @@ export class Antenna {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Antenna_get_PacketInterval",
       arguments: args,
     });
@@ -1927,7 +1927,7 @@ export class Antenna {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Antenna_get_PacketSize",
       arguments: args,
     });
@@ -1953,7 +1953,7 @@ export class Antenna {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Antenna_get_PacketResourceCost",
       arguments: args,
     });
@@ -1995,7 +1995,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_Engage",
       arguments: args,
     });
@@ -2020,7 +2020,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_Disengage",
       arguments: args,
     });
@@ -2045,7 +2045,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_Wait",
       arguments: args,
     });
@@ -2078,7 +2078,7 @@ export class AutoPilot {
       value: encoding.encodeFloat(heading),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_TargetPitchAndHeading",
       arguments: args,
     });
@@ -2103,7 +2103,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_Error",
       arguments: args,
     });
@@ -2129,7 +2129,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_PitchError",
       arguments: args,
     });
@@ -2155,7 +2155,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_HeadingError",
       arguments: args,
     });
@@ -2181,7 +2181,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_RollError",
       arguments: args,
     });
@@ -2207,7 +2207,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_ReferenceFrame",
       arguments: args,
     });
@@ -2237,7 +2237,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(value.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_ReferenceFrame",
       arguments: args,
     });
@@ -2263,7 +2263,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_TargetPitch",
       arguments: args,
     });
@@ -2293,7 +2293,7 @@ export class AutoPilot {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_TargetPitch",
       arguments: args,
     });
@@ -2319,7 +2319,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_TargetHeading",
       arguments: args,
     });
@@ -2349,7 +2349,7 @@ export class AutoPilot {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_TargetHeading",
       arguments: args,
     });
@@ -2375,7 +2375,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_TargetRoll",
       arguments: args,
     });
@@ -2405,7 +2405,7 @@ export class AutoPilot {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_TargetRoll",
       arguments: args,
     });
@@ -2431,7 +2431,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_TargetDirection",
       arguments: args,
     });
@@ -2465,7 +2465,7 @@ export class AutoPilot {
       value: encoding.encodeTuple(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_TargetDirection",
       arguments: args,
     });
@@ -2491,7 +2491,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_SAS",
       arguments: args,
     });
@@ -2521,7 +2521,7 @@ export class AutoPilot {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_SAS",
       arguments: args,
     });
@@ -2547,7 +2547,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_SASMode",
       arguments: args,
     });
@@ -2579,7 +2579,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_SASMode",
       arguments: args,
     });
@@ -2605,7 +2605,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_RollThreshold",
       arguments: args,
     });
@@ -2635,7 +2635,7 @@ export class AutoPilot {
       value: encoding.encodeDouble(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_RollThreshold",
       arguments: args,
     });
@@ -2661,7 +2661,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_StoppingTime",
       arguments: args,
     });
@@ -2695,7 +2695,7 @@ export class AutoPilot {
       value: encoding.encodeTuple(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_StoppingTime",
       arguments: args,
     });
@@ -2721,7 +2721,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_DecelerationTime",
       arguments: args,
     });
@@ -2755,7 +2755,7 @@ export class AutoPilot {
       value: encoding.encodeTuple(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_DecelerationTime",
       arguments: args,
     });
@@ -2781,7 +2781,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_AttenuationAngle",
       arguments: args,
     });
@@ -2815,7 +2815,7 @@ export class AutoPilot {
       value: encoding.encodeTuple(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_AttenuationAngle",
       arguments: args,
     });
@@ -2841,7 +2841,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_AutoTune",
       arguments: args,
     });
@@ -2871,7 +2871,7 @@ export class AutoPilot {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_AutoTune",
       arguments: args,
     });
@@ -2897,7 +2897,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_TimeToPeak",
       arguments: args,
     });
@@ -2931,7 +2931,7 @@ export class AutoPilot {
       value: encoding.encodeTuple(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_TimeToPeak",
       arguments: args,
     });
@@ -2957,7 +2957,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_Overshoot",
       arguments: args,
     });
@@ -2991,7 +2991,7 @@ export class AutoPilot {
       value: encoding.encodeTuple(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_Overshoot",
       arguments: args,
     });
@@ -3017,7 +3017,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_PitchPIDGains",
       arguments: args,
     });
@@ -3051,7 +3051,7 @@ export class AutoPilot {
       value: encoding.encodeTuple(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_PitchPIDGains",
       arguments: args,
     });
@@ -3077,7 +3077,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_RollPIDGains",
       arguments: args,
     });
@@ -3111,7 +3111,7 @@ export class AutoPilot {
       value: encoding.encodeTuple(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_RollPIDGains",
       arguments: args,
     });
@@ -3137,7 +3137,7 @@ export class AutoPilot {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_get_YawPIDGains",
       arguments: args,
     });
@@ -3171,7 +3171,7 @@ export class AutoPilot {
       value: encoding.encodeTuple(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "AutoPilot_set_YawPIDGains",
       arguments: args,
     });
@@ -3213,7 +3213,7 @@ export class Camera {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_get_Mode",
       arguments: args,
     });
@@ -3245,7 +3245,7 @@ export class Camera {
       value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_set_Mode",
       arguments: args,
     });
@@ -3271,7 +3271,7 @@ export class Camera {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_get_Pitch",
       arguments: args,
     });
@@ -3301,7 +3301,7 @@ export class Camera {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_set_Pitch",
       arguments: args,
     });
@@ -3327,7 +3327,7 @@ export class Camera {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_get_Heading",
       arguments: args,
     });
@@ -3357,7 +3357,7 @@ export class Camera {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_set_Heading",
       arguments: args,
     });
@@ -3383,7 +3383,7 @@ export class Camera {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_get_Distance",
       arguments: args,
     });
@@ -3413,7 +3413,7 @@ export class Camera {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_set_Distance",
       arguments: args,
     });
@@ -3439,7 +3439,7 @@ export class Camera {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_get_MinPitch",
       arguments: args,
     });
@@ -3465,7 +3465,7 @@ export class Camera {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_get_MaxPitch",
       arguments: args,
     });
@@ -3491,7 +3491,7 @@ export class Camera {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_get_MinDistance",
       arguments: args,
     });
@@ -3517,7 +3517,7 @@ export class Camera {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_get_MaxDistance",
       arguments: args,
     });
@@ -3543,7 +3543,7 @@ export class Camera {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_get_DefaultDistance",
       arguments: args,
     });
@@ -3569,7 +3569,7 @@ export class Camera {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_get_FocussedBody",
       arguments: args,
     });
@@ -3599,7 +3599,7 @@ export class Camera {
       value: encoding.encodeVarint64(value.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_set_FocussedBody",
       arguments: args,
     });
@@ -3625,7 +3625,7 @@ export class Camera {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_get_FocussedVessel",
       arguments: args,
     });
@@ -3655,7 +3655,7 @@ export class Camera {
       value: encoding.encodeVarint64(value.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_set_FocussedVessel",
       arguments: args,
     });
@@ -3681,7 +3681,7 @@ export class Camera {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_get_FocussedNode",
       arguments: args,
     });
@@ -3711,7 +3711,7 @@ export class Camera {
       value: encoding.encodeVarint64(value.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Camera_set_FocussedNode",
       arguments: args,
     });
@@ -3753,7 +3753,7 @@ export class CargoBay {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CargoBay_get_Part",
       arguments: args,
     });
@@ -3779,7 +3779,7 @@ export class CargoBay {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CargoBay_get_State",
       arguments: args,
     });
@@ -3807,7 +3807,7 @@ export class CargoBay {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CargoBay_get_Open",
       arguments: args,
     });
@@ -3837,7 +3837,7 @@ export class CargoBay {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CargoBay_set_Open",
       arguments: args,
     });
@@ -3887,7 +3887,7 @@ export class CelestialBody {
       value: encoding.encodeDouble(longitude),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_SurfaceHeight",
       arguments: args,
     });
@@ -3920,7 +3920,7 @@ export class CelestialBody {
       value: encoding.encodeDouble(longitude),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_BedrockHeight",
       arguments: args,
     });
@@ -3961,7 +3961,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_MSLPosition",
       arguments: args,
     });
@@ -4007,7 +4007,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_SurfacePosition",
       arguments: args,
     });
@@ -4053,7 +4053,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_BedrockPosition",
       arguments: args,
     });
@@ -4104,7 +4104,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_PositionAtAltitude",
       arguments: args,
     });
@@ -4145,7 +4145,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_LatitudeAtPosition",
       arguments: args,
     });
@@ -4181,7 +4181,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_LongitudeAtPosition",
       arguments: args,
     });
@@ -4217,7 +4217,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_AltitudeAtPosition",
       arguments: args,
     });
@@ -4253,7 +4253,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_AtmosphericDensityAtPosition",
       arguments: args,
     });
@@ -4289,7 +4289,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_TemperatureAt",
       arguments: args,
     });
@@ -4318,7 +4318,7 @@ export class CelestialBody {
       value: encoding.encodeDouble(altitude),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_DensityAt",
       arguments: args,
     });
@@ -4347,7 +4347,7 @@ export class CelestialBody {
       value: encoding.encodeDouble(altitude),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_PressureAt",
       arguments: args,
     });
@@ -4380,7 +4380,7 @@ export class CelestialBody {
       value: encoding.encodeDouble(longitude),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_BiomeAt",
       arguments: args,
     });
@@ -4411,7 +4411,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_Position",
       arguments: args,
     });
@@ -4447,7 +4447,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_Velocity",
       arguments: args,
     });
@@ -4483,7 +4483,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_Rotation",
       arguments: args,
     });
@@ -4520,7 +4520,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_Direction",
       arguments: args,
     });
@@ -4556,7 +4556,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_AngularVelocity",
       arguments: args,
     });
@@ -4586,7 +4586,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_Name",
       arguments: args,
     });
@@ -4612,7 +4612,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_Satellites",
       arguments: args,
     });
@@ -4640,7 +4640,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_Mass",
       arguments: args,
     });
@@ -4666,7 +4666,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_GravitationalParameter",
       arguments: args,
     });
@@ -4692,7 +4692,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_SurfaceGravity",
       arguments: args,
     });
@@ -4718,7 +4718,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_RotationalPeriod",
       arguments: args,
     });
@@ -4744,7 +4744,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_RotationalSpeed",
       arguments: args,
     });
@@ -4770,7 +4770,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_RotationAngle",
       arguments: args,
     });
@@ -4796,7 +4796,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_InitialRotation",
       arguments: args,
     });
@@ -4822,7 +4822,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_EquatorialRadius",
       arguments: args,
     });
@@ -4848,7 +4848,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_SphereOfInfluence",
       arguments: args,
     });
@@ -4874,7 +4874,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_Orbit",
       arguments: args,
     });
@@ -4900,7 +4900,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_HasAtmosphere",
       arguments: args,
     });
@@ -4926,7 +4926,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_AtmosphereDepth",
       arguments: args,
     });
@@ -4952,7 +4952,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_HasAtmosphericOxygen",
       arguments: args,
     });
@@ -4978,7 +4978,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_Biomes",
       arguments: args,
     });
@@ -5007,7 +5007,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_FlyingHighAltitudeThreshold",
       arguments: args,
     });
@@ -5033,7 +5033,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_SpaceHighAltitudeThreshold",
       arguments: args,
     });
@@ -5059,7 +5059,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_ReferenceFrame",
       arguments: args,
     });
@@ -5085,7 +5085,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_NonRotatingReferenceFrame",
       arguments: args,
     });
@@ -5111,7 +5111,7 @@ export class CelestialBody {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CelestialBody_get_OrbitalReferenceFrame",
       arguments: args,
     });
@@ -5153,7 +5153,7 @@ export class CommLink {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CommLink_get_Type",
       arguments: args,
     });
@@ -5181,7 +5181,7 @@ export class CommLink {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CommLink_get_SignalStrength",
       arguments: args,
     });
@@ -5207,7 +5207,7 @@ export class CommLink {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CommLink_get_Start",
       arguments: args,
     });
@@ -5233,7 +5233,7 @@ export class CommLink {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CommLink_get_End",
       arguments: args,
     });
@@ -5275,7 +5275,7 @@ export class CommNode {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CommNode_get_Name",
       arguments: args,
     });
@@ -5301,7 +5301,7 @@ export class CommNode {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CommNode_get_IsHome",
       arguments: args,
     });
@@ -5327,7 +5327,7 @@ export class CommNode {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CommNode_get_IsControlPoint",
       arguments: args,
     });
@@ -5353,7 +5353,7 @@ export class CommNode {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CommNode_get_IsVessel",
       arguments: args,
     });
@@ -5379,7 +5379,7 @@ export class CommNode {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CommNode_get_Vessel",
       arguments: args,
     });
@@ -5421,7 +5421,7 @@ export class Comms {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Comms_get_CanCommunicate",
       arguments: args,
     });
@@ -5447,7 +5447,7 @@ export class Comms {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Comms_get_CanTransmitScience",
       arguments: args,
     });
@@ -5473,7 +5473,7 @@ export class Comms {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Comms_get_SignalStrength",
       arguments: args,
     });
@@ -5499,7 +5499,7 @@ export class Comms {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Comms_get_SignalDelay",
       arguments: args,
     });
@@ -5525,7 +5525,7 @@ export class Comms {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Comms_get_Power",
       arguments: args,
     });
@@ -5551,7 +5551,7 @@ export class Comms {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Comms_get_ControlPath",
       arguments: args,
     });
@@ -5595,7 +5595,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_Cancel",
       arguments: args,
     });
@@ -5620,7 +5620,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_Accept",
       arguments: args,
     });
@@ -5645,7 +5645,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_Decline",
       arguments: args,
     });
@@ -5670,7 +5670,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_Type",
       arguments: args,
     });
@@ -5696,7 +5696,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_Title",
       arguments: args,
     });
@@ -5722,7 +5722,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_Description",
       arguments: args,
     });
@@ -5748,7 +5748,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_Notes",
       arguments: args,
     });
@@ -5774,7 +5774,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_Synopsis",
       arguments: args,
     });
@@ -5800,7 +5800,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_Keywords",
       arguments: args,
     });
@@ -5828,7 +5828,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_State",
       arguments: args,
     });
@@ -5856,7 +5856,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_Active",
       arguments: args,
     });
@@ -5882,7 +5882,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_Failed",
       arguments: args,
     });
@@ -5908,7 +5908,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_Seen",
       arguments: args,
     });
@@ -5934,7 +5934,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_Read",
       arguments: args,
     });
@@ -5960,7 +5960,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_CanBeCanceled",
       arguments: args,
     });
@@ -5986,7 +5986,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_CanBeDeclined",
       arguments: args,
     });
@@ -6012,7 +6012,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_CanBeFailed",
       arguments: args,
     });
@@ -6038,7 +6038,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_FundsAdvance",
       arguments: args,
     });
@@ -6064,7 +6064,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_FundsCompletion",
       arguments: args,
     });
@@ -6090,7 +6090,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_FundsFailure",
       arguments: args,
     });
@@ -6116,7 +6116,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_ReputationCompletion",
       arguments: args,
     });
@@ -6142,7 +6142,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_ReputationFailure",
       arguments: args,
     });
@@ -6168,7 +6168,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_ScienceCompletion",
       arguments: args,
     });
@@ -6194,7 +6194,7 @@ export class Contract {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Contract_get_Parameters",
       arguments: args,
     });
@@ -6238,7 +6238,7 @@ export class ContractManager {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractManager_get_Types",
       arguments: args,
     });
@@ -6267,7 +6267,7 @@ export class ContractManager {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractManager_get_AllContracts",
       arguments: args,
     });
@@ -6295,7 +6295,7 @@ export class ContractManager {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractManager_get_ActiveContracts",
       arguments: args,
     });
@@ -6323,7 +6323,7 @@ export class ContractManager {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractManager_get_OfferedContracts",
       arguments: args,
     });
@@ -6351,7 +6351,7 @@ export class ContractManager {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractManager_get_CompletedContracts",
       arguments: args,
     });
@@ -6379,7 +6379,7 @@ export class ContractManager {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractManager_get_FailedContracts",
       arguments: args,
     });
@@ -6423,7 +6423,7 @@ export class ContractParameter {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractParameter_get_Title",
       arguments: args,
     });
@@ -6449,7 +6449,7 @@ export class ContractParameter {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractParameter_get_Notes",
       arguments: args,
     });
@@ -6475,7 +6475,7 @@ export class ContractParameter {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractParameter_get_Children",
       arguments: args,
     });
@@ -6503,7 +6503,7 @@ export class ContractParameter {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractParameter_get_Completed",
       arguments: args,
     });
@@ -6529,7 +6529,7 @@ export class ContractParameter {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractParameter_get_Failed",
       arguments: args,
     });
@@ -6555,7 +6555,7 @@ export class ContractParameter {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractParameter_get_Optional",
       arguments: args,
     });
@@ -6581,7 +6581,7 @@ export class ContractParameter {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractParameter_get_FundsCompletion",
       arguments: args,
     });
@@ -6607,7 +6607,7 @@ export class ContractParameter {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractParameter_get_FundsFailure",
       arguments: args,
     });
@@ -6633,7 +6633,7 @@ export class ContractParameter {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractParameter_get_ReputationCompletion",
       arguments: args,
     });
@@ -6659,7 +6659,7 @@ export class ContractParameter {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractParameter_get_ReputationFailure",
       arguments: args,
     });
@@ -6685,7 +6685,7 @@ export class ContractParameter {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ContractParameter_get_ScienceCompletion",
       arguments: args,
     });
@@ -6727,7 +6727,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_ActivateNextStage",
       arguments: args,
     });
@@ -6759,7 +6759,7 @@ export class Control {
       value: encoding.encodeUint32(group),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_GetActionGroup",
       arguments: args,
     });
@@ -6792,7 +6792,7 @@ export class Control {
       value: encoding.encodeBool(state),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_SetActionGroup",
       arguments: args,
     });
@@ -6821,7 +6821,7 @@ export class Control {
       value: encoding.encodeUint32(group),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_ToggleActionGroup",
       arguments: args,
     });
@@ -6873,7 +6873,7 @@ export class Control {
       });
     }
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_AddNode",
       arguments: args,
     });
@@ -6898,7 +6898,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_RemoveNodes",
       arguments: args,
     });
@@ -6923,7 +6923,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_State",
       arguments: args,
     });
@@ -6951,7 +6951,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Source",
       arguments: args,
     });
@@ -6979,7 +6979,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_SAS",
       arguments: args,
     });
@@ -7009,7 +7009,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_SAS",
       arguments: args,
     });
@@ -7035,7 +7035,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_SASMode",
       arguments: args,
     });
@@ -7067,7 +7067,7 @@ export class Control {
       value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_SASMode",
       arguments: args,
     });
@@ -7093,7 +7093,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_SpeedMode",
       arguments: args,
     });
@@ -7125,7 +7125,7 @@ export class Control {
       value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_SpeedMode",
       arguments: args,
     });
@@ -7151,7 +7151,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_RCS",
       arguments: args,
     });
@@ -7181,7 +7181,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_RCS",
       arguments: args,
     });
@@ -7207,7 +7207,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_ReactionWheels",
       arguments: args,
     });
@@ -7237,7 +7237,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_ReactionWheels",
       arguments: args,
     });
@@ -7263,7 +7263,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Gear",
       arguments: args,
     });
@@ -7293,7 +7293,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Gear",
       arguments: args,
     });
@@ -7319,7 +7319,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Legs",
       arguments: args,
     });
@@ -7349,7 +7349,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Legs",
       arguments: args,
     });
@@ -7375,7 +7375,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Wheels",
       arguments: args,
     });
@@ -7405,7 +7405,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Wheels",
       arguments: args,
     });
@@ -7431,7 +7431,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Lights",
       arguments: args,
     });
@@ -7461,7 +7461,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Lights",
       arguments: args,
     });
@@ -7487,7 +7487,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Brakes",
       arguments: args,
     });
@@ -7517,7 +7517,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Brakes",
       arguments: args,
     });
@@ -7543,7 +7543,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Antennas",
       arguments: args,
     });
@@ -7573,7 +7573,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Antennas",
       arguments: args,
     });
@@ -7599,7 +7599,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_CargoBays",
       arguments: args,
     });
@@ -7629,7 +7629,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_CargoBays",
       arguments: args,
     });
@@ -7655,7 +7655,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Intakes",
       arguments: args,
     });
@@ -7685,7 +7685,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Intakes",
       arguments: args,
     });
@@ -7711,7 +7711,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Parachutes",
       arguments: args,
     });
@@ -7741,7 +7741,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Parachutes",
       arguments: args,
     });
@@ -7767,7 +7767,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Radiators",
       arguments: args,
     });
@@ -7797,7 +7797,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Radiators",
       arguments: args,
     });
@@ -7823,7 +7823,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_ResourceHarvesters",
       arguments: args,
     });
@@ -7853,7 +7853,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_ResourceHarvesters",
       arguments: args,
     });
@@ -7879,7 +7879,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_ResourceHarvestersActive",
       arguments: args,
     });
@@ -7909,7 +7909,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_ResourceHarvestersActive",
       arguments: args,
     });
@@ -7935,7 +7935,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_SolarPanels",
       arguments: args,
     });
@@ -7965,7 +7965,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_SolarPanels",
       arguments: args,
     });
@@ -7991,7 +7991,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Abort",
       arguments: args,
     });
@@ -8021,7 +8021,7 @@ export class Control {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Abort",
       arguments: args,
     });
@@ -8047,7 +8047,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Throttle",
       arguments: args,
     });
@@ -8077,7 +8077,7 @@ export class Control {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Throttle",
       arguments: args,
     });
@@ -8103,7 +8103,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_InputMode",
       arguments: args,
     });
@@ -8135,7 +8135,7 @@ export class Control {
       value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_InputMode",
       arguments: args,
     });
@@ -8161,7 +8161,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Pitch",
       arguments: args,
     });
@@ -8191,7 +8191,7 @@ export class Control {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Pitch",
       arguments: args,
     });
@@ -8217,7 +8217,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Yaw",
       arguments: args,
     });
@@ -8247,7 +8247,7 @@ export class Control {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Yaw",
       arguments: args,
     });
@@ -8273,7 +8273,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Roll",
       arguments: args,
     });
@@ -8303,7 +8303,7 @@ export class Control {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Roll",
       arguments: args,
     });
@@ -8329,7 +8329,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Forward",
       arguments: args,
     });
@@ -8359,7 +8359,7 @@ export class Control {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Forward",
       arguments: args,
     });
@@ -8385,7 +8385,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Up",
       arguments: args,
     });
@@ -8415,7 +8415,7 @@ export class Control {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Up",
       arguments: args,
     });
@@ -8441,7 +8441,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Right",
       arguments: args,
     });
@@ -8471,7 +8471,7 @@ export class Control {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_Right",
       arguments: args,
     });
@@ -8497,7 +8497,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_WheelThrottle",
       arguments: args,
     });
@@ -8527,7 +8527,7 @@ export class Control {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_WheelThrottle",
       arguments: args,
     });
@@ -8553,7 +8553,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_WheelSteering",
       arguments: args,
     });
@@ -8583,7 +8583,7 @@ export class Control {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_set_WheelSteering",
       arguments: args,
     });
@@ -8609,7 +8609,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_CurrentStage",
       arguments: args,
     });
@@ -8635,7 +8635,7 @@ export class Control {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Control_get_Nodes",
       arguments: args,
     });
@@ -8679,7 +8679,7 @@ export class ControlSurface {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ControlSurface_get_Part",
       arguments: args,
     });
@@ -8705,7 +8705,7 @@ export class ControlSurface {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ControlSurface_get_PitchEnabled",
       arguments: args,
     });
@@ -8735,7 +8735,7 @@ export class ControlSurface {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ControlSurface_set_PitchEnabled",
       arguments: args,
     });
@@ -8761,7 +8761,7 @@ export class ControlSurface {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ControlSurface_get_YawEnabled",
       arguments: args,
     });
@@ -8791,7 +8791,7 @@ export class ControlSurface {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ControlSurface_set_YawEnabled",
       arguments: args,
     });
@@ -8817,7 +8817,7 @@ export class ControlSurface {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ControlSurface_get_RollEnabled",
       arguments: args,
     });
@@ -8847,7 +8847,7 @@ export class ControlSurface {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ControlSurface_set_RollEnabled",
       arguments: args,
     });
@@ -8873,7 +8873,7 @@ export class ControlSurface {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ControlSurface_get_AuthorityLimiter",
       arguments: args,
     });
@@ -8903,7 +8903,7 @@ export class ControlSurface {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ControlSurface_set_AuthorityLimiter",
       arguments: args,
     });
@@ -8929,7 +8929,7 @@ export class ControlSurface {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ControlSurface_get_Inverted",
       arguments: args,
     });
@@ -8959,7 +8959,7 @@ export class ControlSurface {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ControlSurface_set_Inverted",
       arguments: args,
     });
@@ -8985,7 +8985,7 @@ export class ControlSurface {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ControlSurface_get_Deployed",
       arguments: args,
     });
@@ -9015,7 +9015,7 @@ export class ControlSurface {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ControlSurface_set_Deployed",
       arguments: args,
     });
@@ -9041,7 +9041,7 @@ export class ControlSurface {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ControlSurface_get_SurfaceArea",
       arguments: args,
     });
@@ -9069,7 +9069,7 @@ export class ControlSurface {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ControlSurface_get_AvailableTorque",
       arguments: args,
     });
@@ -9122,7 +9122,7 @@ export class CrewMember {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CrewMember_get_Name",
       arguments: args,
     });
@@ -9152,7 +9152,7 @@ export class CrewMember {
       value: encoding.encodeString(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CrewMember_set_Name",
       arguments: args,
     });
@@ -9178,7 +9178,7 @@ export class CrewMember {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CrewMember_get_Type",
       arguments: args,
     });
@@ -9206,7 +9206,7 @@ export class CrewMember {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CrewMember_get_OnMission",
       arguments: args,
     });
@@ -9232,7 +9232,7 @@ export class CrewMember {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CrewMember_get_Courage",
       arguments: args,
     });
@@ -9262,7 +9262,7 @@ export class CrewMember {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CrewMember_set_Courage",
       arguments: args,
     });
@@ -9288,7 +9288,7 @@ export class CrewMember {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CrewMember_get_Stupidity",
       arguments: args,
     });
@@ -9318,7 +9318,7 @@ export class CrewMember {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CrewMember_set_Stupidity",
       arguments: args,
     });
@@ -9344,7 +9344,7 @@ export class CrewMember {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CrewMember_get_Experience",
       arguments: args,
     });
@@ -9374,7 +9374,7 @@ export class CrewMember {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CrewMember_set_Experience",
       arguments: args,
     });
@@ -9400,7 +9400,7 @@ export class CrewMember {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CrewMember_get_Badass",
       arguments: args,
     });
@@ -9430,7 +9430,7 @@ export class CrewMember {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CrewMember_set_Badass",
       arguments: args,
     });
@@ -9456,7 +9456,7 @@ export class CrewMember {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CrewMember_get_Veteran",
       arguments: args,
     });
@@ -9486,7 +9486,7 @@ export class CrewMember {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "CrewMember_set_Veteran",
       arguments: args,
     });
@@ -9528,7 +9528,7 @@ export class Decoupler {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Decoupler_Decouple",
       arguments: args,
     });
@@ -9553,7 +9553,7 @@ export class Decoupler {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Decoupler_get_Part",
       arguments: args,
     });
@@ -9579,7 +9579,7 @@ export class Decoupler {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Decoupler_get_Decoupled",
       arguments: args,
     });
@@ -9605,7 +9605,7 @@ export class Decoupler {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Decoupler_get_Staged",
       arguments: args,
     });
@@ -9631,7 +9631,7 @@ export class Decoupler {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Decoupler_get_Impulse",
       arguments: args,
     });
@@ -9673,7 +9673,7 @@ export class DockingPort {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "DockingPort_Undock",
       arguments: args,
     });
@@ -9704,7 +9704,7 @@ export class DockingPort {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "DockingPort_Position",
       arguments: args,
     });
@@ -9740,7 +9740,7 @@ export class DockingPort {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "DockingPort_Direction",
       arguments: args,
     });
@@ -9776,7 +9776,7 @@ export class DockingPort {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "DockingPort_Rotation",
       arguments: args,
     });
@@ -9807,7 +9807,7 @@ export class DockingPort {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "DockingPort_get_Part",
       arguments: args,
     });
@@ -9833,7 +9833,7 @@ export class DockingPort {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "DockingPort_get_State",
       arguments: args,
     });
@@ -9861,7 +9861,7 @@ export class DockingPort {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "DockingPort_get_DockedPart",
       arguments: args,
     });
@@ -9887,7 +9887,7 @@ export class DockingPort {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "DockingPort_get_ReengageDistance",
       arguments: args,
     });
@@ -9913,7 +9913,7 @@ export class DockingPort {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "DockingPort_get_HasShield",
       arguments: args,
     });
@@ -9939,7 +9939,7 @@ export class DockingPort {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "DockingPort_get_Shielded",
       arguments: args,
     });
@@ -9969,7 +9969,7 @@ export class DockingPort {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "DockingPort_set_Shielded",
       arguments: args,
     });
@@ -9995,7 +9995,7 @@ export class DockingPort {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "DockingPort_get_ReferenceFrame",
       arguments: args,
     });
@@ -10037,7 +10037,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_ToggleMode",
       arguments: args,
     });
@@ -10062,7 +10062,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_Part",
       arguments: args,
     });
@@ -10088,7 +10088,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_Active",
       arguments: args,
     });
@@ -10118,7 +10118,7 @@ export class Engine {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_set_Active",
       arguments: args,
     });
@@ -10144,7 +10144,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_Thrust",
       arguments: args,
     });
@@ -10170,7 +10170,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_AvailableThrust",
       arguments: args,
     });
@@ -10196,7 +10196,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_MaxThrust",
       arguments: args,
     });
@@ -10222,7 +10222,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_MaxVacuumThrust",
       arguments: args,
     });
@@ -10248,7 +10248,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_ThrustLimit",
       arguments: args,
     });
@@ -10278,7 +10278,7 @@ export class Engine {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_set_ThrustLimit",
       arguments: args,
     });
@@ -10304,7 +10304,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_Thrusters",
       arguments: args,
     });
@@ -10332,7 +10332,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_SpecificImpulse",
       arguments: args,
     });
@@ -10358,7 +10358,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_VacuumSpecificImpulse",
       arguments: args,
     });
@@ -10384,7 +10384,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_KerbinSeaLevelSpecificImpulse",
       arguments: args,
     });
@@ -10410,7 +10410,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_PropellantNames",
       arguments: args,
     });
@@ -10438,7 +10438,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_Propellants",
       arguments: args,
     });
@@ -10466,7 +10466,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_PropellantRatios",
       arguments: args,
     });
@@ -10497,7 +10497,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_HasFuel",
       arguments: args,
     });
@@ -10523,7 +10523,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_Throttle",
       arguments: args,
     });
@@ -10549,7 +10549,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_ThrottleLocked",
       arguments: args,
     });
@@ -10575,7 +10575,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_CanRestart",
       arguments: args,
     });
@@ -10601,7 +10601,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_CanShutdown",
       arguments: args,
     });
@@ -10627,7 +10627,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_HasModes",
       arguments: args,
     });
@@ -10653,7 +10653,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_Mode",
       arguments: args,
     });
@@ -10683,7 +10683,7 @@ export class Engine {
       value: encoding.encodeString(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_set_Mode",
       arguments: args,
     });
@@ -10709,7 +10709,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_Modes",
       arguments: args,
     });
@@ -10740,7 +10740,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_AutoModeSwitch",
       arguments: args,
     });
@@ -10770,7 +10770,7 @@ export class Engine {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_set_AutoModeSwitch",
       arguments: args,
     });
@@ -10796,7 +10796,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_Gimballed",
       arguments: args,
     });
@@ -10822,7 +10822,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_GimbalRange",
       arguments: args,
     });
@@ -10848,7 +10848,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_GimbalLocked",
       arguments: args,
     });
@@ -10878,7 +10878,7 @@ export class Engine {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_set_GimbalLocked",
       arguments: args,
     });
@@ -10904,7 +10904,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_GimbalLimit",
       arguments: args,
     });
@@ -10934,7 +10934,7 @@ export class Engine {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_set_GimbalLimit",
       arguments: args,
     });
@@ -10962,7 +10962,7 @@ export class Engine {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Engine_get_AvailableTorque",
       arguments: args,
     });
@@ -11015,7 +11015,7 @@ export class Experiment {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Experiment_Run",
       arguments: args,
     });
@@ -11040,7 +11040,7 @@ export class Experiment {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Experiment_Transmit",
       arguments: args,
     });
@@ -11065,7 +11065,7 @@ export class Experiment {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Experiment_Dump",
       arguments: args,
     });
@@ -11090,7 +11090,7 @@ export class Experiment {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Experiment_Reset",
       arguments: args,
     });
@@ -11115,7 +11115,7 @@ export class Experiment {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Experiment_get_Part",
       arguments: args,
     });
@@ -11141,7 +11141,7 @@ export class Experiment {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Experiment_get_Inoperable",
       arguments: args,
     });
@@ -11167,7 +11167,7 @@ export class Experiment {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Experiment_get_Deployed",
       arguments: args,
     });
@@ -11193,7 +11193,7 @@ export class Experiment {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Experiment_get_Rerunnable",
       arguments: args,
     });
@@ -11219,7 +11219,7 @@ export class Experiment {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Experiment_get_HasData",
       arguments: args,
     });
@@ -11245,7 +11245,7 @@ export class Experiment {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Experiment_get_Data",
       arguments: args,
     });
@@ -11273,7 +11273,7 @@ export class Experiment {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Experiment_get_Available",
       arguments: args,
     });
@@ -11299,7 +11299,7 @@ export class Experiment {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Experiment_get_Biome",
       arguments: args,
     });
@@ -11325,7 +11325,7 @@ export class Experiment {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Experiment_get_ScienceSubject",
       arguments: args,
     });
@@ -11367,7 +11367,7 @@ export class Fairing {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Fairing_Jettison",
       arguments: args,
     });
@@ -11392,7 +11392,7 @@ export class Fairing {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Fairing_get_Part",
       arguments: args,
     });
@@ -11418,7 +11418,7 @@ export class Fairing {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Fairing_get_Jettisoned",
       arguments: args,
     });
@@ -11476,7 +11476,7 @@ export class Flight {
       value: encoding.encodeTuple(velocity),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_SimulateAerodynamicForceAt",
       arguments: args,
     });
@@ -11506,7 +11506,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_GForce",
       arguments: args,
     });
@@ -11532,7 +11532,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_MeanAltitude",
       arguments: args,
     });
@@ -11558,7 +11558,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_SurfaceAltitude",
       arguments: args,
     });
@@ -11584,7 +11584,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_BedrockAltitude",
       arguments: args,
     });
@@ -11610,7 +11610,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Elevation",
       arguments: args,
     });
@@ -11636,7 +11636,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Latitude",
       arguments: args,
     });
@@ -11662,7 +11662,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Longitude",
       arguments: args,
     });
@@ -11688,7 +11688,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Velocity",
       arguments: args,
     });
@@ -11718,7 +11718,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Speed",
       arguments: args,
     });
@@ -11744,7 +11744,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_HorizontalSpeed",
       arguments: args,
     });
@@ -11770,7 +11770,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_VerticalSpeed",
       arguments: args,
     });
@@ -11796,7 +11796,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_CenterOfMass",
       arguments: args,
     });
@@ -11826,7 +11826,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Rotation",
       arguments: args,
     });
@@ -11857,7 +11857,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Direction",
       arguments: args,
     });
@@ -11887,7 +11887,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Pitch",
       arguments: args,
     });
@@ -11913,7 +11913,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Heading",
       arguments: args,
     });
@@ -11939,7 +11939,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Roll",
       arguments: args,
     });
@@ -11965,7 +11965,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Prograde",
       arguments: args,
     });
@@ -11995,7 +11995,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Retrograde",
       arguments: args,
     });
@@ -12025,7 +12025,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Normal",
       arguments: args,
     });
@@ -12055,7 +12055,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_AntiNormal",
       arguments: args,
     });
@@ -12085,7 +12085,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Radial",
       arguments: args,
     });
@@ -12115,7 +12115,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_AntiRadial",
       arguments: args,
     });
@@ -12145,7 +12145,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_AtmosphereDensity",
       arguments: args,
     });
@@ -12171,7 +12171,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_DynamicPressure",
       arguments: args,
     });
@@ -12197,7 +12197,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_StaticPressureAtMSL",
       arguments: args,
     });
@@ -12223,7 +12223,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_StaticPressure",
       arguments: args,
     });
@@ -12249,7 +12249,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_AerodynamicForce",
       arguments: args,
     });
@@ -12279,7 +12279,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Lift",
       arguments: args,
     });
@@ -12309,7 +12309,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Drag",
       arguments: args,
     });
@@ -12339,7 +12339,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_SpeedOfSound",
       arguments: args,
     });
@@ -12365,7 +12365,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_Mach",
       arguments: args,
     });
@@ -12391,7 +12391,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_ReynoldsNumber",
       arguments: args,
     });
@@ -12417,7 +12417,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_TrueAirSpeed",
       arguments: args,
     });
@@ -12443,7 +12443,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_EquivalentAirSpeed",
       arguments: args,
     });
@@ -12469,7 +12469,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_TerminalVelocity",
       arguments: args,
     });
@@ -12495,7 +12495,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_AngleOfAttack",
       arguments: args,
     });
@@ -12521,7 +12521,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_SideslipAngle",
       arguments: args,
     });
@@ -12547,7 +12547,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_TotalAirTemperature",
       arguments: args,
     });
@@ -12573,7 +12573,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_StaticAirTemperature",
       arguments: args,
     });
@@ -12599,7 +12599,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_StallFraction",
       arguments: args,
     });
@@ -12625,7 +12625,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_DragCoefficient",
       arguments: args,
     });
@@ -12651,7 +12651,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_LiftCoefficient",
       arguments: args,
     });
@@ -12677,7 +12677,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_BallisticCoefficient",
       arguments: args,
     });
@@ -12703,7 +12703,7 @@ export class Flight {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Flight_get_ThrustSpecificFuelConsumption",
       arguments: args,
     });
@@ -12745,7 +12745,7 @@ export class Force {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Force_Remove",
       arguments: args,
     });
@@ -12770,7 +12770,7 @@ export class Force {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Force_get_Part",
       arguments: args,
     });
@@ -12796,7 +12796,7 @@ export class Force {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Force_get_ForceVector",
       arguments: args,
     });
@@ -12830,7 +12830,7 @@ export class Force {
       value: encoding.encodeTuple(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Force_set_ForceVector",
       arguments: args,
     });
@@ -12856,7 +12856,7 @@ export class Force {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Force_get_Position",
       arguments: args,
     });
@@ -12890,7 +12890,7 @@ export class Force {
       value: encoding.encodeTuple(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Force_set_Position",
       arguments: args,
     });
@@ -12916,7 +12916,7 @@ export class Force {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Force_get_ReferenceFrame",
       arguments: args,
     });
@@ -12946,7 +12946,7 @@ export class Force {
       value: encoding.encodeVarint64(value.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Force_set_ReferenceFrame",
       arguments: args,
     });
@@ -12988,7 +12988,7 @@ export class Intake {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Intake_get_Part",
       arguments: args,
     });
@@ -13014,7 +13014,7 @@ export class Intake {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Intake_get_Open",
       arguments: args,
     });
@@ -13044,7 +13044,7 @@ export class Intake {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Intake_set_Open",
       arguments: args,
     });
@@ -13070,7 +13070,7 @@ export class Intake {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Intake_get_Speed",
       arguments: args,
     });
@@ -13096,7 +13096,7 @@ export class Intake {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Intake_get_Flow",
       arguments: args,
     });
@@ -13122,7 +13122,7 @@ export class Intake {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Intake_get_Area",
       arguments: args,
     });
@@ -13164,7 +13164,7 @@ export class LaunchClamp {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "LaunchClamp_Release",
       arguments: args,
     });
@@ -13189,7 +13189,7 @@ export class LaunchClamp {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "LaunchClamp_get_Part",
       arguments: args,
     });
@@ -13231,7 +13231,7 @@ export class Leg {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Leg_get_Part",
       arguments: args,
     });
@@ -13257,7 +13257,7 @@ export class Leg {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Leg_get_State",
       arguments: args,
     });
@@ -13285,7 +13285,7 @@ export class Leg {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Leg_get_Deployable",
       arguments: args,
     });
@@ -13311,7 +13311,7 @@ export class Leg {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Leg_get_Deployed",
       arguments: args,
     });
@@ -13341,7 +13341,7 @@ export class Leg {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Leg_set_Deployed",
       arguments: args,
     });
@@ -13367,7 +13367,7 @@ export class Leg {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Leg_get_IsGrounded",
       arguments: args,
     });
@@ -13409,7 +13409,7 @@ export class Light {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Light_get_Part",
       arguments: args,
     });
@@ -13435,7 +13435,7 @@ export class Light {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Light_get_Active",
       arguments: args,
     });
@@ -13465,7 +13465,7 @@ export class Light {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Light_set_Active",
       arguments: args,
     });
@@ -13491,7 +13491,7 @@ export class Light {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Light_get_Color",
       arguments: args,
     });
@@ -13525,7 +13525,7 @@ export class Light {
       value: encoding.encodeTuple(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Light_set_Color",
       arguments: args,
     });
@@ -13551,7 +13551,7 @@ export class Light {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Light_get_PowerUsage",
       arguments: args,
     });
@@ -13597,7 +13597,7 @@ export class Module {
       value: encoding.encodeString(name),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Module_HasField",
       arguments: args,
     });
@@ -13626,7 +13626,7 @@ export class Module {
       value: encoding.encodeString(name),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Module_GetField",
       arguments: args,
     });
@@ -13659,7 +13659,7 @@ export class Module {
       value: encoding.encodeSint32(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Module_SetFieldInt",
       arguments: args,
     });
@@ -13692,7 +13692,7 @@ export class Module {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Module_SetFieldFloat",
       arguments: args,
     });
@@ -13725,7 +13725,7 @@ export class Module {
       value: encoding.encodeString(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Module_SetFieldString",
       arguments: args,
     });
@@ -13754,7 +13754,7 @@ export class Module {
       value: encoding.encodeString(name),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Module_ResetField",
       arguments: args,
     });
@@ -13783,7 +13783,7 @@ export class Module {
       value: encoding.encodeString(name),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Module_HasEvent",
       arguments: args,
     });
@@ -13812,7 +13812,7 @@ export class Module {
       value: encoding.encodeString(name),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Module_TriggerEvent",
       arguments: args,
     });
@@ -13841,7 +13841,7 @@ export class Module {
       value: encoding.encodeString(name),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Module_HasAction",
       arguments: args,
     });
@@ -13876,7 +13876,7 @@ export class Module {
       });
     }
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Module_SetAction",
       arguments: args,
     });
@@ -13901,7 +13901,7 @@ export class Module {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Module_get_Name",
       arguments: args,
     });
@@ -13927,7 +13927,7 @@ export class Module {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Module_get_Part",
       arguments: args,
     });
@@ -13953,7 +13953,7 @@ export class Module {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Module_get_Fields",
       arguments: args,
     });
@@ -13984,7 +13984,7 @@ export class Module {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Module_get_Events",
       arguments: args,
     });
@@ -14012,7 +14012,7 @@ export class Module {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Module_get_Actions",
       arguments: args,
     });
@@ -14064,7 +14064,7 @@ export class Node {
       });
     }
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_BurnVector",
       arguments: args,
     });
@@ -14102,7 +14102,7 @@ export class Node {
       });
     }
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_RemainingBurnVector",
       arguments: args,
     });
@@ -14132,7 +14132,7 @@ export class Node {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_Remove",
       arguments: args,
     });
@@ -14163,7 +14163,7 @@ export class Node {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_Position",
       arguments: args,
     });
@@ -14199,7 +14199,7 @@ export class Node {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_Direction",
       arguments: args,
     });
@@ -14229,7 +14229,7 @@ export class Node {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_get_Prograde",
       arguments: args,
     });
@@ -14259,7 +14259,7 @@ export class Node {
       value: encoding.encodeDouble(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_set_Prograde",
       arguments: args,
     });
@@ -14285,7 +14285,7 @@ export class Node {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_get_Normal",
       arguments: args,
     });
@@ -14315,7 +14315,7 @@ export class Node {
       value: encoding.encodeDouble(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_set_Normal",
       arguments: args,
     });
@@ -14341,7 +14341,7 @@ export class Node {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_get_Radial",
       arguments: args,
     });
@@ -14371,7 +14371,7 @@ export class Node {
       value: encoding.encodeDouble(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_set_Radial",
       arguments: args,
     });
@@ -14397,7 +14397,7 @@ export class Node {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_get_DeltaV",
       arguments: args,
     });
@@ -14427,7 +14427,7 @@ export class Node {
       value: encoding.encodeDouble(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_set_DeltaV",
       arguments: args,
     });
@@ -14453,7 +14453,7 @@ export class Node {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_get_RemainingDeltaV",
       arguments: args,
     });
@@ -14479,7 +14479,7 @@ export class Node {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_get_UT",
       arguments: args,
     });
@@ -14509,7 +14509,7 @@ export class Node {
       value: encoding.encodeDouble(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_set_UT",
       arguments: args,
     });
@@ -14535,7 +14535,7 @@ export class Node {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_get_TimeTo",
       arguments: args,
     });
@@ -14561,7 +14561,7 @@ export class Node {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_get_Orbit",
       arguments: args,
     });
@@ -14587,7 +14587,7 @@ export class Node {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_get_ReferenceFrame",
       arguments: args,
     });
@@ -14613,7 +14613,7 @@ export class Node {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Node_get_OrbitalReferenceFrame",
       arguments: args,
     });
@@ -14659,7 +14659,7 @@ export class Orbit {
       value: encoding.encodeDouble(ut),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_MeanAnomalyAtUT",
       arguments: args,
     });
@@ -14688,7 +14688,7 @@ export class Orbit {
       value: encoding.encodeDouble(trueAnomaly),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_RadiusAtTrueAnomaly",
       arguments: args,
     });
@@ -14717,7 +14717,7 @@ export class Orbit {
       value: encoding.encodeDouble(radius),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_TrueAnomalyAtRadius",
       arguments: args,
     });
@@ -14746,7 +14746,7 @@ export class Orbit {
       value: encoding.encodeDouble(ut),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_TrueAnomalyAtUT",
       arguments: args,
     });
@@ -14775,7 +14775,7 @@ export class Orbit {
       value: encoding.encodeDouble(trueAnomaly),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_UTAtTrueAnomaly",
       arguments: args,
     });
@@ -14804,7 +14804,7 @@ export class Orbit {
       value: encoding.encodeDouble(ut),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_EccentricAnomalyAtUT",
       arguments: args,
     });
@@ -14833,7 +14833,7 @@ export class Orbit {
       value: encoding.encodeDouble(time),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_OrbitalSpeedAt",
       arguments: args,
     });
@@ -14862,7 +14862,7 @@ export class Orbit {
       value: encoding.encodeDouble(ut),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_RadiusAt",
       arguments: args,
     });
@@ -14898,7 +14898,7 @@ export class Orbit {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_PositionAt",
       arguments: args,
     });
@@ -14932,7 +14932,7 @@ export class Orbit {
       value: encoding.encodeVarint64(target.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_TimeOfClosestApproach",
       arguments: args,
     });
@@ -14961,7 +14961,7 @@ export class Orbit {
       value: encoding.encodeVarint64(target.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_DistanceAtClosestApproach",
       arguments: args,
     });
@@ -14997,7 +14997,7 @@ export class Orbit {
       value: encoding.encodeSint32(orbits),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_ListClosestApproaches",
       arguments: args,
     });
@@ -15031,7 +15031,7 @@ export class Orbit {
       value: encoding.encodeVarint64(target.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_TrueAnomalyAtAN",
       arguments: args,
     });
@@ -15060,7 +15060,7 @@ export class Orbit {
       value: encoding.encodeVarint64(target.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_TrueAnomalyAtDN",
       arguments: args,
     });
@@ -15089,7 +15089,7 @@ export class Orbit {
       value: encoding.encodeVarint64(target.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_RelativeInclination",
       arguments: args,
     });
@@ -15114,7 +15114,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_Body",
       arguments: args,
     });
@@ -15140,7 +15140,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_Apoapsis",
       arguments: args,
     });
@@ -15166,7 +15166,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_Periapsis",
       arguments: args,
     });
@@ -15192,7 +15192,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_ApoapsisAltitude",
       arguments: args,
     });
@@ -15218,7 +15218,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_PeriapsisAltitude",
       arguments: args,
     });
@@ -15244,7 +15244,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_SemiMajorAxis",
       arguments: args,
     });
@@ -15270,7 +15270,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_SemiMinorAxis",
       arguments: args,
     });
@@ -15296,7 +15296,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_Radius",
       arguments: args,
     });
@@ -15322,7 +15322,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_Speed",
       arguments: args,
     });
@@ -15348,7 +15348,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_Period",
       arguments: args,
     });
@@ -15374,7 +15374,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_TimeToApoapsis",
       arguments: args,
     });
@@ -15400,7 +15400,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_TimeToPeriapsis",
       arguments: args,
     });
@@ -15426,7 +15426,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_Eccentricity",
       arguments: args,
     });
@@ -15452,7 +15452,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_Inclination",
       arguments: args,
     });
@@ -15478,7 +15478,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_LongitudeOfAscendingNode",
       arguments: args,
     });
@@ -15504,7 +15504,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_ArgumentOfPeriapsis",
       arguments: args,
     });
@@ -15530,7 +15530,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_MeanAnomalyAtEpoch",
       arguments: args,
     });
@@ -15556,7 +15556,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_Epoch",
       arguments: args,
     });
@@ -15582,7 +15582,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_MeanAnomaly",
       arguments: args,
     });
@@ -15608,7 +15608,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_EccentricAnomaly",
       arguments: args,
     });
@@ -15634,7 +15634,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_TrueAnomaly",
       arguments: args,
     });
@@ -15660,7 +15660,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_NextOrbit",
       arguments: args,
     });
@@ -15686,7 +15686,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_TimeToSOIChange",
       arguments: args,
     });
@@ -15712,7 +15712,7 @@ export class Orbit {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_get_OrbitalSpeed",
       arguments: args,
     });
@@ -15741,7 +15741,7 @@ export class Orbit {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_static_ReferencePlaneNormal",
       arguments: args,
     });
@@ -15773,7 +15773,7 @@ export class Orbit {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Orbit_static_ReferencePlaneDirection",
       arguments: args,
     });
@@ -15817,7 +15817,7 @@ export class Parachute {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parachute_Deploy",
       arguments: args,
     });
@@ -15842,7 +15842,7 @@ export class Parachute {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parachute_Arm",
       arguments: args,
     });
@@ -15867,7 +15867,7 @@ export class Parachute {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parachute_get_Part",
       arguments: args,
     });
@@ -15893,7 +15893,7 @@ export class Parachute {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parachute_get_Deployed",
       arguments: args,
     });
@@ -15919,7 +15919,7 @@ export class Parachute {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parachute_get_Armed",
       arguments: args,
     });
@@ -15945,7 +15945,7 @@ export class Parachute {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parachute_get_State",
       arguments: args,
     });
@@ -15973,7 +15973,7 @@ export class Parachute {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parachute_get_DeployAltitude",
       arguments: args,
     });
@@ -16003,7 +16003,7 @@ export class Parachute {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parachute_set_DeployAltitude",
       arguments: args,
     });
@@ -16029,7 +16029,7 @@ export class Parachute {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parachute_get_DeployMinPressure",
       arguments: args,
     });
@@ -16059,7 +16059,7 @@ export class Parachute {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parachute_set_DeployMinPressure",
       arguments: args,
     });
@@ -16107,7 +16107,7 @@ export class Part {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_Position",
       arguments: args,
     });
@@ -16143,7 +16143,7 @@ export class Part {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_CenterOfMass",
       arguments: args,
     });
@@ -16179,7 +16179,7 @@ export class Part {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_BoundingBox",
       arguments: args,
     });
@@ -16222,7 +16222,7 @@ export class Part {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_Direction",
       arguments: args,
     });
@@ -16258,7 +16258,7 @@ export class Part {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_Velocity",
       arguments: args,
     });
@@ -16294,7 +16294,7 @@ export class Part {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_Rotation",
       arguments: args,
     });
@@ -16341,7 +16341,7 @@ export class Part {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_AddForce",
       arguments: args,
     });
@@ -16382,7 +16382,7 @@ export class Part {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_InstantaneousForce",
       arguments: args,
     });
@@ -16407,7 +16407,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Name",
       arguments: args,
     });
@@ -16433,7 +16433,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Title",
       arguments: args,
     });
@@ -16459,7 +16459,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Tag",
       arguments: args,
     });
@@ -16489,7 +16489,7 @@ export class Part {
       value: encoding.encodeString(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_set_Tag",
       arguments: args,
     });
@@ -16515,7 +16515,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Highlighted",
       arguments: args,
     });
@@ -16545,7 +16545,7 @@ export class Part {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_set_Highlighted",
       arguments: args,
     });
@@ -16571,7 +16571,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_HighlightColor",
       arguments: args,
     });
@@ -16605,7 +16605,7 @@ export class Part {
       value: encoding.encodeTuple(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_set_HighlightColor",
       arguments: args,
     });
@@ -16631,7 +16631,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Cost",
       arguments: args,
     });
@@ -16657,7 +16657,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Vessel",
       arguments: args,
     });
@@ -16683,7 +16683,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Parent",
       arguments: args,
     });
@@ -16709,7 +16709,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Children",
       arguments: args,
     });
@@ -16737,7 +16737,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_AxiallyAttached",
       arguments: args,
     });
@@ -16763,7 +16763,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_RadiallyAttached",
       arguments: args,
     });
@@ -16789,7 +16789,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Stage",
       arguments: args,
     });
@@ -16815,7 +16815,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_DecoupleStage",
       arguments: args,
     });
@@ -16841,7 +16841,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Massless",
       arguments: args,
     });
@@ -16867,7 +16867,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Mass",
       arguments: args,
     });
@@ -16893,7 +16893,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_DryMass",
       arguments: args,
     });
@@ -16919,7 +16919,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Shielded",
       arguments: args,
     });
@@ -16945,7 +16945,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_DynamicPressure",
       arguments: args,
     });
@@ -16971,7 +16971,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_ImpactTolerance",
       arguments: args,
     });
@@ -16997,7 +16997,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Temperature",
       arguments: args,
     });
@@ -17023,7 +17023,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_SkinTemperature",
       arguments: args,
     });
@@ -17049,7 +17049,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_MaxTemperature",
       arguments: args,
     });
@@ -17075,7 +17075,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_MaxSkinTemperature",
       arguments: args,
     });
@@ -17101,7 +17101,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_ThermalMass",
       arguments: args,
     });
@@ -17127,7 +17127,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_ThermalSkinMass",
       arguments: args,
     });
@@ -17153,7 +17153,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_ThermalResourceMass",
       arguments: args,
     });
@@ -17179,7 +17179,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_ThermalInternalFlux",
       arguments: args,
     });
@@ -17205,7 +17205,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_ThermalConductionFlux",
       arguments: args,
     });
@@ -17231,7 +17231,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_ThermalConvectionFlux",
       arguments: args,
     });
@@ -17257,7 +17257,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_ThermalRadiationFlux",
       arguments: args,
     });
@@ -17283,7 +17283,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_ThermalSkinToInternalFlux",
       arguments: args,
     });
@@ -17309,7 +17309,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Resources",
       arguments: args,
     });
@@ -17335,7 +17335,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Crossfeed",
       arguments: args,
     });
@@ -17361,7 +17361,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_IsFuelLine",
       arguments: args,
     });
@@ -17387,7 +17387,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_FuelLinesFrom",
       arguments: args,
     });
@@ -17415,7 +17415,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_FuelLinesTo",
       arguments: args,
     });
@@ -17443,7 +17443,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Modules",
       arguments: args,
     });
@@ -17471,7 +17471,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Antenna",
       arguments: args,
     });
@@ -17497,7 +17497,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_CargoBay",
       arguments: args,
     });
@@ -17523,7 +17523,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_ControlSurface",
       arguments: args,
     });
@@ -17549,7 +17549,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Decoupler",
       arguments: args,
     });
@@ -17575,7 +17575,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_DockingPort",
       arguments: args,
     });
@@ -17601,7 +17601,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Engine",
       arguments: args,
     });
@@ -17627,7 +17627,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Experiment",
       arguments: args,
     });
@@ -17653,7 +17653,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Fairing",
       arguments: args,
     });
@@ -17679,7 +17679,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Intake",
       arguments: args,
     });
@@ -17705,7 +17705,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Leg",
       arguments: args,
     });
@@ -17731,7 +17731,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_LaunchClamp",
       arguments: args,
     });
@@ -17757,7 +17757,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Light",
       arguments: args,
     });
@@ -17783,7 +17783,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Parachute",
       arguments: args,
     });
@@ -17809,7 +17809,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Radiator",
       arguments: args,
     });
@@ -17835,7 +17835,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_RCS",
       arguments: args,
     });
@@ -17861,7 +17861,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_ReactionWheel",
       arguments: args,
     });
@@ -17887,7 +17887,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_ResourceConverter",
       arguments: args,
     });
@@ -17913,7 +17913,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_ResourceHarvester",
       arguments: args,
     });
@@ -17939,7 +17939,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Sensor",
       arguments: args,
     });
@@ -17965,7 +17965,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_SolarPanel",
       arguments: args,
     });
@@ -17991,7 +17991,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_Wheel",
       arguments: args,
     });
@@ -18017,7 +18017,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_MomentOfInertia",
       arguments: args,
     });
@@ -18047,7 +18047,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_InertiaTensor",
       arguments: args,
     });
@@ -18075,7 +18075,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_ReferenceFrame",
       arguments: args,
     });
@@ -18101,7 +18101,7 @@ export class Part {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Part_get_CenterOfMassReferenceFrame",
       arguments: args,
     });
@@ -18147,7 +18147,7 @@ export class Parts {
       value: encoding.encodeString(name),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_WithName",
       arguments: args,
     });
@@ -18179,7 +18179,7 @@ export class Parts {
       value: encoding.encodeString(title),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_WithTitle",
       arguments: args,
     });
@@ -18211,7 +18211,7 @@ export class Parts {
       value: encoding.encodeString(tag),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_WithTag",
       arguments: args,
     });
@@ -18243,7 +18243,7 @@ export class Parts {
       value: encoding.encodeString(moduleName),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_WithModule",
       arguments: args,
     });
@@ -18275,7 +18275,7 @@ export class Parts {
       value: encoding.encodeSint32(stage),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_InStage",
       arguments: args,
     });
@@ -18307,7 +18307,7 @@ export class Parts {
       value: encoding.encodeSint32(stage),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_InDecoupleStage",
       arguments: args,
     });
@@ -18339,7 +18339,7 @@ export class Parts {
       value: encoding.encodeString(moduleName),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_ModulesWithName",
       arguments: args,
     });
@@ -18367,7 +18367,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_All",
       arguments: args,
     });
@@ -18395,7 +18395,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_Root",
       arguments: args,
     });
@@ -18421,7 +18421,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_Controlling",
       arguments: args,
     });
@@ -18451,7 +18451,7 @@ export class Parts {
       value: encoding.encodeVarint64(value.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_set_Controlling",
       arguments: args,
     });
@@ -18477,7 +18477,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_Antennas",
       arguments: args,
     });
@@ -18505,7 +18505,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_ControlSurfaces",
       arguments: args,
     });
@@ -18533,7 +18533,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_CargoBays",
       arguments: args,
     });
@@ -18561,7 +18561,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_Decouplers",
       arguments: args,
     });
@@ -18589,7 +18589,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_DockingPorts",
       arguments: args,
     });
@@ -18617,7 +18617,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_Engines",
       arguments: args,
     });
@@ -18645,7 +18645,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_Experiments",
       arguments: args,
     });
@@ -18673,7 +18673,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_Fairings",
       arguments: args,
     });
@@ -18701,7 +18701,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_Intakes",
       arguments: args,
     });
@@ -18729,7 +18729,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_Legs",
       arguments: args,
     });
@@ -18757,7 +18757,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_LaunchClamps",
       arguments: args,
     });
@@ -18785,7 +18785,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_Lights",
       arguments: args,
     });
@@ -18813,7 +18813,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_Parachutes",
       arguments: args,
     });
@@ -18841,7 +18841,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_Radiators",
       arguments: args,
     });
@@ -18869,7 +18869,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_RCS",
       arguments: args,
     });
@@ -18897,7 +18897,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_ReactionWheels",
       arguments: args,
     });
@@ -18925,7 +18925,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_ResourceConverters",
       arguments: args,
     });
@@ -18953,7 +18953,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_ResourceHarvesters",
       arguments: args,
     });
@@ -18981,7 +18981,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_Sensors",
       arguments: args,
     });
@@ -19009,7 +19009,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_SolarPanels",
       arguments: args,
     });
@@ -19037,7 +19037,7 @@ export class Parts {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Parts_get_Wheels",
       arguments: args,
     });
@@ -19081,7 +19081,7 @@ export class Propellant {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Propellant_get_Name",
       arguments: args,
     });
@@ -19107,7 +19107,7 @@ export class Propellant {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Propellant_get_CurrentAmount",
       arguments: args,
     });
@@ -19133,7 +19133,7 @@ export class Propellant {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Propellant_get_CurrentRequirement",
       arguments: args,
     });
@@ -19159,7 +19159,7 @@ export class Propellant {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Propellant_get_TotalResourceAvailable",
       arguments: args,
     });
@@ -19185,7 +19185,7 @@ export class Propellant {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Propellant_get_TotalResourceCapacity",
       arguments: args,
     });
@@ -19211,7 +19211,7 @@ export class Propellant {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Propellant_get_IgnoreForIsp",
       arguments: args,
     });
@@ -19237,7 +19237,7 @@ export class Propellant {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Propellant_get_IgnoreForThrustCurve",
       arguments: args,
     });
@@ -19263,7 +19263,7 @@ export class Propellant {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Propellant_get_DrawStackGauge",
       arguments: args,
     });
@@ -19289,7 +19289,7 @@ export class Propellant {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Propellant_get_IsDeprived",
       arguments: args,
     });
@@ -19315,7 +19315,7 @@ export class Propellant {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Propellant_get_Ratio",
       arguments: args,
     });
@@ -19357,7 +19357,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_Part",
       arguments: args,
     });
@@ -19383,7 +19383,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_Active",
       arguments: args,
     });
@@ -19409,7 +19409,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_Enabled",
       arguments: args,
     });
@@ -19439,7 +19439,7 @@ export class RCS {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_set_Enabled",
       arguments: args,
     });
@@ -19465,7 +19465,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_PitchEnabled",
       arguments: args,
     });
@@ -19495,7 +19495,7 @@ export class RCS {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_set_PitchEnabled",
       arguments: args,
     });
@@ -19521,7 +19521,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_YawEnabled",
       arguments: args,
     });
@@ -19551,7 +19551,7 @@ export class RCS {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_set_YawEnabled",
       arguments: args,
     });
@@ -19577,7 +19577,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_RollEnabled",
       arguments: args,
     });
@@ -19607,7 +19607,7 @@ export class RCS {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_set_RollEnabled",
       arguments: args,
     });
@@ -19633,7 +19633,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_ForwardEnabled",
       arguments: args,
     });
@@ -19663,7 +19663,7 @@ export class RCS {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_set_ForwardEnabled",
       arguments: args,
     });
@@ -19689,7 +19689,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_UpEnabled",
       arguments: args,
     });
@@ -19719,7 +19719,7 @@ export class RCS {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_set_UpEnabled",
       arguments: args,
     });
@@ -19745,7 +19745,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_RightEnabled",
       arguments: args,
     });
@@ -19775,7 +19775,7 @@ export class RCS {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_set_RightEnabled",
       arguments: args,
     });
@@ -19803,7 +19803,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_AvailableTorque",
       arguments: args,
     });
@@ -19840,7 +19840,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_MaxThrust",
       arguments: args,
     });
@@ -19866,7 +19866,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_MaxVacuumThrust",
       arguments: args,
     });
@@ -19892,7 +19892,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_Thrusters",
       arguments: args,
     });
@@ -19920,7 +19920,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_SpecificImpulse",
       arguments: args,
     });
@@ -19946,7 +19946,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_VacuumSpecificImpulse",
       arguments: args,
     });
@@ -19972,7 +19972,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_KerbinSeaLevelSpecificImpulse",
       arguments: args,
     });
@@ -19998,7 +19998,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_Propellants",
       arguments: args,
     });
@@ -20026,7 +20026,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_PropellantRatios",
       arguments: args,
     });
@@ -20057,7 +20057,7 @@ export class RCS {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "RCS_get_HasFuel",
       arguments: args,
     });
@@ -20099,7 +20099,7 @@ export class Radiator {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Radiator_get_Part",
       arguments: args,
     });
@@ -20125,7 +20125,7 @@ export class Radiator {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Radiator_get_Deployable",
       arguments: args,
     });
@@ -20151,7 +20151,7 @@ export class Radiator {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Radiator_get_Deployed",
       arguments: args,
     });
@@ -20181,7 +20181,7 @@ export class Radiator {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Radiator_set_Deployed",
       arguments: args,
     });
@@ -20207,7 +20207,7 @@ export class Radiator {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Radiator_get_State",
       arguments: args,
     });
@@ -20251,7 +20251,7 @@ export class ReactionWheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ReactionWheel_get_Part",
       arguments: args,
     });
@@ -20277,7 +20277,7 @@ export class ReactionWheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ReactionWheel_get_Active",
       arguments: args,
     });
@@ -20307,7 +20307,7 @@ export class ReactionWheel {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ReactionWheel_set_Active",
       arguments: args,
     });
@@ -20333,7 +20333,7 @@ export class ReactionWheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ReactionWheel_get_Broken",
       arguments: args,
     });
@@ -20361,7 +20361,7 @@ export class ReactionWheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ReactionWheel_get_AvailableTorque",
       arguments: args,
     });
@@ -20400,7 +20400,7 @@ export class ReactionWheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ReactionWheel_get_MaxTorque",
       arguments: args,
     });
@@ -20484,7 +20484,7 @@ export class ReferenceFrame {
       });
     }
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ReferenceFrame_static_CreateRelative",
       arguments: args,
     });
@@ -20533,7 +20533,7 @@ export class ReferenceFrame {
       });
     }
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ReferenceFrame_static_CreateHybrid",
       arguments: args,
     });
@@ -20573,7 +20573,7 @@ export class Resource {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resource_get_Name",
       arguments: args,
     });
@@ -20599,7 +20599,7 @@ export class Resource {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resource_get_Part",
       arguments: args,
     });
@@ -20625,7 +20625,7 @@ export class Resource {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resource_get_Max",
       arguments: args,
     });
@@ -20651,7 +20651,7 @@ export class Resource {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resource_get_Amount",
       arguments: args,
     });
@@ -20677,7 +20677,7 @@ export class Resource {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resource_get_Density",
       arguments: args,
     });
@@ -20703,7 +20703,7 @@ export class Resource {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resource_get_FlowMode",
       arguments: args,
     });
@@ -20731,7 +20731,7 @@ export class Resource {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resource_get_Enabled",
       arguments: args,
     });
@@ -20761,7 +20761,7 @@ export class Resource {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resource_set_Enabled",
       arguments: args,
     });
@@ -20807,7 +20807,7 @@ export class ResourceConverter {
       value: encoding.encodeSint32(index),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceConverter_Active",
       arguments: args,
     });
@@ -20836,7 +20836,7 @@ export class ResourceConverter {
       value: encoding.encodeSint32(index),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceConverter_Name",
       arguments: args,
     });
@@ -20865,7 +20865,7 @@ export class ResourceConverter {
       value: encoding.encodeSint32(index),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceConverter_Start",
       arguments: args,
     });
@@ -20894,7 +20894,7 @@ export class ResourceConverter {
       value: encoding.encodeSint32(index),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceConverter_Stop",
       arguments: args,
     });
@@ -20923,7 +20923,7 @@ export class ResourceConverter {
       value: encoding.encodeSint32(index),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceConverter_State",
       arguments: args,
     });
@@ -20955,7 +20955,7 @@ export class ResourceConverter {
       value: encoding.encodeSint32(index),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceConverter_StatusInfo",
       arguments: args,
     });
@@ -20984,7 +20984,7 @@ export class ResourceConverter {
       value: encoding.encodeSint32(index),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceConverter_Inputs",
       arguments: args,
     });
@@ -21016,7 +21016,7 @@ export class ResourceConverter {
       value: encoding.encodeSint32(index),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceConverter_Outputs",
       arguments: args,
     });
@@ -21044,7 +21044,7 @@ export class ResourceConverter {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceConverter_get_Part",
       arguments: args,
     });
@@ -21070,7 +21070,7 @@ export class ResourceConverter {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceConverter_get_Count",
       arguments: args,
     });
@@ -21096,7 +21096,7 @@ export class ResourceConverter {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceConverter_get_ThermalEfficiency",
       arguments: args,
     });
@@ -21122,7 +21122,7 @@ export class ResourceConverter {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceConverter_get_CoreTemperature",
       arguments: args,
     });
@@ -21148,7 +21148,7 @@ export class ResourceConverter {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceConverter_get_OptimumCoreTemperature",
       arguments: args,
     });
@@ -21190,7 +21190,7 @@ export class ResourceHarvester {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceHarvester_get_Part",
       arguments: args,
     });
@@ -21216,7 +21216,7 @@ export class ResourceHarvester {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceHarvester_get_State",
       arguments: args,
     });
@@ -21244,7 +21244,7 @@ export class ResourceHarvester {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceHarvester_get_Deployed",
       arguments: args,
     });
@@ -21274,7 +21274,7 @@ export class ResourceHarvester {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceHarvester_set_Deployed",
       arguments: args,
     });
@@ -21300,7 +21300,7 @@ export class ResourceHarvester {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceHarvester_get_Active",
       arguments: args,
     });
@@ -21330,7 +21330,7 @@ export class ResourceHarvester {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceHarvester_set_Active",
       arguments: args,
     });
@@ -21356,7 +21356,7 @@ export class ResourceHarvester {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceHarvester_get_ExtractionRate",
       arguments: args,
     });
@@ -21382,7 +21382,7 @@ export class ResourceHarvester {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceHarvester_get_ThermalEfficiency",
       arguments: args,
     });
@@ -21408,7 +21408,7 @@ export class ResourceHarvester {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceHarvester_get_CoreTemperature",
       arguments: args,
     });
@@ -21434,7 +21434,7 @@ export class ResourceHarvester {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceHarvester_get_OptimumCoreTemperature",
       arguments: args,
     });
@@ -21476,7 +21476,7 @@ export class ResourceTransfer {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceTransfer_get_Complete",
       arguments: args,
     });
@@ -21502,7 +21502,7 @@ export class ResourceTransfer {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceTransfer_get_Amount",
       arguments: args,
     });
@@ -21546,7 +21546,7 @@ export class ResourceTransfer {
       value: encoding.encodeFloat(maxAmount),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ResourceTransfer_static_Start",
       arguments: args,
     });
@@ -21590,7 +21590,7 @@ export class Resources {
       value: encoding.encodeString(name),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resources_WithResource",
       arguments: args,
     });
@@ -21622,7 +21622,7 @@ export class Resources {
       value: encoding.encodeString(name),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resources_HasResource",
       arguments: args,
     });
@@ -21651,7 +21651,7 @@ export class Resources {
       value: encoding.encodeString(name),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resources_Max",
       arguments: args,
     });
@@ -21680,7 +21680,7 @@ export class Resources {
       value: encoding.encodeString(name),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resources_Amount",
       arguments: args,
     });
@@ -21705,7 +21705,7 @@ export class Resources {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resources_get_All",
       arguments: args,
     });
@@ -21733,7 +21733,7 @@ export class Resources {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resources_get_Names",
       arguments: args,
     });
@@ -21761,7 +21761,7 @@ export class Resources {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resources_get_Enabled",
       arguments: args,
     });
@@ -21791,7 +21791,7 @@ export class Resources {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resources_set_Enabled",
       arguments: args,
     });
@@ -21817,7 +21817,7 @@ export class Resources {
       value: encoding.encodeString(name),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resources_static_Density",
       arguments: args,
     });
@@ -21845,7 +21845,7 @@ export class Resources {
       value: encoding.encodeString(name),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Resources_static_FlowMode",
       arguments: args,
     });
@@ -21887,7 +21887,7 @@ export class ScienceData {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ScienceData_get_DataAmount",
       arguments: args,
     });
@@ -21913,7 +21913,7 @@ export class ScienceData {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ScienceData_get_ScienceValue",
       arguments: args,
     });
@@ -21939,7 +21939,7 @@ export class ScienceData {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ScienceData_get_TransmitValue",
       arguments: args,
     });
@@ -21981,7 +21981,7 @@ export class ScienceSubject {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ScienceSubject_get_Science",
       arguments: args,
     });
@@ -22007,7 +22007,7 @@ export class ScienceSubject {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ScienceSubject_get_ScienceCap",
       arguments: args,
     });
@@ -22033,7 +22033,7 @@ export class ScienceSubject {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ScienceSubject_get_IsComplete",
       arguments: args,
     });
@@ -22059,7 +22059,7 @@ export class ScienceSubject {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ScienceSubject_get_DataScale",
       arguments: args,
     });
@@ -22085,7 +22085,7 @@ export class ScienceSubject {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ScienceSubject_get_ScientificValue",
       arguments: args,
     });
@@ -22111,7 +22111,7 @@ export class ScienceSubject {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ScienceSubject_get_SubjectValue",
       arguments: args,
     });
@@ -22137,7 +22137,7 @@ export class ScienceSubject {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "ScienceSubject_get_Title",
       arguments: args,
     });
@@ -22179,7 +22179,7 @@ export class Sensor {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Sensor_get_Part",
       arguments: args,
     });
@@ -22205,7 +22205,7 @@ export class Sensor {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Sensor_get_Active",
       arguments: args,
     });
@@ -22235,7 +22235,7 @@ export class Sensor {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Sensor_set_Active",
       arguments: args,
     });
@@ -22261,7 +22261,7 @@ export class Sensor {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Sensor_get_Value",
       arguments: args,
     });
@@ -22303,7 +22303,7 @@ export class SolarPanel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "SolarPanel_get_Part",
       arguments: args,
     });
@@ -22329,7 +22329,7 @@ export class SolarPanel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "SolarPanel_get_Deployable",
       arguments: args,
     });
@@ -22355,7 +22355,7 @@ export class SolarPanel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "SolarPanel_get_Deployed",
       arguments: args,
     });
@@ -22385,7 +22385,7 @@ export class SolarPanel {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "SolarPanel_set_Deployed",
       arguments: args,
     });
@@ -22411,7 +22411,7 @@ export class SolarPanel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "SolarPanel_get_State",
       arguments: args,
     });
@@ -22439,7 +22439,7 @@ export class SolarPanel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "SolarPanel_get_EnergyFlow",
       arguments: args,
     });
@@ -22465,7 +22465,7 @@ export class SolarPanel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "SolarPanel_get_SunExposure",
       arguments: args,
     });
@@ -22513,7 +22513,7 @@ export class Thruster {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Thruster_ThrustPosition",
       arguments: args,
     });
@@ -22549,7 +22549,7 @@ export class Thruster {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Thruster_ThrustDirection",
       arguments: args,
     });
@@ -22585,7 +22585,7 @@ export class Thruster {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Thruster_InitialThrustPosition",
       arguments: args,
     });
@@ -22621,7 +22621,7 @@ export class Thruster {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Thruster_InitialThrustDirection",
       arguments: args,
     });
@@ -22657,7 +22657,7 @@ export class Thruster {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Thruster_GimbalPosition",
       arguments: args,
     });
@@ -22687,7 +22687,7 @@ export class Thruster {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Thruster_get_Part",
       arguments: args,
     });
@@ -22713,7 +22713,7 @@ export class Thruster {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Thruster_get_ThrustReferenceFrame",
       arguments: args,
     });
@@ -22739,7 +22739,7 @@ export class Thruster {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Thruster_get_Gimballed",
       arguments: args,
     });
@@ -22765,7 +22765,7 @@ export class Thruster {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Thruster_get_GimbalAngle",
       arguments: args,
     });
@@ -22811,7 +22811,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_Recover",
       arguments: args,
     });
@@ -22842,7 +22842,7 @@ export class Vessel {
       });
     }
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_Flight",
       arguments: args,
     });
@@ -22880,7 +22880,7 @@ export class Vessel {
       });
     }
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_ResourcesInDecoupleStage",
       arguments: args,
     });
@@ -22911,7 +22911,7 @@ export class Vessel {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_Position",
       arguments: args,
     });
@@ -22947,7 +22947,7 @@ export class Vessel {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_BoundingBox",
       arguments: args,
     });
@@ -22990,7 +22990,7 @@ export class Vessel {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_Velocity",
       arguments: args,
     });
@@ -23026,7 +23026,7 @@ export class Vessel {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_Rotation",
       arguments: args,
     });
@@ -23063,7 +23063,7 @@ export class Vessel {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_Direction",
       arguments: args,
     });
@@ -23099,7 +23099,7 @@ export class Vessel {
       value: encoding.encodeVarint64(referenceFrame.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_AngularVelocity",
       arguments: args,
     });
@@ -23129,7 +23129,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_Name",
       arguments: args,
     });
@@ -23159,7 +23159,7 @@ export class Vessel {
       value: encoding.encodeString(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_set_Name",
       arguments: args,
     });
@@ -23185,7 +23185,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_Type",
       arguments: args,
     });
@@ -23217,7 +23217,7 @@ export class Vessel {
       value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_set_Type",
       arguments: args,
     });
@@ -23243,7 +23243,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_Situation",
       arguments: args,
     });
@@ -23271,7 +23271,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_Recoverable",
       arguments: args,
     });
@@ -23297,7 +23297,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_MET",
       arguments: args,
     });
@@ -23323,7 +23323,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_Biome",
       arguments: args,
     });
@@ -23349,7 +23349,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_Orbit",
       arguments: args,
     });
@@ -23375,7 +23375,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_Control",
       arguments: args,
     });
@@ -23401,7 +23401,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_Comms",
       arguments: args,
     });
@@ -23427,7 +23427,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_AutoPilot",
       arguments: args,
     });
@@ -23453,7 +23453,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_CrewCapacity",
       arguments: args,
     });
@@ -23479,7 +23479,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_CrewCount",
       arguments: args,
     });
@@ -23505,7 +23505,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_Crew",
       arguments: args,
     });
@@ -23533,7 +23533,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_Resources",
       arguments: args,
     });
@@ -23559,7 +23559,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_Parts",
       arguments: args,
     });
@@ -23585,7 +23585,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_Mass",
       arguments: args,
     });
@@ -23611,7 +23611,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_DryMass",
       arguments: args,
     });
@@ -23637,7 +23637,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_Thrust",
       arguments: args,
     });
@@ -23663,7 +23663,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_AvailableThrust",
       arguments: args,
     });
@@ -23689,7 +23689,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_MaxThrust",
       arguments: args,
     });
@@ -23715,7 +23715,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_MaxVacuumThrust",
       arguments: args,
     });
@@ -23741,7 +23741,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_SpecificImpulse",
       arguments: args,
     });
@@ -23767,7 +23767,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_VacuumSpecificImpulse",
       arguments: args,
     });
@@ -23793,7 +23793,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_KerbinSeaLevelSpecificImpulse",
       arguments: args,
     });
@@ -23819,7 +23819,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_MomentOfInertia",
       arguments: args,
     });
@@ -23849,7 +23849,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_InertiaTensor",
       arguments: args,
     });
@@ -23879,7 +23879,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_AvailableTorque",
       arguments: args,
     });
@@ -23918,7 +23918,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_AvailableReactionWheelTorque",
       arguments: args,
     });
@@ -23957,7 +23957,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_AvailableRCSTorque",
       arguments: args,
     });
@@ -23996,7 +23996,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_AvailableEngineTorque",
       arguments: args,
     });
@@ -24035,7 +24035,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_AvailableControlSurfaceTorque",
       arguments: args,
     });
@@ -24074,7 +24074,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_AvailableOtherTorque",
       arguments: args,
     });
@@ -24111,7 +24111,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_ReferenceFrame",
       arguments: args,
     });
@@ -24137,7 +24137,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_OrbitalReferenceFrame",
       arguments: args,
     });
@@ -24163,7 +24163,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_SurfaceReferenceFrame",
       arguments: args,
     });
@@ -24189,7 +24189,7 @@ export class Vessel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Vessel_get_SurfaceVelocityReferenceFrame",
       arguments: args,
     });
@@ -24231,7 +24231,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_Remove",
       arguments: args,
     });
@@ -24256,7 +24256,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_get_Body",
       arguments: args,
     });
@@ -24286,7 +24286,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(value.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_set_Body",
       arguments: args,
     });
@@ -24312,7 +24312,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_get_Name",
       arguments: args,
     });
@@ -24342,7 +24342,7 @@ export class Waypoint {
       value: encoding.encodeString(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_set_Name",
       arguments: args,
     });
@@ -24368,7 +24368,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_get_Color",
       arguments: args,
     });
@@ -24398,7 +24398,7 @@ export class Waypoint {
       value: encoding.encodeSint32(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_set_Color",
       arguments: args,
     });
@@ -24424,7 +24424,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_get_Icon",
       arguments: args,
     });
@@ -24454,7 +24454,7 @@ export class Waypoint {
       value: encoding.encodeString(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_set_Icon",
       arguments: args,
     });
@@ -24480,7 +24480,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_get_Latitude",
       arguments: args,
     });
@@ -24510,7 +24510,7 @@ export class Waypoint {
       value: encoding.encodeDouble(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_set_Latitude",
       arguments: args,
     });
@@ -24536,7 +24536,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_get_Longitude",
       arguments: args,
     });
@@ -24566,7 +24566,7 @@ export class Waypoint {
       value: encoding.encodeDouble(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_set_Longitude",
       arguments: args,
     });
@@ -24592,7 +24592,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_get_MeanAltitude",
       arguments: args,
     });
@@ -24622,7 +24622,7 @@ export class Waypoint {
       value: encoding.encodeDouble(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_set_MeanAltitude",
       arguments: args,
     });
@@ -24648,7 +24648,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_get_SurfaceAltitude",
       arguments: args,
     });
@@ -24678,7 +24678,7 @@ export class Waypoint {
       value: encoding.encodeDouble(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_set_SurfaceAltitude",
       arguments: args,
     });
@@ -24704,7 +24704,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_get_BedrockAltitude",
       arguments: args,
     });
@@ -24734,7 +24734,7 @@ export class Waypoint {
       value: encoding.encodeDouble(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_set_BedrockAltitude",
       arguments: args,
     });
@@ -24760,7 +24760,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_get_NearSurface",
       arguments: args,
     });
@@ -24786,7 +24786,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_get_Grounded",
       arguments: args,
     });
@@ -24812,7 +24812,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_get_Index",
       arguments: args,
     });
@@ -24838,7 +24838,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_get_Clustered",
       arguments: args,
     });
@@ -24864,7 +24864,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_get_HasContract",
       arguments: args,
     });
@@ -24890,7 +24890,7 @@ export class Waypoint {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Waypoint_get_Contract",
       arguments: args,
     });
@@ -24953,7 +24953,7 @@ export class WaypointManager {
       value: encoding.encodeString(name),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "WaypointManager_AddWaypoint",
       arguments: args,
     });
@@ -25004,7 +25004,7 @@ export class WaypointManager {
       value: encoding.encodeString(name),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "WaypointManager_AddWaypointAtAltitude",
       arguments: args,
     });
@@ -25029,7 +25029,7 @@ export class WaypointManager {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "WaypointManager_get_Waypoints",
       arguments: args,
     });
@@ -25057,7 +25057,7 @@ export class WaypointManager {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "WaypointManager_get_Icons",
       arguments: args,
     });
@@ -25085,7 +25085,7 @@ export class WaypointManager {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "WaypointManager_get_Colors",
       arguments: args,
     });
@@ -25132,7 +25132,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_Part",
       arguments: args,
     });
@@ -25158,7 +25158,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_State",
       arguments: args,
     });
@@ -25186,7 +25186,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_Radius",
       arguments: args,
     });
@@ -25212,7 +25212,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_Grounded",
       arguments: args,
     });
@@ -25238,7 +25238,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_HasBrakes",
       arguments: args,
     });
@@ -25264,7 +25264,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_Brakes",
       arguments: args,
     });
@@ -25294,7 +25294,7 @@ export class Wheel {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_set_Brakes",
       arguments: args,
     });
@@ -25320,7 +25320,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_AutoFrictionControl",
       arguments: args,
     });
@@ -25350,7 +25350,7 @@ export class Wheel {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_set_AutoFrictionControl",
       arguments: args,
     });
@@ -25376,7 +25376,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_ManualFrictionControl",
       arguments: args,
     });
@@ -25406,7 +25406,7 @@ export class Wheel {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_set_ManualFrictionControl",
       arguments: args,
     });
@@ -25432,7 +25432,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_Deployable",
       arguments: args,
     });
@@ -25458,7 +25458,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_Deployed",
       arguments: args,
     });
@@ -25488,7 +25488,7 @@ export class Wheel {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_set_Deployed",
       arguments: args,
     });
@@ -25514,7 +25514,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_Powered",
       arguments: args,
     });
@@ -25540,7 +25540,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_MotorEnabled",
       arguments: args,
     });
@@ -25570,7 +25570,7 @@ export class Wheel {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_set_MotorEnabled",
       arguments: args,
     });
@@ -25596,7 +25596,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_MotorInverted",
       arguments: args,
     });
@@ -25626,7 +25626,7 @@ export class Wheel {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_set_MotorInverted",
       arguments: args,
     });
@@ -25652,7 +25652,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_MotorState",
       arguments: args,
     });
@@ -25680,7 +25680,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_MotorOutput",
       arguments: args,
     });
@@ -25706,7 +25706,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_TractionControlEnabled",
       arguments: args,
     });
@@ -25736,7 +25736,7 @@ export class Wheel {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_set_TractionControlEnabled",
       arguments: args,
     });
@@ -25762,7 +25762,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_TractionControl",
       arguments: args,
     });
@@ -25792,7 +25792,7 @@ export class Wheel {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_set_TractionControl",
       arguments: args,
     });
@@ -25818,7 +25818,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_DriveLimiter",
       arguments: args,
     });
@@ -25848,7 +25848,7 @@ export class Wheel {
       value: encoding.encodeFloat(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_set_DriveLimiter",
       arguments: args,
     });
@@ -25874,7 +25874,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_Steerable",
       arguments: args,
     });
@@ -25900,7 +25900,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_SteeringEnabled",
       arguments: args,
     });
@@ -25930,7 +25930,7 @@ export class Wheel {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_set_SteeringEnabled",
       arguments: args,
     });
@@ -25956,7 +25956,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_SteeringInverted",
       arguments: args,
     });
@@ -25986,7 +25986,7 @@ export class Wheel {
       value: encoding.encodeBool(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_set_SteeringInverted",
       arguments: args,
     });
@@ -26012,7 +26012,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_HasSuspension",
       arguments: args,
     });
@@ -26038,7 +26038,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_SuspensionSpringStrength",
       arguments: args,
     });
@@ -26064,7 +26064,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_SuspensionDamperStrength",
       arguments: args,
     });
@@ -26090,7 +26090,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_Broken",
       arguments: args,
     });
@@ -26116,7 +26116,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_Repairable",
       arguments: args,
     });
@@ -26142,7 +26142,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_Stress",
       arguments: args,
     });
@@ -26168,7 +26168,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_StressTolerance",
       arguments: args,
     });
@@ -26194,7 +26194,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_StressPercentage",
       arguments: args,
     });
@@ -26220,7 +26220,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_Deflection",
       arguments: args,
     });
@@ -26246,7 +26246,7 @@ export class Wheel {
       value: encoding.encodeVarint64(this.id),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
-      service: "",
+      service: "SpaceCenter",
       procedure: "Wheel_get_Slip",
       arguments: args,
     });
