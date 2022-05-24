@@ -2,7 +2,10 @@
 import { ref } from "vue";
 
 import { KRPC } from "../services/krpc";
-import { SpaceCenter } from "../generated/services/space-center";
+import {
+  ReferenceFrame,
+  SpaceCenter,
+} from "../generated/services/space-center";
 import { conn } from "../services/connection";
 import ByteBuffer from "bytebuffer";
 
@@ -23,43 +26,73 @@ const loop = async () => {
   console.log(activeVessel);
   const control = await activeVessel.getControl();
   console.log(control);
-  const flight = await activeVessel.flight();
-  console.log("flight:");
-  console.log(flight);
 
   const autopilot = await activeVessel.getAutoPilot();
   console.log("autopilot:");
   console.log(autopilot);
 
   await autopilot.engage();
-  // const vesselsJettisoned = await control.activateNextStage();
-  // console.log(vesselsJettisoned);
-  let pitchTarget = 90;
+  await autopilot.setTargetHeading(90);
+  await autopilot.setTargetRoll(0);
+  const body = await (await activeVessel.getOrbit()).getBody();
+  const radius = await body.getEquatorialRadius();
+  const gravitationalParameter = await body.getGravitationalParameter();
+  const bodyReferenceFrame = await body.getReferenceFrame();
+  const flight = await activeVessel.flight(bodyReferenceFrame);
+  console.log("flight:");
+  console.log(flight);
+  console.log(gravitationalParameter);
   for (;;) {
-    const result = await Promise.all([
+    const data = await Promise.all([
+      flight.getMeanAltitude(),
       spaceCenter.getUt(),
       spaceCenter.getNavball(),
-      flight.getMeanAltitude(),
-      autopilot.setTargetPitch(pitchTarget),
-      autopilot.setTargetHeading(90),
+      activeVessel.getMass(),
+      activeVessel.getMaxThrust(),
+      flight.getVerticalSpeed(),
     ]);
-    ut.value = result[0];
-    navball.value = result[1];
-    meanAltitude.value = result[2];
+    const altitude = data[0];
 
-    if (result[2] > 500) {
-      pitchTarget = 80;
-    }
-    if (result[2] > 1500) {
-      pitchTarget = 70;
-    }
-    if (result[2] > 3000) {
-      pitchTarget = 50;
-    }
-    if (result[2] > 15000) {
-      pitchTarget = 10;
-    }
+    meanAltitude.value = data[0];
+    ut.value = data[1];
+    navball.value = data[2];
+    const mass = data[3];
+    const maxThrust = data[4];
+    const verticalSpeed = data[5];
+
+    const maxThrustAsAcceleration = maxThrust / mass;
+
+    const g = gravitationalParameter / (radius * radius);
+    const gravityForce = mass * g;
+    const netZeroThrottle = gravityForce / maxThrust;
+
+    // altitude control
+    const altitudeSetpoint = 500;
+    const altitudeError = altitudeSetpoint - altitude;
+    // 1 m => 0.5 m/s
+    const targetVerticalSpeed = Math.min(
+      Math.max(altitudeError * 0.5, -30),
+      30
+    );
+
+    const verticalSpeedError = targetVerticalSpeed - verticalSpeed;
+    // 1m/s => 10 m/s^2
+    const accelerationSetpoint = verticalSpeedError * 10;
+
+    const throttle =
+      netZeroThrottle + accelerationSetpoint / maxThrustAsAcceleration;
+
+    // don't await commands
+    // autopilot.setTargetPitch(90 - altitude / 100);
+    autopilot.setTargetPitch(90);
+    control.setThrottle(throttle);
   }
+};
+
+const pdControl = (altitude: number): number => {
+  const error = 200 - altitude;
+  const command = Math.min(Math.max(error * 0.001 + 0.3, 0), 1);
+  return command;
 };
 
 loop();
@@ -72,6 +105,7 @@ const count = ref(0);
 <template>
   <h2>{{ version }}</h2>
   <h2>ut: {{ ut.toFixed(1) }}</h2>
+
   <h2>altitude: {{ meanAltitude.toFixed(1) }}</h2>
   <h2>navball: {{ navball }}</h2>
   <h2>Queue length: {{ queueLength }}</h2>
