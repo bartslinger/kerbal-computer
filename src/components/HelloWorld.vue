@@ -16,6 +16,14 @@ const ut = ref(0);
 const navball = ref(false);
 const meanAltitude = ref(0);
 const queueLength = ref(0);
+const latitude = ref(0);
+const longitude = ref(0);
+const altitudeSetpointInput = ref("200");
+const eastVelocitySetpointInput = ref("10");
+const eastVelocity = ref(0);
+
+const VabLatitude = -0.09678838905180992;
+const VabLongitude = -74.6187414738767;
 
 const loop = async () => {
   const krpc = new KRPC(conn);
@@ -24,6 +32,8 @@ const loop = async () => {
   const spaceCenter = new SpaceCenter(conn);
   const activeVessel = await spaceCenter.getActiveVessel();
   console.log(activeVessel);
+  const surfaceReferenceFrame = await activeVessel.getSurfaceReferenceFrame();
+
   const control = await activeVessel.getControl();
   console.log(control);
 
@@ -35,10 +45,16 @@ const loop = async () => {
   await autopilot.setTargetHeading(90);
   await autopilot.setTargetRoll(0);
   const body = await (await activeVessel.getOrbit()).getBody();
+  const bodyReferenceFrame = await body.getReferenceFrame();
+  const referenceFrame = await ReferenceFrame.createHybrid(
+    conn,
+    bodyReferenceFrame,
+    surfaceReferenceFrame
+  );
+
   const radius = await body.getEquatorialRadius();
   const gravitationalParameter = await body.getGravitationalParameter();
-  const bodyReferenceFrame = await body.getReferenceFrame();
-  const flight = await activeVessel.flight(bodyReferenceFrame);
+  const flight = await activeVessel.flight(referenceFrame);
   console.log("flight:");
   console.log(flight);
   console.log(gravitationalParameter);
@@ -50,6 +66,15 @@ const loop = async () => {
       activeVessel.getMass(),
       activeVessel.getMaxThrust(),
       flight.getVerticalSpeed(),
+      flight.getLatitude(),
+      flight.getLongitude(),
+      body.positionAtAltitude(
+        VabLatitude,
+        VabLongitude,
+        175,
+        surfaceReferenceFrame
+      ),
+      flight.getVelocity(),
     ]);
     const altitude = data[0];
 
@@ -59,15 +84,20 @@ const loop = async () => {
     const mass = data[3];
     const maxThrust = data[4];
     const verticalSpeed = data[5];
+    latitude.value = data[6];
+    longitude.value = data[7];
+    const relativeLandingPosition = data[8];
+    const velocity = data[9];
+    eastVelocity.value = velocity[2];
 
     const maxThrustAsAcceleration = maxThrust / mass;
 
-    const g = gravitationalParameter / (radius * radius);
+    const g = gravitationalParameter / Math.pow(radius + altitude * 0.001, 2);
     const gravityForce = mass * g;
     const netZeroThrottle = gravityForce / maxThrust;
 
     // altitude control
-    const altitudeSetpoint = 500;
+    const altitudeSetpoint = Number.parseFloat(altitudeSetpointInput.value);
     const altitudeError = altitudeSetpoint - altitude;
     // 1 m => 0.5 m/s
     const targetVerticalSpeed = Math.min(
@@ -77,22 +107,31 @@ const loop = async () => {
 
     const verticalSpeedError = targetVerticalSpeed - verticalSpeed;
     // 1m/s => 10 m/s^2
-    const accelerationSetpoint = verticalSpeedError * 10;
+    const accelerationSetpoint = verticalSpeedError * 5;
 
     const throttle =
       netZeroThrottle + accelerationSetpoint / maxThrustAsAcceleration;
 
+    // const north error
+    const northError = relativeLandingPosition[1];
+    const northVelocitySetpoint = Math.min(Math.max(northError * 0.3, -30), 30);
+    const northVelocityError = northVelocitySetpoint - velocity[1];
+    const rollTarget = Math.min(Math.max(0.5 * northVelocityError, -10), 10);
+
+    // const eastError = relativeLandingPosition[2];
+    // const eastVelocitySetpoint = Math.min(Math.max(eastError * 0.5, -30), 30);
+    const eastVelocityError =
+      Number.parseFloat(eastVelocitySetpointInput.value) - velocity[2];
+    const pitchTarget = Math.min(Math.max(0.8 * eastVelocityError, -10), 10);
+    console.log(pitchTarget);
+
     // don't await commands
     // autopilot.setTargetPitch(90 - altitude / 100);
-    autopilot.setTargetPitch(90);
+    autopilot.setTargetHeading(pitchTarget > 0 ? 90 : -90);
+    autopilot.setTargetPitch(90 - Math.abs(pitchTarget));
+    autopilot.setTargetRoll(0);
     control.setThrottle(throttle);
   }
-};
-
-const pdControl = (altitude: number): number => {
-  const error = 200 - altitude;
-  const command = Math.min(Math.max(error * 0.001 + 0.3, 0), 1);
-  return command;
 };
 
 loop();
@@ -105,9 +144,12 @@ const count = ref(0);
 <template>
   <h2>{{ version }}</h2>
   <h2>ut: {{ ut.toFixed(1) }}</h2>
-
+  <input type="text" v-model="altitudeSetpointInput" />
   <h2>altitude: {{ meanAltitude.toFixed(1) }}</h2>
+  <input type="text" v-model="eastVelocitySetpointInput" />
+  <h2>{{ eastVelocity.toFixed(1) }}</h2>
   <h2>navball: {{ navball }}</h2>
+  <h2>{{ latitude }}, {{ longitude }}</h2>
   <h2>Queue length: {{ queueLength }}</h2>
 
   <p>
