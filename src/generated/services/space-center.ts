@@ -7,41 +7,33 @@ import * as encoding from "../../services/encoding";
 import ByteBuffer from "bytebuffer";
 ByteBuffer.DEFAULT_ENDIAN = true;
 
-enum MotorState {
-  Idle = 0,
-  Running = 1,
-  Disabled = 2,
-  Inoperable = 3,
-  NotEnoughResources = 4,
+export enum CommLinkType {
+  Home = 0,
+  Control = 1,
+  Relay = 2,
 }
 
-enum AntennaState {
-  Deployed = 0,
+export enum RadiatorState {
+  Extended = 0,
   Retracted = 1,
-  Deploying = 2,
+  Extending = 2,
   Retracting = 3,
   Broken = 4,
 }
 
-enum GameMode {
-  Sandbox = 0,
-  Career = 1,
-  Science = 2,
-  ScienceSandbox = 3,
-  Mission = 4,
-  MissionBuilder = 5,
-  Scenario = 6,
-  ScenarioNonResumable = 7,
+export enum VesselType {
+  Base = 0,
+  Debris = 1,
+  Lander = 2,
+  Plane = 3,
+  Probe = 4,
+  Relay = 5,
+  Rover = 6,
+  Ship = 7,
+  Station = 8,
 }
 
-enum CargoBayState {
-  Open = 0,
-  Closed = 1,
-  Opening = 2,
-  Closing = 3,
-}
-
-enum ParachuteState {
+export enum ParachuteState {
   Stowed = 0,
   Armed = 1,
   Active = 2,
@@ -50,13 +42,32 @@ enum ParachuteState {
   Cut = 5,
 }
 
-enum ControlState {
-  Full = 0,
-  Partial = 1,
-  None = 2,
+export enum AntennaState {
+  Deployed = 0,
+  Retracted = 1,
+  Deploying = 2,
+  Retracting = 3,
+  Broken = 4,
 }
 
-enum ContractState {
+export enum DockingPortState {
+  Ready = 0,
+  Docked = 1,
+  Docking = 2,
+  Undocking = 3,
+  Shielded = 4,
+  Moving = 5,
+}
+
+export enum ResourceHarvesterState {
+  Deploying = 0,
+  Deployed = 1,
+  Retracting = 2,
+  Retracted = 3,
+  Active = 4,
+}
+
+export enum ContractState {
   Active = 0,
   Canceled = 1,
   Completed = 2,
@@ -69,15 +80,7 @@ enum ContractState {
   Withdrawn = 9,
 }
 
-enum LegState {
-  Deployed = 0,
-  Retracted = 1,
-  Deploying = 2,
-  Retracting = 3,
-  Broken = 4,
-}
-
-enum CameraMode {
+export enum CameraMode {
   Automatic = 0,
   Free = 1,
   Chase = 2,
@@ -87,49 +90,13 @@ enum CameraMode {
   Map = 6,
 }
 
-enum ControlSource {
+export enum ControlSource {
   Kerbal = 0,
   Probe = 1,
   None = 2,
 }
 
-enum RadiatorState {
-  Extended = 0,
-  Retracted = 1,
-  Extending = 2,
-  Retracting = 3,
-  Broken = 4,
-}
-
-enum ResourceHarvesterState {
-  Deploying = 0,
-  Deployed = 1,
-  Retracting = 2,
-  Retracted = 3,
-  Active = 4,
-}
-
-enum ControlInputMode {
-  Additive = 0,
-  Override = 1,
-}
-
-enum SolarPanelState {
-  Extended = 0,
-  Retracted = 1,
-  Extending = 2,
-  Retracting = 3,
-  Broken = 4,
-}
-
-enum ResourceFlowMode {
-  Vessel = 0,
-  Stage = 1,
-  Adjacent = 2,
-  None = 3,
-}
-
-enum ResourceConverterState {
+export enum ResourceConverterState {
   Running = 0,
   Idle = 1,
   MissingResource = 2,
@@ -138,7 +105,20 @@ enum ResourceConverterState {
   Unknown = 5,
 }
 
-enum WheelState {
+export enum CrewMemberType {
+  Applicant = 0,
+  Crew = 1,
+  Tourist = 2,
+  Unowned = 3,
+}
+
+export enum WarpMode {
+  Rails = 0,
+  Physics = 1,
+  None = 2,
+}
+
+export enum WheelState {
   Deployed = 0,
   Retracted = 1,
   Deploying = 2,
@@ -146,46 +126,42 @@ enum WheelState {
   Broken = 4,
 }
 
-enum VesselSituation {
-  PreLaunch = 0,
-  Orbiting = 1,
-  SubOrbital = 2,
-  Escaping = 3,
-  Flying = 4,
-  Landed = 5,
-  Splashed = 6,
-  Docked = 7,
+export enum CargoBayState {
+  Open = 0,
+  Closed = 1,
+  Opening = 2,
+  Closing = 3,
 }
 
-enum WarpMode {
-  Rails = 0,
-  Physics = 1,
-  None = 2,
+export enum LegState {
+  Deployed = 0,
+  Retracted = 1,
+  Deploying = 2,
+  Retracting = 3,
+  Broken = 4,
 }
 
-enum DockingPortState {
-  Ready = 0,
-  Docked = 1,
-  Docking = 2,
-  Undocking = 3,
-  Shielded = 4,
-  Moving = 5,
+export enum ControlInputMode {
+  Additive = 0,
+  Override = 1,
 }
 
-enum CommLinkType {
-  Home = 0,
-  Control = 1,
-  Relay = 2,
+export enum SolarPanelState {
+  Extended = 0,
+  Retracted = 1,
+  Extending = 2,
+  Retracting = 3,
+  Broken = 4,
 }
 
-enum CrewMemberType {
-  Applicant = 0,
-  Crew = 1,
-  Tourist = 2,
-  Unowned = 3,
+export enum ResourceFlowMode {
+  Vessel = 0,
+  Stage = 1,
+  Adjacent = 2,
+  None = 3,
 }
 
-enum SASMode {
+export enum SASMode {
   StabilityAssist = 0,
   Maneuver = 1,
   Prograde = 2,
@@ -198,22 +174,46 @@ enum SASMode {
   AntiTarget = 9,
 }
 
-enum SpeedMode {
+export enum MotorState {
+  Idle = 0,
+  Running = 1,
+  Disabled = 2,
+  Inoperable = 3,
+  NotEnoughResources = 4,
+}
+
+export enum GameMode {
+  Sandbox = 0,
+  Career = 1,
+  Science = 2,
+  ScienceSandbox = 3,
+  Mission = 4,
+  MissionBuilder = 5,
+  Scenario = 6,
+  ScenarioNonResumable = 7,
+}
+
+export enum SpeedMode {
   Orbit = 0,
   Surface = 1,
   Target = 2,
 }
 
-enum VesselType {
-  Base = 0,
-  Debris = 1,
-  Lander = 2,
-  Plane = 3,
-  Probe = 4,
-  Relay = 5,
-  Rover = 6,
-  Ship = 7,
-  Station = 8,
+export enum VesselSituation {
+  PreLaunch = 0,
+  Orbiting = 1,
+  SubOrbital = 2,
+  Escaping = 3,
+  Flying = 4,
+  Landed = 5,
+  Splashed = 6,
+  Docked = 7,
+}
+
+export enum ControlState {
+  Full = 0,
+  Partial = 1,
+  None = 2,
 }
 
 export class SpaceCenter {
