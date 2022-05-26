@@ -7,30 +7,30 @@ import * as encoding from "../../services/encoding";
 import ByteBuffer from "bytebuffer";
 ByteBuffer.DEFAULT_ENDIAN = true;
 
-export enum CommLinkType {
-  Home = 0,
-  Control = 1,
-  Relay = 2,
-}
-
-export enum RadiatorState {
-  Extended = 0,
+export enum WheelState {
+  Deployed = 0,
   Retracted = 1,
-  Extending = 2,
+  Deploying = 2,
   Retracting = 3,
   Broken = 4,
 }
 
-export enum VesselType {
-  Base = 0,
-  Debris = 1,
-  Lander = 2,
-  Plane = 3,
-  Probe = 4,
-  Relay = 5,
-  Rover = 6,
-  Ship = 7,
-  Station = 8,
+export enum ControlInputMode {
+  Additive = 0,
+  Override = 1,
+}
+
+export enum ResourceFlowMode {
+  Vessel = 0,
+  Stage = 1,
+  Adjacent = 2,
+  None = 3,
+}
+
+export enum CommLinkType {
+  Home = 0,
+  Control = 1,
+  Relay = 2,
 }
 
 export enum ParachuteState {
@@ -42,29 +42,23 @@ export enum ParachuteState {
   Cut = 5,
 }
 
-export enum AntennaState {
-  Deployed = 0,
-  Retracted = 1,
-  Deploying = 2,
-  Retracting = 3,
-  Broken = 4,
+export enum SASMode {
+  StabilityAssist = 0,
+  Maneuver = 1,
+  Prograde = 2,
+  Retrograde = 3,
+  Normal = 4,
+  AntiNormal = 5,
+  Radial = 6,
+  AntiRadial = 7,
+  Target = 8,
+  AntiTarget = 9,
 }
 
-export enum DockingPortState {
-  Ready = 0,
-  Docked = 1,
-  Docking = 2,
-  Undocking = 3,
-  Shielded = 4,
-  Moving = 5,
-}
-
-export enum ResourceHarvesterState {
-  Deploying = 0,
-  Deployed = 1,
-  Retracting = 2,
-  Retracted = 3,
-  Active = 4,
+export enum ControlState {
+  Full = 0,
+  Partial = 1,
+  None = 2,
 }
 
 export enum ContractState {
@@ -80,6 +74,36 @@ export enum ContractState {
   Withdrawn = 9,
 }
 
+export enum RadiatorState {
+  Extended = 0,
+  Retracted = 1,
+  Extending = 2,
+  Retracting = 3,
+  Broken = 4,
+}
+
+export enum DockingPortState {
+  Ready = 0,
+  Docked = 1,
+  Docking = 2,
+  Undocking = 3,
+  Shielded = 4,
+  Moving = 5,
+}
+
+export enum ControlSource {
+  Kerbal = 0,
+  Probe = 1,
+  None = 2,
+}
+
+export enum CrewMemberType {
+  Applicant = 0,
+  Crew = 1,
+  Tourist = 2,
+  Unowned = 3,
+}
+
 export enum CameraMode {
   Automatic = 0,
   Free = 1,
@@ -88,12 +112,6 @@ export enum CameraMode {
   Orbital = 4,
   IVA = 5,
   Map = 6,
-}
-
-export enum ControlSource {
-  Kerbal = 0,
-  Probe = 1,
-  None = 2,
 }
 
 export enum ResourceConverterState {
@@ -105,25 +123,70 @@ export enum ResourceConverterState {
   Unknown = 5,
 }
 
-export enum CrewMemberType {
-  Applicant = 0,
-  Crew = 1,
-  Tourist = 2,
-  Unowned = 3,
+export enum ResourceHarvesterState {
+  Deploying = 0,
+  Deployed = 1,
+  Retracting = 2,
+  Retracted = 3,
+  Active = 4,
 }
 
-export enum WarpMode {
-  Rails = 0,
-  Physics = 1,
-  None = 2,
+export enum VesselSituation {
+  PreLaunch = 0,
+  Orbiting = 1,
+  SubOrbital = 2,
+  Escaping = 3,
+  Flying = 4,
+  Landed = 5,
+  Splashed = 6,
+  Docked = 7,
 }
 
-export enum WheelState {
+export enum VesselType {
+  Base = 0,
+  Debris = 1,
+  Lander = 2,
+  Plane = 3,
+  Probe = 4,
+  Relay = 5,
+  Rover = 6,
+  Ship = 7,
+  Station = 8,
+}
+
+export enum AntennaState {
   Deployed = 0,
   Retracted = 1,
   Deploying = 2,
   Retracting = 3,
   Broken = 4,
+}
+
+export enum MotorState {
+  Idle = 0,
+  Running = 1,
+  Disabled = 2,
+  Inoperable = 3,
+  NotEnoughResources = 4,
+}
+
+export enum SolarPanelState {
+  Extended = 0,
+  Retracted = 1,
+  Extending = 2,
+  Retracting = 3,
+  Broken = 4,
+}
+
+export enum GameMode {
+  Sandbox = 0,
+  Career = 1,
+  Science = 2,
+  ScienceSandbox = 3,
+  Mission = 4,
+  MissionBuilder = 5,
+  Scenario = 6,
+  ScenarioNonResumable = 7,
 }
 
 export enum CargoBayState {
@@ -141,78 +204,15 @@ export enum LegState {
   Broken = 4,
 }
 
-export enum ControlInputMode {
-  Additive = 0,
-  Override = 1,
-}
-
-export enum SolarPanelState {
-  Extended = 0,
-  Retracted = 1,
-  Extending = 2,
-  Retracting = 3,
-  Broken = 4,
-}
-
-export enum ResourceFlowMode {
-  Vessel = 0,
-  Stage = 1,
-  Adjacent = 2,
-  None = 3,
-}
-
-export enum SASMode {
-  StabilityAssist = 0,
-  Maneuver = 1,
-  Prograde = 2,
-  Retrograde = 3,
-  Normal = 4,
-  AntiNormal = 5,
-  Radial = 6,
-  AntiRadial = 7,
-  Target = 8,
-  AntiTarget = 9,
-}
-
-export enum MotorState {
-  Idle = 0,
-  Running = 1,
-  Disabled = 2,
-  Inoperable = 3,
-  NotEnoughResources = 4,
-}
-
-export enum GameMode {
-  Sandbox = 0,
-  Career = 1,
-  Science = 2,
-  ScienceSandbox = 3,
-  Mission = 4,
-  MissionBuilder = 5,
-  Scenario = 6,
-  ScenarioNonResumable = 7,
-}
-
 export enum SpeedMode {
   Orbit = 0,
   Surface = 1,
   Target = 2,
 }
 
-export enum VesselSituation {
-  PreLaunch = 0,
-  Orbiting = 1,
-  SubOrbital = 2,
-  Escaping = 3,
-  Flying = 4,
-  Landed = 5,
-  Splashed = 6,
-  Docked = 7,
-}
-
-export enum ControlState {
-  Full = 0,
-  Partial = 1,
+export enum WarpMode {
+  Rails = 0,
+  Physics = 1,
   None = 2,
 }
 
@@ -803,9 +803,7 @@ export class SpaceCenter {
         });
       }
     );
-    const enumValue: GameMode = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: GameMode = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -1342,9 +1340,7 @@ export class SpaceCenter {
         });
       }
     );
-    const enumValue: WarpMode = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: WarpMode = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -1645,9 +1641,7 @@ export class Antenna {
         });
       }
     );
-    const enumValue: AntennaState = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: AntennaState = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -2561,9 +2555,7 @@ export class AutoPilot {
         });
       }
     );
-    const enumValue: SASMode = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: SASMode = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -2576,7 +2568,7 @@ export class AutoPilot {
     });
     args.push({
       position: 1,
-      value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
+      value: encoding.encodeSint32(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
@@ -3227,9 +3219,7 @@ export class Camera {
         });
       }
     );
-    const enumValue: CameraMode = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: CameraMode = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -3242,7 +3232,7 @@ export class Camera {
     });
     args.push({
       position: 1,
-      value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
+      value: encoding.encodeSint32(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
@@ -3793,9 +3783,7 @@ export class CargoBay {
         });
       }
     );
-    const enumValue: CargoBayState = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: CargoBayState = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -5167,9 +5155,7 @@ export class CommLink {
         });
       }
     );
-    const enumValue: CommLinkType = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: CommLinkType = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -5842,9 +5828,7 @@ export class Contract {
         });
       }
     );
-    const enumValue: ContractState = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: ContractState = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -6937,9 +6921,7 @@ export class Control {
         });
       }
     );
-    const enumValue: ControlState = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: ControlState = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -6965,9 +6947,7 @@ export class Control {
         });
       }
     );
-    const enumValue: ControlSource = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: ControlSource = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -7049,9 +7029,7 @@ export class Control {
         });
       }
     );
-    const enumValue: SASMode = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: SASMode = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -7064,7 +7042,7 @@ export class Control {
     });
     args.push({
       position: 1,
-      value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
+      value: encoding.encodeSint32(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
@@ -7107,9 +7085,7 @@ export class Control {
         });
       }
     );
-    const enumValue: SpeedMode = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: SpeedMode = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -7122,7 +7098,7 @@ export class Control {
     });
     args.push({
       position: 1,
-      value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
+      value: encoding.encodeSint32(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
@@ -8117,9 +8093,10 @@ export class Control {
         });
       }
     );
-    const enumValue: ControlInputMode = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: ControlInputMode = encoding.decodeSint32(
+      conn,
+      result.value
+    );
     return enumValue;
   }
 
@@ -8132,7 +8109,7 @@ export class Control {
     });
     args.push({
       position: 1,
-      value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
+      value: encoding.encodeSint32(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
@@ -9192,9 +9169,7 @@ export class CrewMember {
         });
       }
     );
-    const enumValue: CrewMemberType = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: CrewMemberType = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -9847,9 +9822,10 @@ export class DockingPort {
         });
       }
     );
-    const enumValue: DockingPortState = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: DockingPortState = encoding.decodeSint32(
+      conn,
+      result.value
+    );
     return enumValue;
   }
 
@@ -13271,9 +13247,7 @@ export class Leg {
         });
       }
     );
-    const enumValue: LegState = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: LegState = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -15959,9 +15933,7 @@ export class Parachute {
         });
       }
     );
-    const enumValue: ParachuteState = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: ParachuteState = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -20221,9 +20193,7 @@ export class Radiator {
         });
       }
     );
-    const enumValue: RadiatorState = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: RadiatorState = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -20717,9 +20687,10 @@ export class Resource {
         });
       }
     );
-    const enumValue: ResourceFlowMode = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: ResourceFlowMode = encoding.decodeSint32(
+      conn,
+      result.value
+    );
     return enumValue;
   }
 
@@ -20937,9 +20908,10 @@ export class ResourceConverter {
         });
       }
     );
-    const enumValue: ResourceConverterState = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: ResourceConverterState = encoding.decodeSint32(
+      conn,
+      result.value
+    );
     return enumValue;
   }
 
@@ -21230,9 +21202,10 @@ export class ResourceHarvester {
         });
       }
     );
-    const enumValue: ResourceHarvesterState = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: ResourceHarvesterState = encoding.decodeSint32(
+      conn,
+      result.value
+    );
     return enumValue;
   }
 
@@ -21859,9 +21832,10 @@ export class Resources {
         });
       }
     );
-    const enumValue: ResourceFlowMode = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: ResourceFlowMode = encoding.decodeSint32(
+      conn,
+      result.value
+    );
     return enumValue;
   }
 }
@@ -22425,9 +22399,10 @@ export class SolarPanel {
         });
       }
     );
-    const enumValue: SolarPanelState = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: SolarPanelState = encoding.decodeSint32(
+      conn,
+      result.value
+    );
     return enumValue;
   }
 
@@ -23199,9 +23174,7 @@ export class Vessel {
         });
       }
     );
-    const enumValue: VesselType = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: VesselType = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -23214,7 +23187,7 @@ export class Vessel {
     });
     args.push({
       position: 1,
-      value: encoding.encodeVarint64(Long.fromInt(value.valueOf())),
+      value: encoding.encodeSint32(value),
     });
     const procedureCall = krpc.ProcedureCall.fromPartial({
       service: "SpaceCenter",
@@ -23257,9 +23230,10 @@ export class Vessel {
         });
       }
     );
-    const enumValue: VesselSituation = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: VesselSituation = encoding.decodeSint32(
+      conn,
+      result.value
+    );
     return enumValue;
   }
 
@@ -25172,9 +25146,7 @@ export class Wheel {
         });
       }
     );
-    const enumValue: WheelState = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: WheelState = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 
@@ -25666,9 +25638,7 @@ export class Wheel {
         });
       }
     );
-    const enumValue: MotorState = encoding
-      .decodeVarint64(conn, result.value)
-      .toNumber();
+    const enumValue: MotorState = encoding.decodeSint32(conn, result.value);
     return enumValue;
   }
 

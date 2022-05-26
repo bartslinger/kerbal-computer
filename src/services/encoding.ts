@@ -88,6 +88,7 @@ export const decodeUint32 = (
 };
 
 export const decodeVarint64 = (conn: KRPCConnection, result: Uint8Array) => {
+  console.log(result);
   const value = new protobufjs.Reader(result).uint64();
   return new Long(value.low, value.high, value.unsigned);
 };
