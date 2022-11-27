@@ -5,7 +5,6 @@ import Airplane from "./components/Airplane.vue";
 </script>
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
   <Airplane />
 </template>
 

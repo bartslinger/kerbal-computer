@@ -18,6 +18,7 @@ export class Airplane {
   spaceCenter?: SpaceCenter;
   activeVessel?: Vessel;
   body?: CelestialBody;
+  referenceFrame?: ReferenceFrame;
   flight?: Flight;
   control?: Control;
 
@@ -33,12 +34,12 @@ export class Airplane {
     const bodyReferenceFrame = await this.body.getReferenceFrame();
     const surfaceReferenceFrame =
       await this.activeVessel.getSurfaceReferenceFrame();
-    const referenceFrame = await ReferenceFrame.createHybrid(
+    this.referenceFrame = await ReferenceFrame.createHybrid(
       conn,
       bodyReferenceFrame,
       surfaceReferenceFrame
     );
-    this.flight = await this.activeVessel.flight(referenceFrame);
+    this.flight = await this.activeVessel.flight(this.referenceFrame);
 
     this.control = await this.activeVessel.getControl();
     console.log(this.control);
