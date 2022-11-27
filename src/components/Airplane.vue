@@ -1,12 +1,24 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { TaskMachine } from "./task-machine";
 
 const version = ref("loading");
 const ut = ref(0);
+
+const taskMachine = new TaskMachine();
+
+await taskMachine.init();
+
+// continuous loop
+taskMachine.run();
+
+const click = () => {
+  console.log("clicked");
+};
 </script>
 
 <template>
-  <input type="button" @click="run" value="Launch!" />
+  <input type="button" @click="click" value="Launch!" />
   <h2>{{ version }}</h2>
   <h2>ut: {{ ut.toFixed(1) }}</h2>
 </template>

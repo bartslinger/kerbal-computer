@@ -13,7 +13,7 @@ import ByteBuffer from "bytebuffer";
 
 ByteBuffer.DEFAULT_ENDIAN = true;
 
-class Airplane {
+export class Airplane {
   krpc?: KRPC;
   spaceCenter?: SpaceCenter;
   activeVessel?: Vessel;
@@ -21,11 +21,7 @@ class Airplane {
   flight?: Flight;
   control?: Control;
 
-  constructor() {
-    this.start();
-  }
-
-  async start() {
+  async init() {
     this.krpc = new KRPC(conn);
     const status = await this.krpc.getStatus();
     console.log(status.version);
